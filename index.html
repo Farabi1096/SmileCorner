@@ -320,36 +320,70 @@
 
             <!-- ================= VIEW 2: REPORT ================= -->
             <div id="reportView" class="hidden animate-fade-in">
-                <!-- Filters Section -->
-                <div class="bg-gray-50 border border-gray-100 p-4 rounded-2xl shadow-sm mb-4">
-                    <h3 class="text-[15px] font-bold text-gray-800 mb-3 flex items-center">
-                        <i data-lucide="filter" class="h-[18px] w-[18px] mr-1.5 text-colgate"></i> পারফরম্যান্স ফিল্টার
-                    </h3>
-                    <div class="space-y-3">
-                        <select id="reportZoneSelect" class="w-full rounded-xl border border-gray-200 bg-white text-[13px] py-2.5 px-3 outline-none focus:border-colgate font-medium text-gray-700">
-                            <option value="">Zone সিলেক্ট করুন</option>
-                        </select>
-                        <select id="reportDhSelect" class="w-full rounded-xl border border-gray-200 bg-gray-100 text-[13px] py-2.5 px-3 outline-none focus:border-colgate font-medium text-gray-500" disabled>
-                            <option value="">প্রথমে Zone সিলেক্ট করুন</option>
-                        </select>
-                        <select id="reportRouteSelect" class="w-full rounded-xl border border-gray-200 bg-gray-100 text-[13px] py-2.5 px-3 outline-none focus:border-colgate font-medium text-gray-500" disabled>
-                            <option value="">প্রথমে DH Name সিলেক্ট করুন</option>
-                        </select>
-                    </div>
+                <!-- Loader -->
+                <div id="reportLoader" class="hidden flex-col items-center justify-center py-12">
+                    <div class="loader mb-4"></div>
+                    <p class="text-[13px] font-medium text-gray-500">ডেটা লোড হচ্ছে...</p>
                 </div>
 
-                <!-- Results Section -->
-                <div>
-                    <h4 class="font-bold text-gray-700 mt-2 mb-3 px-1 text-[15px] flex items-center justify-between">
-                        <span class="flex items-center"><i data-lucide="bar-chart" class="h-4 w-4 mr-1.5 text-gray-400"></i> আউটলেট রিপোর্ট</span>
-                        <span id="reportCount" class="bg-red-50 text-colgate px-2 py-0.5 rounded-full text-[11px] font-bold">0</span>
-                    </h4>
-                    
-                    <div id="reportResults" class="space-y-3 pb-4">
-                        <!-- Default Message -->
-                        <div class="text-center py-8 bg-white rounded-xl border border-dashed border-gray-200">
-                            <i data-lucide="search" class="h-8 w-8 text-gray-300 mx-auto mb-2"></i>
-                            <p class="text-[13px] text-gray-500 font-medium">উপরের ফিল্টার থেকে তথ্য সিলেক্ট করুন</p>
+                <div id="reportContent" class="hidden">
+                    <!-- Overall Performance Card -->
+                    <div class="bg-colgate/5 border border-red-100 p-5 rounded-2xl shadow-sm mb-5 text-center relative overflow-hidden">
+                        <i data-lucide="trending-up" class="absolute -right-4 -top-4 h-24 w-24 text-red-100 opacity-50"></i>
+                        <h3 class="text-colgate font-bold text-sm mb-1 relative z-10">সর্বমোট পারফরম্যান্স (সিলেক্টেড)</h3>
+                        <div class="text-4xl font-extrabold text-gray-800 relative z-10 mt-2"><span id="overallPercent">0</span><span class="text-lg text-gray-500 font-medium">%</span></div>
+                        
+                        <div class="mt-5 mb-2 bg-red-100 rounded-full h-2 w-full overflow-hidden relative z-10">
+                            <div id="overallProgressBar" class="bg-colgate h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between mt-3 text-[13px] font-semibold relative z-10">
+                            <div class="flex flex-col items-start">
+                                <span class="text-gray-500 text-[11px]">মোট টার্গেট</span>
+                                <span class="text-gray-800" id="overallTarget">0</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <span class="text-gray-500 text-[11px]">সম্পন্ন হয়েছে</span>
+                                <span class="text-green-600" id="overallAchieved">0</span>
+                            </div>
+                            <div class="flex flex-col items-end">
+                                <span class="text-gray-500 text-[11px]">বাকি আছে</span>
+                                <span class="text-colgate" id="overallBalance">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filters Section -->
+                    <div class="bg-gray-50 border border-gray-100 p-4 rounded-2xl shadow-sm mb-4">
+                        <h3 class="text-[15px] font-bold text-gray-800 mb-3 flex items-center">
+                            <i data-lucide="filter" class="h-[18px] w-[18px] mr-1.5 text-colgate"></i> পারফরম্যান্স ফিল্টার
+                        </h3>
+                        <div class="space-y-3">
+                            <select id="reportZoneSelect" class="w-full rounded-xl border border-gray-200 bg-white text-[13px] py-2.5 px-3 outline-none focus:border-colgate font-medium text-gray-700">
+                                <option value="">Zone সিলেক্ট করুন</option>
+                            </select>
+                            <select id="reportDhSelect" class="w-full rounded-xl border border-gray-200 bg-gray-100 text-[13px] py-2.5 px-3 outline-none focus:border-colgate font-medium text-gray-500" disabled>
+                                <option value="">প্রথমে Zone সিলেক্ট করুন</option>
+                            </select>
+                            <select id="reportRouteSelect" class="w-full rounded-xl border border-gray-200 bg-gray-100 text-[13px] py-2.5 px-3 outline-none focus:border-colgate font-medium text-gray-500" disabled>
+                                <option value="">প্রথমে DH Name সিলেক্ট করুন</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div>
+                        <h4 class="font-bold text-gray-700 mt-2 mb-3 px-1 text-[15px] flex items-center justify-between">
+                            <span class="flex items-center"><i data-lucide="bar-chart" class="h-4 w-4 mr-1.5 text-gray-400"></i> আউটলেট রিপোর্ট</span>
+                            <span id="reportCount" class="bg-red-50 text-colgate px-2 py-0.5 rounded-full text-[11px] font-bold">0</span>
+                        </h4>
+                        
+                        <div id="reportResults" class="space-y-3 pb-4">
+                            <!-- Default Message -->
+                            <div class="text-center py-8 bg-white rounded-xl border border-dashed border-gray-200">
+                                <i data-lucide="search" class="h-8 w-8 text-gray-300 mx-auto mb-2"></i>
+                                <p class="text-[13px] text-gray-500 font-medium">উপরের ফিল্টার থেকে তথ্য সিলেক্ট করুন</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -366,18 +400,69 @@
     <script>
         lucide.createIcons();
 
-        // --- DUMMY REPORT DATA ---
-        const reportData = [
-            { zone: "DHAKA", dhName: "Takwa Enterprise", code: "BDC0002916", name: "Glob Pharmacy-1", route: "SCHOOL ROAD", target: "5,500", achieved: "5,819", achPercent: 105.8, balance: "-319", eligible: "Y", payout: "400" },
-            { zone: "DHAKA", dhName: "Unitrust Trading Co.", code: "BDC0025096", name: "Laz farma", route: "FOKIRAPUL 1", target: "5,500", achieved: "1,168", achPercent: 21.2, balance: "4,332", eligible: "N", payout: "0" },
-            { zone: "DHAKA", dhName: "Paragon Marketing Limited", code: "BDC0019129", name: "Saha General Store", route: "MATIKATA", target: "5,500", achieved: "6,851", achPercent: 124.6, balance: "-1,351", eligible: "Y", payout: "400" }
-        ];
+        // --- FETCH REPORT DATA DIRECTLY FROM GOOGLE SHEETS ---
+        const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; // User's actual Sheet ID
+        const SHEET_TAB_NAME = 'Sheet2';
+        
+        let reportData = [];
+        let isReportLoaded = false;
+
+        async function fetchReportDataFromSheet() {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_TAB_NAME}`;
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                // Strip Google's JSONP wrapper function
+                const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+                const data = JSON.parse(jsonString);
+                
+                const rows = data.table.rows;
+                const parsedData = rows.map(row => {
+                    // Helper to safely get value or formatted value
+                    const getVal = (colIdx) => row.c[colIdx] ? row.c[colIdx].v : "";
+                    const getFormatted = (colIdx) => row.c[colIdx] && row.c[colIdx].f ? row.c[colIdx].f : getVal(colIdx);
+                    
+                    // Parse achievement percent correctly
+                    let achPercentRaw = getVal(9);
+                    let achPercentStr = getFormatted(9);
+                    let achPercent = 0;
+                    if(typeof achPercentRaw === 'number') {
+                        achPercent = parseFloat((achPercentRaw * 100).toFixed(1));
+                    } else if(typeof achPercentStr === 'string') {
+                        achPercent = parseFloat(achPercentStr.replace('%','')) || 0;
+                    }
+
+                    return {
+                        zone: getVal(0),
+                        dhName: getVal(1),
+                        code: getVal(2),
+                        name: getVal(3),
+                        route: getVal(4),
+                        slab: getVal(5),
+                        month: getVal(6),
+                        target: getFormatted(7),
+                        achieved: getFormatted(8),
+                        achPercent: achPercent,
+                        balance: getFormatted(10),
+                        eligible: getVal(11),
+                        payout: getFormatted(12)
+                    };
+                }).filter(item => item.zone && item.zone.toUpperCase() !== "ZONE"); // Remove header and empty rows
+                
+                return parsedData;
+            } catch (error) {
+                console.error("Error fetching sheet data", error);
+                return [];
+            }
+        }
 
         // --- TAB SWITCHING LOGIC ---
         const tabForm = document.getElementById('tabForm');
         const tabReport = document.getElementById('tabReport');
         const formView = document.getElementById('formView');
         const reportView = document.getElementById('reportView');
+        const reportLoader = document.getElementById('reportLoader');
+        const reportContent = document.getElementById('reportContent');
 
         tabForm.addEventListener('click', () => {
             tabForm.classList.add('bg-white', 'shadow-sm', 'text-colgate');
@@ -388,14 +473,27 @@
             reportView.classList.add('hidden');
         });
 
-        tabReport.addEventListener('click', () => {
+        tabReport.addEventListener('click', async () => {
             tabReport.classList.add('bg-white', 'shadow-sm', 'text-colgate');
             tabReport.classList.remove('text-gray-500', 'hover:text-gray-700');
             tabForm.classList.remove('bg-white', 'shadow-sm', 'text-colgate');
             tabForm.classList.add('text-gray-500', 'hover:text-gray-700');
             reportView.classList.remove('hidden');
             formView.classList.add('hidden');
-            initReportFilters(); // Initialize filters when tab is opened
+            
+            // Load data only once
+            if (!isReportLoaded) {
+                reportLoader.style.display = 'flex';
+                reportContent.classList.add('hidden');
+                
+                reportData = await fetchReportDataFromSheet();
+                isReportLoaded = true;
+                
+                reportLoader.style.display = 'none';
+                reportContent.classList.remove('hidden');
+                initReportFilters(); 
+                updateOverallPerformance([]); // Initially show 0
+            }
         });
 
         // --- REPORT FILTER LOGIC ---
@@ -404,17 +502,13 @@
         const reportRouteSelect = document.getElementById('reportRouteSelect');
         const reportResults = document.getElementById('reportResults');
         const reportCount = document.getElementById('reportCount');
-        let reportInitialized = false;
 
         function initReportFilters() {
-            if(reportInitialized) return;
-            
-            // Populate Zones
+            reportZoneSelect.innerHTML = '<option value="">Zone সিলেক্ট করুন</option>';
             const zones = [...new Set(reportData.map(item => item.zone))];
             zones.forEach(zone => {
                 reportZoneSelect.innerHTML += `<option value="${zone}">${zone}</option>`;
             });
-            reportInitialized = true;
         }
 
         reportZoneSelect.addEventListener('change', () => {
@@ -463,6 +557,35 @@
 
         reportRouteSelect.addEventListener('change', renderReport);
 
+        function updateOverallPerformance(dataArray) {
+            if(dataArray.length === 0) {
+                document.getElementById('overallPercent').textContent = "0";
+                document.getElementById('overallProgressBar').style.width = '0%';
+                document.getElementById('overallTarget').textContent = "0";
+                document.getElementById('overallAchieved').textContent = "0";
+                document.getElementById('overallBalance').textContent = "0";
+                return;
+            }
+            
+            let totalTarget = 0;
+            let totalAchieved = 0;
+            
+            dataArray.forEach(item => {
+               // Remove commas and parse numbers safely
+               totalTarget += parseFloat((item.target+"").replace(/,/g, '')) || 0;
+               totalAchieved += parseFloat((item.achieved+"").replace(/,/g, '')) || 0;
+            });
+            
+            let totalPercent = totalTarget > 0 ? ((totalAchieved / totalTarget) * 100).toFixed(1) : 0;
+            let totalBalance = totalTarget - totalAchieved;
+            
+            document.getElementById('overallPercent').textContent = totalPercent;
+            document.getElementById('overallProgressBar').style.width = Math.min(totalPercent, 100) + '%';
+            document.getElementById('overallTarget').textContent = totalTarget.toLocaleString('en-IN');
+            document.getElementById('overallAchieved').textContent = totalAchieved.toLocaleString('en-IN');
+            document.getElementById('overallBalance').textContent = totalBalance.toLocaleString('en-IN');
+        }
+
         function renderReport() {
             const z = reportZoneSelect.value;
             const dh = reportDhSelect.value;
@@ -476,6 +599,7 @@
                         <p class="text-[13px] text-gray-500 font-medium">উপরের ফিল্টার থেকে তথ্য সিলেক্ট করুন</p>
                     </div>`;
                 reportCount.textContent = "0";
+                updateOverallPerformance([]);
                 lucide.createIcons();
                 return;
             }
@@ -486,6 +610,7 @@
             if(r) filtered = filtered.filter(i => i.route === r);
 
             reportCount.textContent = filtered.length;
+            updateOverallPerformance(filtered);
             reportResults.innerHTML = '';
 
             if(filtered.length === 0) {
@@ -496,7 +621,7 @@
                     </div>`;
             } else {
                 filtered.forEach(item => {
-                    const isEligible = item.eligible === 'Y';
+                    const isEligible = item.eligible && item.eligible.toUpperCase() === 'Y';
                     const progressColor = item.achPercent >= 100 ? 'bg-green-500' : 'bg-colgate';
                     const achColor = item.achPercent >= 100 ? 'text-green-600' : 'text-colgate';
                     const badgeClass = isEligible 
