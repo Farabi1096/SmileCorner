@@ -246,9 +246,9 @@
 
                         <!-- Captured Preview Container -->
                         <div id="previewContainer" class="hidden mt-2 relative">
-                            <!-- Added aspect ratio to keep preview image compact and properly sized -->
-                            <div class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-sm aspect-[3/4] sm:aspect-video w-full">
-                                <img id="capturedImagePreview" class="w-full h-full object-cover block">
+                            <!-- Removed rigid aspect ratio to prevent cropping the text at the bottom -->
+                            <div class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-sm w-full">
+                                <img id="capturedImagePreview" class="w-full h-auto block">
                                 
                                 <!-- Retake Button -->
                                 <button type="button" id="retakeBtn" class="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-colgate rounded-full p-2.5 shadow-md hover:bg-white transition-all transform hover:rotate-180 duration-500">
@@ -421,10 +421,35 @@
             setTimeout(() => {
                 const ctx = processCanvas.getContext('2d');
                 
-                processCanvas.width = cameraFeed.videoWidth;
-                processCanvas.height = cameraFeed.videoHeight;
-                ctx.drawImage(cameraFeed, 0, 0, processCanvas.width, processCanvas.height);
+                // --- FIX: Crop the canvas exactly matching the visible screen area ---
+                const videoRatio = cameraFeed.videoWidth / cameraFeed.videoHeight;
+                const containerRatio = cameraFeed.clientWidth / cameraFeed.clientHeight;
                 
+                let sourceX = 0, sourceY = 0;
+                let sourceWidth = cameraFeed.videoWidth;
+                let sourceHeight = cameraFeed.videoHeight;
+                
+                if (videoRatio > containerRatio) {
+                    // Video is wider than the container, crop horizontally
+                    sourceWidth = cameraFeed.videoHeight * containerRatio;
+                    sourceX = (cameraFeed.videoWidth - sourceWidth) / 2;
+                } else {
+                    // Video is taller than the container, crop vertically
+                    sourceHeight = cameraFeed.videoWidth / containerRatio;
+                    sourceY = (cameraFeed.videoHeight - sourceHeight) / 2;
+                }
+                
+                processCanvas.width = sourceWidth;
+                processCanvas.height = sourceHeight;
+                
+                // Draw exactly the visible area to avoid cutting off text later
+                ctx.drawImage(
+                    cameraFeed, 
+                    sourceX, sourceY, sourceWidth, sourceHeight, // Source crop
+                    0, 0, sourceWidth, sourceHeight              // Destination
+                );
+                
+                // Apply timestamp on the perfectly cropped canvas
                 applyTimestamp(ctx, processCanvas.width, processCanvas.height);
                 
                 capturedImageData = processCanvas.toDataURL('image/jpeg', 0.85);
@@ -480,21 +505,25 @@
             const titleStr = "Colgate Smile Corner";
             
             const padding = w * 0.015; 
-            const dateFontSize = w * 0.025;
-            const timeFontSize = w * 0.025;
-            const titleFontSize = w * 0.028;
+            const dateFontSize = Math.max(w * 0.025, 14); // Ensures text is readable even on small width
+            const timeFontSize = Math.max(w * 0.025, 14);
+            const titleFontSize = Math.max(w * 0.028, 16);
             
             const font = "sans-serif";
             const lineHeight = 1.3;
             const totalTextHeight = (dateFontSize + timeFontSize + titleFontSize) * lineHeight;
             
-            const margin = w * 0.02;
+            const margin = Math.max(w * 0.02, 10);
             const startX = margin + padding;
             let currentY = h - totalTextHeight - margin;
             
+            // Background blur effect for text readability
+            ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+            ctx.fillRect(0, currentY - margin, w, h - currentY + margin);
+            
             // --- LEFT SIDE TEXT ---
             ctx.strokeStyle = 'black';
-            ctx.lineWidth = w * 0.004; 
+            ctx.lineWidth = w * 0.003; 
             ctx.lineJoin = 'round';
             ctx.textBaseline = 'top';
             ctx.textAlign = 'left';
@@ -516,7 +545,7 @@
             // Draw Title
             ctx.font = `bold ${titleFontSize}px ${font}`;
             ctx.strokeStyle = 'white'; 
-            ctx.lineWidth = w * 0.006; 
+            ctx.lineWidth = w * 0.004; 
             ctx.strokeText(titleStr, startX, currentY);
             ctx.fillStyle = '#da291c'; 
             ctx.fillText(titleStr, startX, currentY);
@@ -524,7 +553,7 @@
             // --- RIGHT SIDE TEXT ---
             ctx.textAlign = 'right';
             ctx.strokeStyle = 'black'; 
-            ctx.lineWidth = w * 0.004; 
+            ctx.lineWidth = w * 0.003; 
             
             // Align with the 2nd line of the left side (Time)
             let rightY = h - totalTextHeight - margin + (dateFontSize * lineHeight); 
