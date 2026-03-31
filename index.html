@@ -401,11 +401,16 @@
         lucide.createIcons();
 
         // --- FETCH REPORT DATA DIRECTLY FROM GOOGLE SHEETS ---
-        const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; // User's actual Sheet ID
+        const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; 
         const SHEET_TAB_NAME = 'Sheet2';
         
         let reportData = [];
         let isReportLoaded = false;
+        
+        // Paginaton Variables for Optimization
+        let currentFilteredData = [];
+        let currentRenderIndex = 0;
+        const ITEMS_PER_RENDER = 30; // Load 30 items at a time to prevent hanging
 
         async function fetchReportDataFromSheet() {
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_TAB_NAME}`;
@@ -418,11 +423,9 @@
                 
                 const rows = data.table.rows;
                 const parsedData = rows.map(row => {
-                    // Helper to safely get value or formatted value
                     const getVal = (colIdx) => row.c[colIdx] ? row.c[colIdx].v : "";
                     const getFormatted = (colIdx) => row.c[colIdx] && row.c[colIdx].f ? row.c[colIdx].f : getVal(colIdx);
                     
-                    // Parse achievement percent correctly
                     let achPercentRaw = getVal(9);
                     let achPercentStr = getFormatted(9);
                     let achPercent = 0;
@@ -447,7 +450,7 @@
                         eligible: getVal(11),
                         payout: getFormatted(12)
                     };
-                }).filter(item => item.zone && item.zone.toUpperCase() !== "ZONE"); // Remove header and empty rows
+                }).filter(item => item.zone && item.zone.toUpperCase() !== "ZONE"); 
                 
                 return parsedData;
             } catch (error) {
@@ -492,7 +495,7 @@
                 reportLoader.style.display = 'none';
                 reportContent.classList.remove('hidden');
                 initReportFilters(); 
-                updateOverallPerformance([]); // Initially show 0
+                updateOverallPerformance([]); 
             }
         });
 
@@ -503,19 +506,20 @@
         const reportResults = document.getElementById('reportResults');
         const reportCount = document.getElementById('reportCount');
 
+        // Optimizing DOM updates by building HTML string first
         function initReportFilters() {
-            reportZoneSelect.innerHTML = '<option value="">Zone সিলেক্ট করুন</option>';
+            let zoneHtml = '<option value="">Zone সিলেক্ট করুন</option>';
             const zones = [...new Set(reportData.map(item => item.zone))];
             zones.forEach(zone => {
-                reportZoneSelect.innerHTML += `<option value="${zone}">${zone}</option>`;
+                zoneHtml += `<option value="${zone}">${zone}</option>`;
             });
+            reportZoneSelect.innerHTML = zoneHtml;
         }
 
         reportZoneSelect.addEventListener('change', () => {
             const selectedZone = reportZoneSelect.value;
             
-            // Reset DH and Route
-            reportDhSelect.innerHTML = '<option value="">DH Name সিলেক্ট করুন</option>';
+            // Reset Route completely
             reportRouteSelect.innerHTML = '<option value="">প্রথমে DH Name সিলেক্ট করুন</option>';
             reportRouteSelect.disabled = true;
             reportRouteSelect.classList.replace('bg-white', 'bg-gray-100');
@@ -526,36 +530,41 @@
                 reportDhSelect.disabled = false;
                 reportDhSelect.classList.replace('bg-gray-100', 'bg-white');
                 reportDhSelect.classList.replace('text-gray-500', 'text-gray-700');
-                dhs.forEach(dh => reportDhSelect.innerHTML += `<option value="${dh}">${dh}</option>`);
+                
+                let dhHtml = '<option value="">DH Name সিলেক্ট করুন</option>';
+                dhs.forEach(dh => dhHtml += `<option value="${dh}">${dh}</option>`);
+                reportDhSelect.innerHTML = dhHtml;
             } else {
+                reportDhSelect.innerHTML = '<option value="">DH Name সিলেক্ট করুন</option>';
                 reportDhSelect.disabled = true;
                 reportDhSelect.classList.replace('bg-white', 'bg-gray-100');
                 reportDhSelect.classList.replace('text-gray-700', 'text-gray-500');
             }
-            renderReport();
+            prepareReportRender();
         });
 
         reportDhSelect.addEventListener('change', () => {
             const selectedDH = reportDhSelect.value;
             
-            // Reset Route
-            reportRouteSelect.innerHTML = '<option value="">Route Name সিলেক্ট করুন</option>';
-
             if (selectedDH) {
                 const routes = [...new Set(reportData.filter(i => i.dhName === selectedDH).map(i => i.route))];
                 reportRouteSelect.disabled = false;
                 reportRouteSelect.classList.replace('bg-gray-100', 'bg-white');
                 reportRouteSelect.classList.replace('text-gray-500', 'text-gray-700');
-                routes.forEach(route => reportRouteSelect.innerHTML += `<option value="${route}">${route}</option>`);
+                
+                let routeHtml = '<option value="">Route Name সিলেক্ট করুন</option>';
+                routes.forEach(route => routeHtml += `<option value="${route}">${route}</option>`);
+                reportRouteSelect.innerHTML = routeHtml;
             } else {
+                reportRouteSelect.innerHTML = '<option value="">Route Name সিলেক্ট করুন</option>';
                 reportRouteSelect.disabled = true;
                 reportRouteSelect.classList.replace('bg-white', 'bg-gray-100');
                 reportRouteSelect.classList.replace('text-gray-700', 'text-gray-500');
             }
-            renderReport();
+            prepareReportRender();
         });
 
-        reportRouteSelect.addEventListener('change', renderReport);
+        reportRouteSelect.addEventListener('change', prepareReportRender);
 
         function updateOverallPerformance(dataArray) {
             if(dataArray.length === 0) {
@@ -571,7 +580,6 @@
             let totalAchieved = 0;
             
             dataArray.forEach(item => {
-               // Remove commas and parse numbers safely
                totalTarget += parseFloat((item.target+"").replace(/,/g, '')) || 0;
                totalAchieved += parseFloat((item.achieved+"").replace(/,/g, '')) || 0;
             });
@@ -586,12 +594,12 @@
             document.getElementById('overallBalance').textContent = totalBalance.toLocaleString('en-IN');
         }
 
-        function renderReport() {
+        // Setup the data before rendering to handle large data smoothly
+        function prepareReportRender() {
             const z = reportZoneSelect.value;
             const dh = reportDhSelect.value;
             const r = reportRouteSelect.value;
 
-            // Don't show anything if nothing is selected
             if (!z && !dh && !r) {
                 reportResults.innerHTML = `
                     <div class="text-center py-8 bg-white rounded-xl border border-dashed border-gray-200">
@@ -604,69 +612,107 @@
                 return;
             }
 
-            let filtered = reportData;
-            if(z) filtered = filtered.filter(i => i.zone === z);
-            if(dh) filtered = filtered.filter(i => i.dhName === dh);
-            if(r) filtered = filtered.filter(i => i.route === r);
+            // Filter data quickly
+            currentFilteredData = reportData;
+            if(z) currentFilteredData = currentFilteredData.filter(i => i.zone === z);
+            if(dh) currentFilteredData = currentFilteredData.filter(i => i.dhName === dh);
+            if(r) currentFilteredData = currentFilteredData.filter(i => i.route === r);
 
-            reportCount.textContent = filtered.length;
-            updateOverallPerformance(filtered);
+            reportCount.textContent = currentFilteredData.length;
+            updateOverallPerformance(currentFilteredData);
+            
+            // Reset render index and clear HTML
+            currentRenderIndex = 0;
             reportResults.innerHTML = '';
 
-            if(filtered.length === 0) {
+            if(currentFilteredData.length === 0) {
                 reportResults.innerHTML = `
                     <div class="text-center py-8 bg-white rounded-xl border border-dashed border-gray-200">
                         <i data-lucide="alert-circle" class="h-8 w-8 text-gray-300 mx-auto mb-2"></i>
                         <p class="text-[13px] text-gray-500 font-medium">কোনো আউটলেট পাওয়া যায়নি</p>
                     </div>`;
+                lucide.createIcons();
             } else {
-                filtered.forEach(item => {
-                    const isEligible = item.eligible && item.eligible.toUpperCase() === 'Y';
-                    const progressColor = item.achPercent >= 100 ? 'bg-green-500' : 'bg-colgate';
-                    const achColor = item.achPercent >= 100 ? 'text-green-600' : 'text-colgate';
-                    const badgeClass = isEligible 
-                        ? 'bg-green-100 text-green-700 border-green-200' 
-                        : 'bg-red-50 text-red-600 border-red-100';
+                // Start rendering in chunks to prevent freezing
+                renderNextBatch();
+            }
+        }
 
-                    const cardHTML = `
-                        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:border-red-200 transition-colors animate-fade-in">
-                            <div class="flex justify-between items-start mb-3">
-                                <div>
-                                    <h4 class="font-bold text-[14px] text-gray-800 leading-tight">${item.name}</h4>
-                                    <p class="text-[11px] text-gray-500 font-medium mt-0.5">${item.code} • ${item.route}</p>
-                                </div>
-                                <span class="px-2 py-0.5 rounded-md text-[10px] font-bold border ${badgeClass} uppercase tracking-wider flex-shrink-0">
-                                    Payout: ${isEligible ? 'Yes' : 'No'}
-                                </span>
+        // Render a batch of items (Lazy Loading logic)
+        window.renderNextBatch = function() {
+            // Remove the 'Load More' button if it exists
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+            if (loadMoreContainer) {
+                loadMoreContainer.remove();
+            }
+
+            const batch = currentFilteredData.slice(currentRenderIndex, currentRenderIndex + ITEMS_PER_RENDER);
+            let htmlStr = '';
+
+            batch.forEach(item => {
+                const isEligible = item.eligible && item.eligible.toUpperCase() === 'Y';
+                const progressColor = item.achPercent >= 100 ? 'bg-green-500' : 'bg-colgate';
+                const achColor = item.achPercent >= 100 ? 'text-green-600' : 'text-colgate';
+                const badgeClass = isEligible 
+                    ? 'bg-green-100 text-green-700 border-green-200' 
+                    : 'bg-red-50 text-red-600 border-red-100';
+
+                htmlStr += `
+                    <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:border-red-200 transition-colors animate-fade-in">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h4 class="font-bold text-[14px] text-gray-800 leading-tight">${item.name}</h4>
+                                <p class="text-[11px] text-gray-500 font-medium mt-0.5">${item.code} • ${item.route}</p>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold border ${badgeClass} uppercase tracking-wider flex-shrink-0">
+                                Payout: ${isEligible ? 'Yes' : 'No'}
+                            </span>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                            <div class="flex justify-between text-[11px] font-bold text-gray-600 mb-1.5">
+                                <span>Target: ${item.target}</span>
+                                <span class="${achColor}">Achieved: ${item.achPercent}%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-1.5 mb-3 overflow-hidden">
+                                <div class="${progressColor} h-1.5 rounded-full transition-all duration-1000" style="width: ${Math.min(item.achPercent, 100)}%"></div>
                             </div>
                             
-                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                                <div class="flex justify-between text-[11px] font-bold text-gray-600 mb-1.5">
-                                    <span>Target: ${item.target}</span>
-                                    <span class="${achColor}">Achieved: ${item.achPercent}%</span>
+                            <div class="flex justify-between items-center pt-2 border-t border-gray-200/80">
+                                <div class="text-[11px] flex flex-col">
+                                    <span class="text-gray-400 font-medium">Balance</span> 
+                                    <span class="font-bold text-gray-800">${item.balance}</span>
                                 </div>
-                                <div class="w-full bg-gray-200 rounded-full h-1.5 mb-3 overflow-hidden">
-                                    <div class="${progressColor} h-1.5 rounded-full transition-all duration-1000" style="width: ${Math.min(item.achPercent, 100)}%"></div>
-                                </div>
-                                
-                                <div class="flex justify-between items-center pt-2 border-t border-gray-200/80">
-                                    <div class="text-[11px] flex flex-col">
-                                        <span class="text-gray-400 font-medium">Balance</span> 
-                                        <span class="font-bold text-gray-800">${item.balance}</span>
-                                    </div>
-                                    <div class="text-[12px] flex flex-col items-end">
-                                        <span class="text-gray-400 font-medium">Payout (TK)</span> 
-                                        <span class="font-extrabold ${isEligible ? 'text-green-600' : 'text-gray-400'}">৳${item.payout}</span>
-                                    </div>
+                                <div class="text-[12px] flex flex-col items-end">
+                                    <span class="text-gray-400 font-medium">Payout (TK)</span> 
+                                    <span class="font-extrabold ${isEligible ? 'text-green-600' : 'text-gray-400'}">৳${item.payout}</span>
                                 </div>
                             </div>
                         </div>
-                    `;
-                    reportResults.innerHTML += cardHTML;
-                });
+                    </div>
+                `;
+            });
+
+            // Insert HTML directly to avoid re-rendering existing items
+            reportResults.insertAdjacentHTML('beforeend', htmlStr);
+            currentRenderIndex += batch.length;
+
+            // Check if there's more data to load
+            if (currentRenderIndex < currentFilteredData.length) {
+                const remaining = currentFilteredData.length - currentRenderIndex;
+                const loadMoreBtn = `
+                    <div id="loadMoreContainer" class="pt-2 animate-fade-in">
+                        <button type="button" onclick="window.renderNextBatch()" class="w-full py-3 text-[13px] font-bold text-colgate bg-red-50 rounded-xl hover:bg-red-100 transition-colors border border-red-100 flex items-center justify-center">
+                            <i data-lucide="chevron-down" class="h-4 w-4 mr-1.5"></i> আরও দেখুন (${remaining} বাকি)
+                        </button>
+                    </div>
+                `;
+                reportResults.insertAdjacentHTML('beforeend', loadMoreBtn);
             }
+            
+            // Re-initialize icons for newly added HTML
             lucide.createIcons();
-        }
+        };
 
         // --- FORM LOGIC ---
         const form = document.getElementById('customForm');
