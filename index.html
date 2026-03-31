@@ -231,7 +231,7 @@
                                 <!-- LIVE LOCATION BADGE -->
                                 <div class="absolute top-3 inset-x-0 flex justify-center z-20 pointer-events-none px-4">
                                     <div class="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-sm flex items-center gap-1.5 max-w-full">
-                                        <i data-lucide="map-pin" class="h-3.5 w-3.5 text-colgate flex-shrink-0"></i>
+                                        <i data-lucide="map-pin" id="locationIconBadge" class="h-3.5 w-3.5 text-colgate flex-shrink-0 transition-colors"></i>
                                         <span id="cameraLocationBadge" class="text-white text-[11px] sm:text-xs font-medium truncate">লোকেশন খোঁজা হচ্ছে...</span>
                                     </div>
                                 </div>
@@ -360,7 +360,10 @@
         function fetchLocation() {
             capturedLocation = "Fetching Location...";
             const badge = document.getElementById('cameraLocationBadge');
+            const iconBadge = document.getElementById('locationIconBadge');
+            
             if (badge) badge.textContent = "লোকেশন খোঁজা হচ্ছে...";
+            if (iconBadge) iconBadge.classList.replace('text-red-500', 'text-colgate');
 
             locationPromise = new Promise((resolve) => {
                 if (navigator.geolocation) {
@@ -398,14 +401,24 @@
                         if (badge) badge.textContent = capturedLocation;
                         resolve(capturedLocation);
                     }, (error) => {
-                        capturedLocation = "Location Access Denied";
+                        // Handle strict permission denial or unavailable GPS
+                        if (error.code === error.PERMISSION_DENIED) {
+                            capturedLocation = "Location Access Denied";
+                            alert("সঠিক লোকেশনের জন্য আপনার ব্রাউজার থেকে লোকেশন (GPS) পারমিশন Allow করা বাধ্যতামূলক। দয়া করে সেটিংস থেকে Allow করুন।");
+                        } else {
+                            capturedLocation = "Location Unavailable";
+                            alert("আপনার মোবাইলের Location/GPS বন্ধ আছে। দয়া করে GPS অন করে আবার চেষ্টা করুন।");
+                        }
+                        
                         if (badge) badge.textContent = "লোকেশন পারমিশন নেই";
+                        if (iconBadge) iconBadge.classList.replace('text-colgate', 'text-red-500');
                         resolve(capturedLocation);
-                    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }); // enableHighAccuracy set to true
+                    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }); 
                 } else {
                     capturedLocation = "GPS Not Supported";
                     if (badge) badge.textContent = "GPS সাপোর্ট করে না";
                     resolve(capturedLocation);
+                    alert("আপনার ডিভাইসে GPS সাপোর্ট করে না।");
                 }
             });
             return locationPromise;
@@ -414,7 +427,7 @@
         // --- IN-BROWSER CAMERA ---
 
         openCameraBtn.addEventListener('click', async () => {
-            fetchLocation(); // Start fetching location immediately
+            fetchLocation(); // Start fetching location immediately and prompt if disabled
             try {
                 stream = await navigator.mediaDevices.getUserMedia({ 
                     video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } } 
@@ -452,6 +465,18 @@
             // Wait for location to finish if it's still fetching
             if (capturedLocation === "Fetching Location..." && locationPromise) {
                 await locationPromise;
+            }
+
+            // Strictly remind user if location is missing before capturing
+            if (capturedLocation === "Location Access Denied" || capturedLocation === "Location Unavailable") {
+                const retry = confirm("আপনার লোকেশন পাওয়া যায়নি! আপনি কি GPS অন করে আবার চেষ্টা করতে চান?\n\n'OK' চাপলে আবার লোকেশন খোঁজা হবে।");
+                if (retry) {
+                    await fetchLocation();
+                    if (capturedLocation === "Location Access Denied" || capturedLocation === "Location Unavailable") {
+                        captureBtn.style.pointerEvents = 'auto';
+                        return; // Prevent capture if they still didn't turn it on
+                    }
+                }
             }
             
             const flashOverlay = document.createElement('div');
@@ -520,6 +545,12 @@
                     // Wait for location to finish if it's still fetching
                     if (capturedLocation === "Fetching Location..." && locationPromise) {
                         await locationPromise;
+                    }
+
+                    // Strict remind user for manual upload too
+                    if (capturedLocation === "Location Access Denied" || capturedLocation === "Location Unavailable") {
+                        alert("আপনার লোকেশন পাওয়া যায়নি! দয়া করে GPS অন করুন।");
+                        await fetchLocation(); // Re-attempt
                     }
 
                     const ctx = processCanvas.getContext('2d');
