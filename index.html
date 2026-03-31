@@ -356,7 +356,7 @@
             });
         });
 
-        // Function to fetch GPS Location (Returns a Promise)
+        // Function to fetch GPS Location using Nominatim API (Returns a Promise)
         function fetchLocation() {
             capturedLocation = "Fetching Location...";
             const badge = document.getElementById('cameraLocationBadge');
@@ -368,17 +368,30 @@
                         const lat = position.coords.latitude;
                         const lon = position.coords.longitude;
                         try {
-                            const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+                            // Using OpenStreetMap Nominatim API for much better neighborhood (suburb) level details
+                            const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`, {
+                                headers: {
+                                    'Accept-Language': 'en-US,en'
+                                }
+                            });
                             const data = await res.json();
-                            let locStr = "";
-                            if(data.locality) locStr += data.locality;
-                            if(data.city && data.city !== data.locality) {
-                                if(locStr) locStr += ", ";
-                                locStr += data.city;
-                            }
-                            if(!locStr && data.principalSubdivision) locStr = data.principalSubdivision;
                             
-                            capturedLocation = locStr || "Unknown Area";
+                            if (data && data.address) {
+                                const addr = data.address;
+                                
+                                // Try to extract local neighborhood, suburb, or district
+                                const localArea = addr.suburb || addr.neighbourhood || addr.residential || addr.city_district || addr.town || addr.village || addr.county || "";
+                                // Try to extract the broader city/state
+                                const city = addr.city || addr.state_district || addr.state || "";
+                                
+                                let parts = [];
+                                if (localArea) parts.push(localArea);
+                                if (city && city !== localArea) parts.push(city);
+                                
+                                capturedLocation = parts.join(", ") || "Unknown Area";
+                            } else {
+                                capturedLocation = "Unknown Area";
+                            }
                         } catch (e) {
                             capturedLocation = "Location Unavailable";
                         }
@@ -388,7 +401,7 @@
                         capturedLocation = "Location Access Denied";
                         if (badge) badge.textContent = "লোকেশন পারমিশন নেই";
                         resolve(capturedLocation);
-                    }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 0 });
+                    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }); // enableHighAccuracy set to true
                 } else {
                     capturedLocation = "GPS Not Supported";
                     if (badge) badge.textContent = "GPS সাপোর্ট করে না";
