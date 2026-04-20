@@ -91,7 +91,6 @@
             <!-- ================= VIEW 1: FORM ================= -->
             <div id="formView" class="animate-fade-in">
                 <form id="customForm" class="space-y-6">
-                    <!-- Section 1 -->
                     <div class="bg-gray-50 border border-gray-100 p-4 sm:p-5 rounded-2xl shadow-sm">
                         <div class="border-b border-gray-200 pb-3 mb-4">
                             <h3 class="text-[17px] font-bold text-gray-800 flex items-center">
@@ -102,68 +101,45 @@
 
                         <div class="space-y-4">
                             <div class="input-group relative">
-                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">মাস <span class="text-colgate">*</span></label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                        <i data-lucide="calendar" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
-                                    </div>
-                                    <select name="display_month" id="formMonth" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium">
-                                        <option value="" disabled selected>মাস</option>
-                                        <option value="March">March</option>
-                                        <option value="April">April</option>
-                                    </select>
-                                </div>
+                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5">মাস <span class="text-colgate">*</span></label>
+                                <select name="display_month" id="formMonth" required class="px-4 block w-full rounded-xl border border-gray-200 bg-white py-3 outline-none font-medium h-11 focus:border-colgate transition-all">
+                                    <option value="" disabled selected>মাস</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
                             </div>
 
                             <div class="input-group relative">
-                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">এরিয়া <span class="text-colgate">*</span></label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                        <i data-lucide="map-pin" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
-                                    </div>
-                                    <select name="area_name" id="areaSelect" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium">
-                                        <option value="" disabled selected>এরিয়া</option>
-                                        <option value="CTG">CTG</option>
-                                        <option value="DHAKA">DHAKA</option>
-                                    </select>
-                                </div>
+                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5">এরিয়া <span class="text-colgate">*</span></label>
+                                <select name="area_name" id="areaSelect" required class="px-4 block w-full rounded-xl border border-gray-200 bg-white py-3 outline-none font-medium h-11 focus:border-colgate transition-all">
+                                    <option value="" disabled selected>এরিয়া</option>
+                                    <option value="CTG">CTG</option>
+                                    <option value="DHAKA">DHAKA</option>
+                                </select>
                             </div>
 
                             <div class="input-group relative">
-                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">ডিস্ট্রিবিউশন নাম <span class="text-colgate">*</span></label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                        <i data-lucide="truck" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
-                                    </div>
-                                    <select name="distribution_name" id="distSelect" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium">
-                                        <option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>
-                                    </select>
-                                </div>
+                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5">ডিস্ট্রিবিউশন নাম <span class="text-colgate">*</span></label>
+                                <select name="distribution_name" id="distSelect" required class="px-4 block w-full rounded-xl border border-gray-200 bg-white py-3 outline-none font-medium h-11 focus:border-colgate transition-all">
+                                    <option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>
+                                </select>
                             </div>
 
                             <div class="input-group relative">
-                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">স্ল্যাব <span class="text-colgate">*</span></label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                        <i data-lucide="layers" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
-                                    </div>
-                                    <select name="slab" id="formSlab" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium">
-                                        <option value="" disabled selected>স্ল্যাব</option>
-                                        <option value="Slab 1">Slab 1</option>
-                                        <option value="Slab 2">Slab 2</option>
-                                        <option value="Regular">Regular (No Slab)</option>
-                                    </select>
-                                </div>
+                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5">স্ল্যাব <span class="text-colgate">*</span></label>
+                                <select name="slab" id="formSlab" required class="px-4 block w-full rounded-xl border border-gray-200 bg-white py-3 outline-none font-medium h-11 focus:border-colgate transition-all">
+                                    <option value="" disabled selected>স্ল্যাব</option>
+                                    <option value="Slab 1">Slab 1</option>
+                                    <option value="Slab 2">Slab 2</option>
+                                    <option value="Regular">Regular (No Slab)</option>
+                                </select>
                             </div>
 
                             <div class="input-group relative">
-                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">কোড <span class="text-colgate">*</span></label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                        <i data-lucide="hash" class="h-[18px] w-[18px] text-gray-300 icon-left"></i>
-                                    </div>
-                                    <input type="text" name="shop_code" id="formShopCode" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none uppercase font-semibold tracking-wide" placeholder="BDC...">
-                                </div>
+                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5">কোড <span class="text-colgate">*</span></label>
+                                <input type="text" name="shop_code" id="formShopCode" required class="px-4 block w-full rounded-xl border border-gray-200 bg-white py-3 outline-none uppercase font-semibold h-11 focus:border-colgate transition-all" placeholder="BDC...">
                             </div>
                         </div>
                     </div>
@@ -175,97 +151,86 @@
                                 ছবি স্ক্যান
                             </h3>
                         </div>
-
                         <div class="input-group relative">
                             <input type="file" id="manualFileInput" accept="image/*" class="hidden">
                             <div id="cameraTriggerContainer" class="flex flex-col items-center">
-                                <button type="button" id="openCameraBtn" class="flex flex-row items-center justify-center w-full py-4 border-[1.5px] border-dashed border-red-300 rounded-2xl bg-white hover:bg-red-50 transition-colors group">
-                                    <div class="bg-red-50 p-2 rounded-full mr-3 shadow-sm border border-red-100 group-hover:scale-105 transition-transform">
-                                        <i data-lucide="scan" class="h-[22px] w-[22px] text-colgate"></i>
-                                    </div>
-                                    <div class="flex flex-col items-start">
-                                        <span class="text-[15px] font-bold text-colgate leading-tight">স্মার্ট ক্যামেরা স্ক্যানার</span>
-                                        <span class="text-[11px] text-red-400 font-medium">ছবি তুলতে এখানে ক্লিক করুন</span>
-                                    </div>
+                                <button type="button" id="openCameraBtn" class="flex flex-row items-center justify-center w-full py-4 border-[1.5px] border-dashed border-red-300 rounded-2xl bg-white hover:bg-red-50 transition-colors">
+                                    <i data-lucide="scan" class="h-[22px] w-[22px] text-colgate mr-2"></i>
+                                    <span class="text-[15px] font-bold text-colgate">স্মার্ট ক্যামেরা স্ক্যানার</span>
                                 </button>
-                                <button type="button" id="manualUploadBtn" class="mt-4 flex items-center text-[13px] font-medium text-gray-500 hover:text-colgate">
+                                <button type="button" id="manualUploadBtn" class="mt-4 text-[13px] text-gray-500 hover:text-colgate flex items-center">
                                     <i data-lucide="cloud-upload" class="h-4 w-4 mr-2"></i> গ্যালারি থেকে আপলোড
                                 </button>
                             </div>
-
                             <div id="cameraContainer" class="hidden mt-2 relative">
                                 <div class="relative rounded-2xl overflow-hidden bg-black aspect-[3/4] w-full flex items-center justify-center shadow-inner">
                                     <video id="cameraFeed" autoplay playsinline class="w-full h-full object-cover"></video>
-                                    <div class="absolute top-3 inset-x-0 flex justify-center z-20 pointer-events-none">
+                                    <div class="absolute top-3 inset-x-0 flex justify-center z-20 px-4">
                                         <div class="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-sm flex items-center gap-1.5">
-                                            <i data-lucide="map-pin" id="locationIconBadge" class="h-3.5 w-3.5 text-colgate"></i>
-                                            <span id="cameraLocationBadge" class="text-white text-[11px] font-medium">লোকেশন খোঁজা হচ্ছে...</span>
+                                            <i data-lucide="map-pin" class="h-3.5 w-3.5 text-colgate"></i>
+                                            <span id="cameraLocationBadge" class="text-white text-[11px] font-medium truncate">লোকেশন খোঁজা হচ্ছে...</span>
                                         </div>
                                     </div>
-                                    <div class="absolute inset-x-0 bottom-6 flex justify-center z-20 pointer-events-none">
-                                        <button type="button" id="captureBtn" class="bg-white rounded-full p-1 shadow-lg pointer-events-auto animate-subtle-pulse">
-                                            <div class="w-12 h-12 rounded-full border-[3px] border-colgate flex items-center justify-center bg-white">
-                                                <div class="w-9 h-9 rounded-full bg-colgate flex items-center justify-center">
-                                                    <i data-lucide="camera" class="text-white h-4 w-4"></i>
-                                                </div>
+                                    <div class="absolute inset-x-0 bottom-6 flex justify-center z-20">
+                                        <button type="button" id="captureBtn" class="bg-white rounded-full p-1 animate-subtle-pulse shadow-lg">
+                                            <div class="w-12 h-12 rounded-full border-[3px] border-colgate flex items-center justify-center">
+                                                <div class="w-9 h-9 rounded-full bg-colgate flex items-center justify-center text-white"><i data-lucide="camera" class="h-4 w-4"></i></div>
                                             </div>
                                         </button>
                                     </div>
                                 </div>
-                                <button type="button" id="closeCameraBtn" class="mt-4 text-[13px] font-semibold text-gray-500 w-full text-center">ক্যামেরা বন্ধ করুন</button>
+                                <button type="button" id="closeCameraBtn" class="mt-4 text-[13px] font-semibold text-gray-500 w-full text-center font-bold">ক্যামেরা বন্ধ করুন</button>
                             </div>
-
                             <div id="previewContainer" class="hidden mt-2 relative">
                                 <div class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-sm w-full">
-                                    <img id="capturedImagePreview" class="w-full h-auto block">
-                                    <button type="button" id="retakeBtn" class="absolute top-3 right-3 bg-white/90 text-colgate rounded-full p-2.5 shadow-md">
-                                        <i data-lucide="refresh-cw" class="h-[18px] w-[18px]"></i>
-                                    </button>
+                                    <img id="capturedImagePreview" class="w-full h-auto block" alt="Preview">
+                                    <button type="button" id="retakeBtn" class="absolute top-3 right-3 bg-white/90 text-colgate rounded-full p-2 shadow-md"><i data-lucide="refresh-cw" class="h-4 w-4"></i></button>
                                 </div>
                             </div>
                             <canvas id="processCanvas" class="hidden"></canvas>
                         </div>
                     </div>
 
-                    <div class="pt-2 pb-2">
-                        <button type="submit" id="submitBtn" class="w-full flex justify-center items-center py-3.5 px-4 rounded-xl shadow-md text-[15px] font-bold text-white bg-colgate hover:bg-red-700 transition-all">
-                            <i data-lucide="send" class="h-[18px] w-[18px] mr-2" id="btnIcon"></i>
-                            <span id="btnText">জমা দিন (Submit)</span>
-                            <div id="btnLoader" class="loader hidden"></div>
-                        </button>
-                    </div>
+                    <button type="submit" id="submitBtn" class="w-full flex justify-center items-center py-3.5 rounded-xl shadow-md text-[15px] font-bold text-white bg-colgate hover:bg-red-700 transition-all">
+                        <span id="btnText">জমা দিন (Submit)</span>
+                        <div id="btnLoader" class="loader hidden"></div>
+                    </button>
                 </form>
 
-                <div id="successMessage" class="hidden text-center py-8 animate-fade-in">
-                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-50 mb-4 border border-green-100">
-                        <i data-lucide="check-circle-2" class="h-8 w-8 text-green-500"></i>
-                    </div>
+                <div id="successMessage" class="hidden text-center py-8">
+                    <i data-lucide="check-circle-2" class="h-16 w-16 text-green-500 mx-auto mb-4"></i>
                     <h3 class="text-xl font-bold text-gray-900 mb-2">সফলভাবে জমা দেওয়া হয়েছে!</h3>
-                    <button onclick="resetForm()" class="bg-gray-50 text-gray-700 border border-gray-200 font-semibold py-2.5 px-6 rounded-full mt-4 text-[14px]">আরেকটি ফর্ম পূরণ করুন</button>
+                    <button onclick="resetForm()" class="bg-gray-100 text-gray-700 py-2.5 px-6 rounded-full mt-4 text-[14px] font-bold">আরেকটি ফর্ম পূরণ করুন</button>
                 </div>
             </div>
 
             <!-- ================= VIEW 2: MY DAY ================= -->
             <div id="myDayView" class="hidden animate-fade-in">
-                <!-- 1. PJP Filters -->
                 <div class="mb-3 text-left">
                     <h3 class="font-bold text-gray-800 text-[14px] mb-2.5 flex items-center"><i data-lucide="map" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আজকের PJP (রুট প্ল্যান)</h3>
                     <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm">
-                        <div class="grid grid-cols-3 gap-2">
-                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[10px] sm:text-[11px] py-1.5 px-1.5 font-bold text-gray-700"><option value="">Town</option></select>
-                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[10px] sm:text-[11px] py-1.5 px-1.5 font-bold text-gray-500" disabled><option value="">Day</option></select>
-                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[10px] sm:text-[11px] py-1.5 px-1.5 font-bold text-gray-500" disabled><option value="">Route</option></select>
+                        <div class="grid grid-cols-3 gap-1.5">
+                            <!-- Filters Box: Removed double DB Name issue by making JS handle clear updates -->
+                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[10px] sm:text-[11px] px-1.5 font-bold outline-none text-gray-700 h-10 shadow-sm truncate">
+                                <option value="">DB Name</option>
+                            </select>
+                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[10px] sm:text-[11px] px-1.5 font-bold outline-none text-gray-500 h-10 shadow-sm truncate" disabled>
+                                <option value="">Visit Day</option>
+                            </select>
+                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[10px] sm:text-[11px] px-1.5 font-bold outline-none text-gray-500 h-10 shadow-sm truncate" disabled>
+                                <option value="">Route Name</option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
-                <!-- Performance Cards -->
-                <div class="bg-gradient-to-br from-red-50 to-white border border-red-100 p-2.5 rounded-xl shadow-sm mb-2.5 relative">
+                <!-- Performance & Stats Summary -->
+                <div id="myDayImageStats" class="bg-white border border-gray-200 p-2.5 rounded-xl shadow-sm mb-2.5">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="text-gray-800 font-bold text-[12px] flex items-center"><i data-lucide="activity" class="h-3.5 w-3.5 mr-1 text-colgate"></i> আজকের পারফরম্যান্স</h3>
                         <p id="currentDateDisplay" class="text-colgate text-[10px] font-semibold"></p>
                     </div>
-                    <div class="grid grid-cols-3 gap-2 text-center">
+                    <div class="grid grid-cols-3 gap-2 text-center mb-2">
                         <div class="bg-white p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
                             <i data-lucide="play-circle" class="h-4 w-4 text-green-500 mb-0.5"></i>
                             <span id="statStartTime" class="text-[12px] font-bold text-gray-800">--:--</span>
@@ -282,9 +247,6 @@
                             <span class="text-gray-400 text-[9px] font-medium">মোট সময়</span>
                         </div>
                     </div>
-                </div>
-
-                <div id="myDayImageStats" class="bg-white border border-gray-200 p-2.5 rounded-xl shadow-sm mb-2.5">
                     <div class="grid grid-cols-3 gap-2">
                         <div class="bg-gray-50 p-1.5 text-center flex flex-col rounded-lg">
                             <span class="text-[9px] text-gray-500 font-bold uppercase mb-0.5">Total Outlet</span>
@@ -301,11 +263,12 @@
                     </div>
                 </div>
 
+                <!-- Outlet List Container -->
                 <div class="text-left relative z-10">
                     <div id="myDayLoader" class="hidden flex flex-col items-center justify-center py-6"><div class="loader mb-3"></div></div>
                     <div id="myDayPjpContainer" class="hidden bg-white border border-gray-200 rounded-xl p-3 shadow-sm">
                         <div class="border-b border-gray-100 pb-2 mb-2.5">
-                            <h4 class="font-bold text-[13px] text-gray-800 mb-2">রুট: <span id="myDaySelectedRouteLabel" class="text-colgate">...</span></h4>
+                            <h4 class="font-bold text-[13px] text-gray-800 mb-2 truncate">রুট: <span id="myDaySelectedRouteLabel" class="text-colgate">...</span></h4>
                             <div class="flex gap-2">
                                 <div class="bg-blue-50 text-blue-700 px-2 py-1 rounded-md text-[10px] font-bold flex-1 text-center">Display: <span id="myDayDisplayCount" class="text-[12px] font-extrabold">0</span></div>
                                 <div class="bg-gray-50 text-gray-600 px-2 py-1 rounded-md text-[10px] font-bold flex-1 text-center">Regular: <span id="myDayRegularCount" class="text-[12px] font-extrabold">0</span></div>
@@ -316,7 +279,7 @@
                 </div>
             </div>
 
-            <!-- ================= VIEW 3: REPORT (Under Construction) ================= -->
+            <!-- ================= VIEW 3: REPORT ================= -->
             <div id="reportView" class="hidden animate-fade-in">
                 <div class="flex flex-col items-center justify-center py-16 text-center space-y-4">
                     <div class="bg-yellow-50 p-6 rounded-full border border-yellow-100 shadow-inner">
@@ -348,16 +311,20 @@
         document.addEventListener('contextmenu', event => event.preventDefault());
         lucide.createIcons();
 
-        const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; 
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlwcRjqEe67k7mWQnZEZg0PevJoFGm7TfVA0TS2rdu88_dT6atcunnWYbnqCao6mAQ/exec';
+        const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k';
+
         let reportData = []; 
         let pjpData = [];    
         let isDataLoaded = false;
+        let stream = null;
+        let capturedImageData = null;
+        let finalLocationName = "Location Unknown";
 
-        const myDayTownSelect = document.getElementById('myDayTownSelect');
-        const myDayVisitDaySelect = document.getElementById('myDayVisitDaySelect');
-        const myDayRouteSelect = document.getElementById('myDayRouteSelect');
-        const areaSelect = document.getElementById('areaSelect');
-        const distSelect = document.getElementById('distSelect');
+        const areaDistData = { 
+            "CTG": ["Next Associates", "ARC Trading", "M/S Farid Enterprise", "P M Traders", "M/S Shihab Enterprise"], 
+            "DHAKA": ["Takwa Enterprise", "Unitrust Trading Co.", "Paragon Marketing Limited", "Self Tech Marketing Ltd", "M/s. Zerin Enterprise", "M/S Sanuar Enterprise", "M/S Hasan Brothers Corporation", "M/S Hasan Brothers Corporation 2"] 
+        };
 
         async function fetchSheetData(tabName) {
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${tabName}&t=${new Date().getTime()}`;
@@ -372,6 +339,7 @@
 
         async function loadAllData() {
             if (isDataLoaded) return;
+            // Column C (Index 2) = Town Name (UI Label: DB Name), Column I (Index 8) = Visit Day, Column H (Index 7) = Route Name, Column A (Index 0) = Real Distributor Name
             const pjpRows = await fetchSheetData('PJP');
             pjpData = pjpRows.map(row => {
                 const getVal = (idx) => row.c[idx] ? row.c[idx].v : "";
@@ -381,9 +349,9 @@
                     routeCode: getVal(6), routeName: getVal(7), visitDay: getVal(8), 
                     merchandiser: getVal(9), status: getVal(10)
                 };
-            }).filter(i => i.townName && i.townName !== "Town Name");
+            }).filter(i => i.townName && !["TOWN NAME", "DB NAME", "TOWN"].includes(String(i.townName).toUpperCase()));
 
-            // Mocking report data loading just in case, though UI is construction
+            // Status verification from Report Tab (Shop Code Column D, Upload Status Column N)
             const reportRows = await fetchSheetData('Report');
             reportData = reportRows.map(row => {
                 const getVal = (idx) => row.c[idx] ? row.c[idx].v : "";
@@ -398,37 +366,51 @@
         const views = ['formView', 'myDayView', 'reportView'];
 
         tabs.forEach((tabId, idx) => {
-            document.getElementById(tabId).addEventListener('click', async () => {
-                tabs.forEach(t => {
-                    const el = document.getElementById(t);
-                    el.classList.remove('bg-white', 'shadow-sm', 'text-colgate');
-                    el.classList.add('text-gray-500');
-                });
-                document.getElementById(tabId).classList.add('bg-white', 'shadow-sm', 'text-colgate');
-                views.forEach(v => document.getElementById(v).classList.add('hidden'));
-                document.getElementById(views[idx]).classList.remove('hidden');
+            const btn = document.getElementById(tabId);
+            if (btn) {
+                btn.addEventListener('click', async () => {
+                    tabs.forEach(t => {
+                        const el = document.getElementById(t);
+                        if (el) {
+                            el.classList.remove('bg-white', 'shadow-sm', 'text-colgate');
+                            el.classList.add('text-gray-500');
+                        }
+                    });
+                    btn.classList.add('bg-white', 'shadow-sm', 'text-colgate');
+                    views.forEach(v => {
+                        const viewEl = document.getElementById(v);
+                        if (viewEl) viewEl.classList.add('hidden');
+                    });
+                    const targetView = document.getElementById(views[idx]);
+                    if (targetView) targetView.classList.remove('hidden');
 
-                if (idx === 1 && !isDataLoaded) {
-                    document.getElementById('myDayLoader').classList.remove('hidden');
-                    await loadAllData();
-                    document.getElementById('myDayLoader').classList.add('hidden');
-                } else if (idx === 1) {
-                    renderMyDayPJP();
-                }
-            });
+                    if (idx === 1 && !isDataLoaded) {
+                        const loader = document.getElementById('myDayLoader');
+                        if (loader) loader.classList.remove('hidden');
+                        await loadAllData();
+                        if (loader) loader.classList.add('hidden');
+                        updateTimeUI();
+                    } else if (idx === 1) {
+                        renderMyDayPJP();
+                        updateTimeUI();
+                    }
+                });
+            }
         });
 
+        // --- FILTER INITIALIZATION (Handles the duplicate DB Name issue) ---
         function initMyDayFilters() {
             const towns = [...new Set(pjpData.map(i => i.townName))].filter(Boolean).sort();
-            myDayTownSelect.innerHTML = '<option value="">Town Name</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
+            // We clear and rebuild the dropdown to ensure only one "DB Name" placeholder exists
+            const myDayTownSelect = document.getElementById('myDayTownSelect');
+            myDayTownSelect.innerHTML = '<option value="">DB Name</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
         }
 
         myDayTownSelect.addEventListener('change', () => {
             const town = myDayTownSelect.value;
             if(!town) {
                 myDayVisitDaySelect.disabled = true;
-                myDayVisitDaySelect.innerHTML = '<option value="">Day</option>';
-                myDayRouteSelect.innerHTML = '<option value="">Route</option>';
+                myDayVisitDaySelect.innerHTML = '<option value="">Visit Day</option>';
                 myDayRouteSelect.disabled = true;
                 return;
             }
@@ -436,6 +418,8 @@
             myDayVisitDaySelect.innerHTML = '<option value="">Visit Day</option>' + days.map(d => `<option value="${d}">${d}</option>`).join('');
             myDayVisitDaySelect.disabled = false;
             myDayVisitDaySelect.classList.replace('bg-gray-100', 'bg-white');
+            myDayVisitDaySelect.classList.replace('text-gray-500', 'text-gray-700');
+
             const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
             if (days.includes(todayName)) myDayVisitDaySelect.value = todayName;
             myDayVisitDaySelect.dispatchEvent(new Event('change'));
@@ -445,7 +429,7 @@
             const town = myDayTownSelect.value;
             const day = myDayVisitDaySelect.value;
             if(!day) {
-                myDayRouteSelect.innerHTML = '<option value="">Route</option>';
+                myDayRouteSelect.innerHTML = '<option value="">Route Name</option>';
                 myDayRouteSelect.disabled = true;
                 return;
             }
@@ -453,6 +437,7 @@
             myDayRouteSelect.innerHTML = '<option value="">Route Name</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
             myDayRouteSelect.disabled = false;
             myDayRouteSelect.classList.replace('bg-gray-100', 'bg-white');
+            myDayRouteSelect.classList.replace('text-gray-500', 'text-gray-700');
             document.getElementById('myDayPjpContainer').classList.add('hidden');
         });
 
@@ -467,8 +452,11 @@
             const todayStr = new Date().toDateString();
             const localSubmitted = session.date === todayStr ? (session.submittedCodes || []) : [];
 
-            document.getElementById('myDayPjpContainer').classList.remove('hidden');
-            document.getElementById('myDaySelectedRouteLabel').textContent = route;
+            const pjpContainer = document.getElementById('myDayPjpContainer');
+            if (pjpContainer) pjpContainer.classList.remove('hidden');
+            
+            const routeLabel = document.getElementById('myDaySelectedRouteLabel');
+            if (routeLabel) routeLabel.textContent = route;
 
             let html = '', completedCount = 0, displayCount = 0, regularCount = 0;
             outlets.forEach(out => {
@@ -484,7 +472,7 @@
                     `<button class="bg-colgate text-white px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-red-700 shadow-sm pointer-events-none"><i data-lucide="camera" class="h-3 w-3 mr-1"></i> Upload</button>`;
 
                 html += `
-                    <div onclick="window.openUploadForm('', '', '', '${out.slab || 'Regular'}', '${outCode}')" 
+                    <div onclick="window.openUploadForm('', '${out.townName}', '${out.distributor}', '${out.slab || 'Regular'}', '${outCode}')" 
                          class="flex items-center justify-between p-3 rounded-lg border ${isCompleted ? 'border-green-400 bg-green-50/60 shadow-sm' : 'border-red-200 bg-white shadow-sm'} transition-all cursor-pointer hover:shadow-md mb-2">
                         <div class="pointer-events-none flex-grow">
                             <div class="font-bold text-[13px] text-gray-800">${out.name}</div>
@@ -497,52 +485,87 @@
                     </div>`;
             });
 
-            document.getElementById('myDayPjpList').innerHTML = html;
-            document.getElementById('pjpTotalCount').textContent = outlets.length;
-            document.getElementById('pjpUploadedCount').textContent = completedCount;
-            document.getElementById('pjpRemainingCount').textContent = outlets.length - completedCount;
-            document.getElementById('myDayDisplayCount').textContent = displayCount;
-            document.getElementById('myDayRegularCount').textContent = regularCount;
+            const pjpList = document.getElementById('myDayPjpList');
+            if (pjpList) pjpList.innerHTML = html;
+            
+            const totalCountEl = document.getElementById('pjpTotalCount');
+            if (totalCountEl) totalCountEl.textContent = outlets.length;
+            
+            const uploadedCountEl = document.getElementById('pjpUploadedCount');
+            if (uploadedCountEl) uploadedCountEl.textContent = completedCount;
+            
+            const remainingCountEl = document.getElementById('pjpRemainingCount');
+            if (remainingCountEl) remainingCountEl.textContent = outlets.length - completedCount;
+            
+            const displayCountEl = document.getElementById('myDayDisplayCount');
+            if (displayCountEl) displayCountEl.textContent = displayCount;
+            
+            const regularCountEl = document.getElementById('myDayRegularCount');
+            if (regularCountEl) regularCountEl.textContent = regularCount;
+            
             lucide.createIcons();
         }
 
-        // Updated Distributor List categorized by Area
-        const areaDistData = { 
-            "CTG": [
-                "Next Associates", 
-                "ARC Trading", 
-                "M/S Farid Enterprise", 
-                "P M Traders", 
-                "M/S Shihab Enterprise"
-            ], 
-            "DHAKA": [
-                "Takwa Enterprise", 
-                "Unitrust Trading Co.", 
-                "Paragon Marketing Limited", 
-                "Self Tech Marketing Ltd", 
-                "M/s. Zerin Enterprise", 
-                "M/S Sanuar Enterprise", 
-                "M/S Hasan Brothers Corporation", 
-                "M/S Hasan Brothers Corporation 2"
-            ] 
-        };
-
-        areaSelect.addEventListener('change', () => {
-            const list = areaDistData[areaSelect.value] || [];
+        areaSelect.addEventListener('change', (e) => {
+            const list = areaDistData[e.target.value] || [];
             distSelect.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউশন নাম</option>' + list.map(d => `<option value="${d}">${d}</option>`).join('');
             distSelect.disabled = !areaSelect.value;
         });
 
-        window.openUploadForm = (month, zone, dh, slab, code) => {
-            document.getElementById('tabForm').click();
+        window.openUploadForm = (month, town, dh, slab, code) => {
+            const tabForm = document.getElementById('tabForm');
+            if (tabForm) tabForm.click();
+            
             setTimeout(() => {
-                let finalSlab = "Regular";
-                if(slab && slab.toLowerCase().includes("slab 1")) finalSlab = "Slab 1"; 
-                else if(slab && slab.toLowerCase().includes("slab 2")) finalSlab = "Slab 2";
-                document.getElementById('formSlab').value = finalSlab;
-                document.getElementById('formShopCode').value = code;
-                document.getElementById('cameraTriggerContainer').scrollIntoView({ behavior: 'smooth' });
-                setTimeout(() => document.getElementById('openCameraBtn').click(), 500);
+                const currentMonthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][new Date().getMonth()];
+                const formMonth = document.getElementById('formMonth');
+                if (formMonth) formMonth.value = currentMonthName;
+
+                let detectedArea = "";
+                for (const area in areaDistData) {
+                    if (areaDistData[area].some(name => name.toLowerCase().trim() === (dh || "").toLowerCase().trim())) {
+                        detectedArea = area;
+                        break;
+                    }
+                }
+                
+                if (!detectedArea) {
+                    detectedArea = (town || "").toUpperCase().includes("CTG") ? "CTG" : "DHAKA";
+                }
+
+                const as = document.getElementById('areaSelect');
+                const ds = document.getElementById('distSelect');
+                if (as && ds) {
+                    as.value = detectedArea;
+                    const list = areaDistData[detectedArea] || [];
+                    ds.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউশন নাম</option>' + list.map(d => `<option value="${d}">${d}</option>`).join('');
+                    ds.disabled = false;
+
+                    setTimeout(() => {
+                        if (dh) {
+                            const options = Array.from(ds.options);
+                            const match = options.find(opt => opt.value.toLowerCase().trim() === dh.toLowerCase().trim());
+                            if (match) ds.value = match.value;
+                        }
+
+                        const fs = document.getElementById('formSlab');
+                        if (fs) {
+                            let finalSlab = "Regular";
+                            if(slab && slab.toLowerCase().includes("slab 1")) finalSlab = "Slab 1"; 
+                            else if(slab && slab.toLowerCase().includes("slab 2")) finalSlab = "Slab 2";
+                            fs.value = finalSlab;
+                        }
+
+                        const sc = document.getElementById('formShopCode');
+                        if (sc) sc.value = code;
+
+                        const camTrigger = document.getElementById('cameraTriggerContainer');
+                        if (camTrigger) camTrigger.scrollIntoView({ behavior: 'smooth' });
+                        
+                        const camBtn = document.getElementById('openCameraBtn');
+                        setTimeout(() => { if (camBtn) camBtn.click(); }, 500);
+                    }, 150);
+                }
             }, 400);
         };
 
@@ -550,19 +573,42 @@
         document.getElementById('openCameraBtn').addEventListener('click', async () => {
             try {
                 stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } } });
-                document.getElementById('cameraFeed').srcObject = stream;
+                const videoFeed = document.getElementById('cameraFeed');
+                if (videoFeed) videoFeed.srcObject = stream;
+                
                 document.getElementById('cameraContainer').classList.remove('hidden');
                 document.getElementById('cameraTriggerContainer').classList.add('hidden');
-                document.getElementById('cameraLocationBadge').textContent = "লোকেশন খোঁজা হচ্ছে...";
-                if (navigator.geolocation) navigator.geolocation.getCurrentPosition(async p => {
-                    const lat = p.coords.latitude, lon = p.coords.longitude;
-                    document.getElementById('cameraLocationBadge').textContent = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
-                }, () => { document.getElementById('cameraLocationBadge').textContent = "GPS Off"; });
+                
+                const locBadge = document.getElementById('cameraLocationBadge');
+                if (locBadge) locBadge.textContent = "লোকেশন খোঁজা হচ্ছে...";
+                
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(async p => {
+                        const lat = p.coords.latitude, lon = p.coords.longitude;
+                        try {
+                            const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`);
+                            const d = await res.json();
+                            const addr = d.address;
+                            let parts = [];
+                            if (addr.suburb || addr.neighbourhood || addr.residential) parts.push(addr.suburb || addr.neighbourhood || addr.residential);
+                            if (addr.village || addr.town || addr.city_district) parts.push(addr.village || addr.town || addr.city_district);
+                            if (addr.city || addr.state) parts.push(addr.city || addr.state);
+                            
+                            finalLocationName = parts.slice(0, 2).join(", ") || "Location Found";
+                            if (locBadge) locBadge.textContent = finalLocationName;
+                        } catch(e) { 
+                            if (locBadge) locBadge.textContent = `${lat.toFixed(4)}, ${lon.toFixed(4)}`; 
+                        }
+                    }, () => { 
+                        if (locBadge) locBadge.textContent = "GPS Off"; 
+                    });
+                }
             } catch (e) { alert("ক্যামেরা ওপেন করা যাচ্ছে না।"); }
         });
 
         document.getElementById('captureBtn').addEventListener('click', () => {
             const v = document.getElementById('cameraFeed'), c = document.getElementById('processCanvas'), ctx = c.getContext('2d');
+            if (!v) return;
             c.width = v.videoWidth; c.height = v.videoHeight;
             ctx.drawImage(v, 0, 0);
             applyWatermark(ctx, c.width, c.height);
@@ -591,43 +637,77 @@
             ctx.strokeText("Colgate Smile Corner", padding, y); ctx.fillStyle = '#da291c'; ctx.fillText("Colgate Smile Corner", padding, y);
             ctx.textAlign = 'right'; ctx.font = `bold ${fontSize}px sans-serif`; ctx.strokeStyle = 'black'; ctx.lineWidth = w * 0.003;
             let ry = h - barH + 10 + (fontSize * lineHeight);
-            const sCode = document.getElementById('formShopCode').value.toUpperCase() || "N/A";
+            const shopInp = document.getElementById('formShopCode');
+            const sCode = shopInp ? shopInp.value.toUpperCase() || "N/A" : "N/A";
             ctx.strokeText("Shop: "+sCode, w - padding, ry); ctx.fillStyle = '#FFFFFF'; ctx.fillText("Shop: "+sCode, w - padding, ry);
             ry += fontSize * lineHeight;
-            ctx.strokeText(document.getElementById('cameraLocationBadge').textContent, w - padding, ry); ctx.fillStyle = '#fde047'; ctx.fillText(document.getElementById('cameraLocationBadge').textContent, w - padding, ry);
+            ctx.strokeText(finalLocationName, w - padding, ry); ctx.fillStyle = '#fde047'; ctx.fillText(finalLocationName, w - padding, ry);
         }
 
-        document.getElementById('retakeBtn').addEventListener('click', () => { document.getElementById('previewContainer').classList.add('hidden'); document.getElementById('cameraTriggerContainer').classList.remove('hidden'); capturedImageData = null; });
-        document.getElementById('closeCameraBtn').addEventListener('click', () => { if(stream) stream.getTracks().forEach(t => t.stop()); document.getElementById('cameraContainer').classList.add('hidden'); document.getElementById('cameraTriggerContainer').classList.remove('hidden'); });
+        document.getElementById('retakeBtn').addEventListener('click', () => { 
+            capturedImageData = null; 
+            document.getElementById('previewContainer').classList.add('hidden'); 
+            document.getElementById('cameraTriggerContainer').classList.remove('hidden'); 
+        });
+        
+        document.getElementById('closeCameraBtn').addEventListener('click', () => { 
+            if(stream) stream.getTracks().forEach(t => t.stop()); 
+            document.getElementById('cameraContainer').classList.add('hidden'); 
+            document.getElementById('cameraTriggerContainer').classList.remove('hidden'); 
+        });
 
         document.getElementById('customForm').addEventListener('submit', async e => {
             e.preventDefault(); if(!capturedImageData) return alert("ছবি তুলুন!");
             const btn = document.getElementById('submitBtn'), loader = document.getElementById('btnLoader'), text = document.getElementById('btnText');
             btn.disabled = true; loader.classList.remove('hidden'); text.textContent = "জমা হচ্ছে...";
-            const data = Object.fromEntries(new FormData(e.target).entries());
-            data.shop_image = { data: capturedImageData, name: `pjp_${Date.now()}.jpg` };
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            data.shop_image = { data: capturedImageData, name: `pjp_${data.shop_code}_${Date.now()}.jpg` };
+            
             try {
-                const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyUmbrQ_nrN4Fi6K3C_Rr1GFLA3i8NQ3sSiIFBjmetVwRmebfaRb7zX6PrVWiRYPwEl/exec';
                 await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data), mode: 'no-cors' });
-                const s = JSON.parse(localStorage.getItem('colgate_merch_session')) || { date: new Date().toDateString(), startTime: Date.now(), submittedCodes: [], count: 0 };
+                const todayStr = new Date().toDateString();
+                const s = JSON.parse(localStorage.getItem('colgate_merch_session')) || { date: todayStr, startTime: Date.now(), submittedCodes: [], count: 0 };
                 s.count++; s.endTime = Date.now(); if(!s.submittedCodes.includes(data.shop_code.toUpperCase().trim())) s.submittedCodes.push(data.shop_code.toUpperCase().trim());
                 localStorage.setItem('colgate_merch_session', JSON.stringify(s));
                 document.getElementById('customForm').classList.add('hidden'); document.getElementById('successMessage').classList.remove('hidden');
                 updateTimeUI(); renderMyDayPJP();
-            } catch(e) { alert("Error submitting"); }
+            } catch(e) { alert("Error sending data."); }
             btn.disabled = false; loader.classList.add('hidden'); text.textContent = "জমা দিন (Submit)";
         });
 
         function updateTimeUI() {
-            const today = new Date().toDateString(); document.getElementById('currentDateDisplay').textContent = new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
+            const today = new Date().toDateString(); 
+            const dateDisplay = document.getElementById('currentDateDisplay');
+            if (dateDisplay) {
+                dateDisplay.textContent = new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
+            }
             const s = JSON.parse(localStorage.getItem('colgate_merch_session'));
             if(!s || s.date !== today) return;
             const fmt = (ms) => new Date(ms).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-            document.getElementById('statStartTime').textContent = fmt(s.startTime); document.getElementById('statEndTime').textContent = fmt(s.endTime);
-            const d = Math.floor((s.endTime - s.startTime) / 60000); document.getElementById('statTotalTime').textContent = `${Math.floor(d/60)}ঘ ${d%60}মি`;
+            const startEl = document.getElementById('statStartTime');
+            const endEl = document.getElementById('statEndTime');
+            const totalEl = document.getElementById('statTotalTime');
+            if (startEl) startEl.textContent = fmt(s.startTime); 
+            if (endEl) endEl.textContent = fmt(s.endTime);
+            if (totalEl) {
+                const d = Math.floor((s.endTime - s.startTime) / 60000); 
+                totalEl.textContent = `${Math.floor(d/60)}ঘ ${d%60}মি`;
+            }
         }
+        
         updateTimeUI();
-        window.resetForm = () => { document.getElementById('customForm').reset(); document.getElementById('customForm').classList.remove('hidden'); document.getElementById('successMessage').classList.add('hidden'); document.getElementById('previewContainer').classList.add('hidden'); document.getElementById('cameraTriggerContainer').classList.remove('hidden'); capturedImageData = null; };
+        
+        window.resetForm = () => { 
+            const form = document.getElementById('customForm');
+            if (form) form.reset();
+            form.classList.remove('hidden'); 
+            document.getElementById('successMessage').classList.add('hidden'); 
+            document.getElementById('previewContainer').classList.add('hidden'); 
+            document.getElementById('cameraTriggerContainer').classList.remove('hidden'); 
+            capturedImageData = null; 
+        };
     </script>
 </body>
 </html>
