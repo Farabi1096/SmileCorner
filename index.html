@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>কোলগেট স্মাইল কর্ণার - প্রিভিউ</title>
+    <title>কোলগেট স্মাইল কর্ণার - লাইভ অ্যাপ</title>
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Noto Sans Bengali for better Bangla rendering -->
@@ -91,6 +91,7 @@
             <!-- ================= VIEW 1: FORM ================= -->
             <div id="formView" class="animate-fade-in">
                 <form id="customForm" class="space-y-6">
+                    <!-- Section 1 -->
                     <div class="bg-gray-50 border border-gray-100 p-4 sm:p-5 rounded-2xl shadow-sm">
                         <div class="border-b border-gray-200 pb-3 mb-4">
                             <h3 class="text-[17px] font-bold text-gray-800 flex items-center">
@@ -101,47 +102,83 @@
 
                         <div class="space-y-4">
                             <div class="input-group relative">
-                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5">মাস <span class="text-colgate">*</span></label>
-                                <select name="display_month" id="formMonth" required class="px-4 block w-full rounded-xl border border-gray-200 bg-white py-3 outline-none font-medium h-11 focus:border-colgate transition-all">
-                                    <option value="" disabled selected>মাস</option>
-                                    <option value="April">April</option>
-                                    <option value="May">May</option>
-                                </select>
+                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">মাস <span class="text-colgate">*</span></label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                        <i data-lucide="calendar" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
+                                    </div>
+                                    <select name="display_month" id="formMonth" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium">
+                                        <option value="" disabled selected>মাস</option>
+                                        <option value="April">April</option>
+                                        <option value="May">May</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="input-group relative">
-                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5">এরিয়া <span class="text-colgate">*</span></label>
-                                <select name="area_name" id="areaSelect" required class="px-4 block w-full rounded-xl border border-gray-200 bg-white py-3 outline-none font-medium h-11 focus:border-colgate transition-all">
-                                    <option value="" disabled selected>এরিয়া</option>
-                                    <option value="CTG">CTG</option>
-                                    <option value="DHAKA">DHAKA</option>
-                                </select>
+                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">এরিয়া <span class="text-colgate">*</span></label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                        <i data-lucide="map-pin" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
+                                    </div>
+                                    <select name="area_name" id="areaSelect" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium">
+                                        <option value="" disabled selected>লোড হচ্ছে...</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="input-group relative">
-                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5">ডিস্ট্রিবিউশন নাম <span class="text-colgate">*</span></label>
-                                <select name="distribution_name" id="distSelect" required class="px-4 block w-full rounded-xl border border-gray-200 bg-white py-3 outline-none font-medium h-11 focus:border-colgate transition-all">
-                                    <option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>
-                                </select>
+                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">ডিস্ট্রিবিউশন কোড <span class="text-colgate">*</span></label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                        <i data-lucide="key" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
+                                    </div>
+                                    <select name="db_code" id="formDbCode" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium" disabled>
+                                        <option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="input-group relative">
-                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5">স্ল্যাব <span class="text-colgate">*</span></label>
-                                <select name="slab" id="formSlab" required class="px-4 block w-full rounded-xl border border-gray-200 bg-white py-3 outline-none font-medium h-11 focus:border-colgate transition-all">
-                                    <option value="" disabled selected>স্ল্যাব</option>
-                                    <option value="Slab 1">Slab 1</option>
-                                    <option value="Slab 2">Slab 2</option>
-                                    <option value="Regular">Regular (No Slab)</option>
-                                </select>
+                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">ডিস্ট্রিবিউশন নাম <span class="text-colgate">*</span></label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                        <i data-lucide="truck" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
+                                    </div>
+                                    <select name="distribution_name" id="distSelect" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium" disabled>
+                                        <option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="input-group relative">
-                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5">কোড <span class="text-colgate">*</span></label>
-                                <input type="text" name="shop_code" id="formShopCode" required class="px-4 block w-full rounded-xl border border-gray-200 bg-white py-3 outline-none uppercase font-semibold h-11 focus:border-colgate transition-all" placeholder="BDC...">
+                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">স্ল্যাব <span class="text-colgate">*</span></label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                        <i data-lucide="layers" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
+                                    </div>
+                                    <select name="slab" id="formSlab" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium">
+                                        <option value="" disabled selected>স্ল্যাব</option>
+                                        <option value="Slab 1">Slab 1</option>
+                                        <option value="Slab 2">Slab 2</option>
+                                        <option value="Regular">Regular (No Slab)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="input-group relative">
+                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">কোড <span class="text-colgate">*</span></label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                        <i data-lucide="hash" class="h-[18px] w-[18px] text-gray-300 icon-left"></i>
+                                    </div>
+                                    <input type="text" name="shop_code" id="formShopCode" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none uppercase font-semibold tracking-wide" placeholder="BDC...">
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Section 2 -->
                     <div class="bg-gray-50 border border-gray-100 p-4 sm:p-5 rounded-2xl shadow-sm">
                         <div class="border-b border-gray-200 pb-3 mb-4">
                             <h3 class="text-[17px] font-bold text-gray-800 flex items-center">
@@ -149,6 +186,7 @@
                                 ছবি স্ক্যান
                             </h3>
                         </div>
+
                         <div class="input-group relative">
                             <input type="file" id="manualFileInput" accept="image/*" class="hidden">
                             <div id="cameraTriggerContainer" class="flex flex-col items-center">
@@ -156,21 +194,22 @@
                                     <div class="bg-red-50 p-2 rounded-full mr-3 shadow-sm border border-red-100 group-hover:scale-105 transition-transform">
                                         <i data-lucide="scan" class="h-[22px] w-[22px] text-colgate"></i>
                                     </div>
-                                    <div class="flex flex-col items-start">
+                                    <div class="flex flex-col items-start ml-3">
                                         <span class="text-[15px] font-bold text-colgate leading-tight">স্মার্ট ক্যামেরা স্ক্যানার</span>
                                         <span class="text-[11px] text-red-400 font-medium">ছবি তুলতে এখানে ক্লিক করুন</span>
                                     </div>
                                 </button>
-                                <button type="button" id="manualUploadBtn" class="mt-4 flex items-center text-[13px] font-medium text-gray-500 hover:text-colgate">
+                                <button type="button" id="manualUploadBtn" class="hidden mt-4 flex items-center text-[13px] font-medium text-gray-500 hover:text-colgate">
                                     <i data-lucide="cloud-upload" class="h-4 w-4 mr-2"></i> গ্যালারি থেকে আপলোড
                                 </button>
                             </div>
+
                             <div id="cameraContainer" class="hidden mt-2 relative">
                                 <div class="relative rounded-2xl overflow-hidden bg-black aspect-[3/4] w-full flex items-center justify-center shadow-inner">
                                     <video id="cameraFeed" autoplay playsinline class="w-full h-full object-cover"></video>
                                     <div class="absolute top-3 inset-x-0 flex justify-center z-20 pointer-events-none px-4">
                                         <div class="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-sm flex items-center gap-1.5">
-                                            <i data-lucide="map-pin" class="h-3.5 w-3.5 text-colgate"></i>
+                                            <i data-lucide="map-pin" id="locationIconBadge" class="h-3.5 w-3.5 text-colgate"></i>
                                             <span id="cameraLocationBadge" class="text-white text-[11px] font-medium truncate">লোকেশন খোঁজা হচ্ছে...</span>
                                         </div>
                                     </div>
@@ -182,58 +221,109 @@
                                         </button>
                                     </div>
                                 </div>
-                                <button type="button" id="closeCameraBtn" class="mt-4 text-[13px] font-semibold text-gray-500 w-full text-center font-bold">ক্যামেরা বন্ধ করুন</button>
+                                <button type="button" id="closeCameraBtn" class="mt-4 text-[13px] font-semibold text-gray-500 w-full text-center">ক্যামেরা বন্ধ করুন</button>
                             </div>
-                            <div id="previewContainer" class="hidden mt-2 relative">
-                                <div class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-sm w-full">
+
+                            <!-- PREVIEW CONTAINER WITH GUIDELINE LAYOUT -->
+                            <div id="previewContainer" class="hidden mt-4 relative animate-fade-in">
+                                
+                                <!-- Captured/Uploaded Image Show here -->
+                                <div class="relative rounded-2xl overflow-hidden border-2 border-colgate shadow-md w-full bg-black mb-4">
                                     <img id="capturedImagePreview" class="w-full h-auto block" alt="Preview">
-                                    <button type="button" id="retakeBtn" class="absolute top-3 right-3 bg-white/90 text-colgate rounded-full p-2 shadow-md"><i data-lucide="refresh-cw" class="h-4 w-4"></i></button>
+                                    
+                                    <!-- Retake Button -->
+                                    <button type="button" id="retakeBtn" class="absolute top-3 right-3 bg-white/90 text-colgate rounded-full p-2.5 shadow-lg transform transition-transform hover:scale-110">
+                                        <i data-lucide="refresh-cw" class="h-5 w-5"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Guidelines Box: Left (Correct), Right Top/Bottom (Incorrect) -->
+                                <div class="bg-white border border-gray-200 rounded-2xl p-3 shadow-sm">
+                                    <h4 class="text-[13px] font-bold text-gray-800 mb-3 text-center flex items-center justify-center">
+                                        <i data-lucide="info" class="h-4 w-4 mr-1.5 text-blue-500"></i> সাবমিট করার আগে মিলিয়ে নিন
+                                    </h4>
+                                    
+                                    <div class="flex gap-2">
+                                        <!-- LEFT: Correct Image -->
+                                        <div class="flex-1 flex flex-col">
+                                            <div class="bg-green-100 text-green-700 text-[11px] font-bold text-center py-1.5 rounded-t-lg border border-green-300 border-b-0 flex items-center justify-center z-10">
+                                                <i data-lucide="check-circle" class="h-3.5 w-3.5 mr-1"></i> সঠিক ছবি
+                                            </div>
+                                            <div class="flex-grow border border-green-300 rounded-b-lg overflow-hidden bg-black relative aspect-[3/4]">
+                                                <img src="https://i.postimg.cc/TpKbKsS4/image.jpg" alt="Correct Display" class="w-full h-full object-contain object-center absolute inset-0 p-1">
+                                            </div>
+                                        </div>
+
+                                        <!-- RIGHT: Incorrect Images (Top & Bottom) -->
+                                        <div class="flex-1 flex flex-col gap-2">
+                                            
+                                            <!-- Top Incorrect -->
+                                            <div class="flex-1 flex flex-col relative aspect-video">
+                                                <div class="bg-red-100 text-red-700 text-[10px] font-bold text-center py-1 rounded-t-lg border border-red-300 border-b-0 flex items-center justify-center absolute top-0 inset-x-0 z-10">
+                                                    <i data-lucide="x-circle" class="h-3 w-3 mr-1"></i> ভুল (জুম বেশি)
+                                                </div>
+                                                <div class="flex-grow border border-red-300 rounded-lg overflow-hidden bg-black h-full w-full relative">
+                                                    <img src="https://i.postimg.cc/SjJRdMrm/image.jpg" alt="Incorrect 1" class="w-full h-full object-contain object-center absolute inset-0 pt-7 pb-1 px-1">
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Bottom Incorrect -->
+                                            <div class="flex-1 flex flex-col relative aspect-video">
+                                                <div class="bg-red-100 text-red-700 text-[10px] font-bold text-center py-1 rounded-t-lg border border-red-300 border-b-0 flex items-center justify-center absolute top-0 inset-x-0 z-10">
+                                                    <i data-lucide="x-circle" class="h-3 w-3 mr-1"></i> ভুল (কাটা পড়া)
+                                                </div>
+                                                <div class="flex-grow border border-red-300 rounded-lg overflow-hidden bg-black h-full w-full relative">
+                                                    <img src="https://i.postimg.cc/4KfN97yx/image.jpg" alt="Incorrect 2" class="w-full h-full object-contain object-center absolute inset-0 pt-7 pb-1 px-1">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <canvas id="processCanvas" class="hidden"></canvas>
                         </div>
                     </div>
 
-                    <button type="submit" id="submitBtn" class="w-full flex justify-center items-center py-3.5 rounded-xl shadow-md text-[15px] font-bold text-white bg-colgate hover:bg-red-700 transition-all">
-                        <span id="btnText">জমা দিন (Submit)</span>
-                        <div id="btnLoader" class="loader hidden"></div>
-                    </button>
+                    <div class="pt-2 pb-2">
+                        <button type="submit" id="submitBtn" class="w-full flex justify-center items-center py-3.5 px-4 rounded-xl shadow-md text-[15px] font-bold text-white bg-colgate hover:bg-red-700 transition-all">
+                            <i data-lucide="send" class="h-[18px] w-[18px] mr-2" id="btnIcon"></i>
+                            <span id="btnText">জমা দিন (Submit)</span>
+                            <div id="btnLoader" class="loader hidden"></div>
+                        </button>
+                    </div>
                 </form>
 
-                <div id="successMessage" class="hidden text-center py-8">
-                    <i data-lucide="check-circle-2" class="h-16 w-16 text-green-500 mx-auto mb-4"></i>
+                <div id="successMessage" class="hidden text-center py-8 animate-fade-in">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-50 mb-4 border border-green-100">
+                        <i data-lucide="check-circle-2" class="h-8 w-8 text-green-500"></i>
+                    </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-2">সফলভাবে জমা দেওয়া হয়েছে!</h3>
-                    <button onclick="resetForm()" class="bg-gray-100 text-gray-700 py-2.5 px-6 rounded-full mt-4 text-[14px] font-bold">আরেকটি ফর্ম পূরণ করুন</button>
+                    <button onclick="resetForm()" class="bg-gray-50 text-gray-700 border border-gray-200 font-semibold py-2.5 px-6 rounded-full mt-4 text-[14px]">আরেকটি ফর্ম পূরণ করুন</button>
                 </div>
             </div>
 
             <!-- ================= VIEW 2: MY DAY ================= -->
             <div id="myDayView" class="hidden animate-fade-in">
+                <!-- PJP Filters -->
                 <div class="mb-3 text-left">
                     <h3 class="font-bold text-gray-800 text-[14px] mb-2.5 flex items-center"><i data-lucide="map" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আজকের PJP (রুট প্ল্যান)</h3>
                     <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm">
-                        <div class="grid grid-cols-3 gap-1.5">
-                            <!-- Filters Box: Removed double DB Name issue by making JS handle clear updates -->
-                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[10px] sm:text-[11px] px-1.5 font-bold outline-none text-gray-700 h-10 shadow-sm truncate">
-                                <option value="">DB Name</option>
-                            </select>
-                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[10px] sm:text-[11px] px-1.5 font-bold outline-none text-gray-500 h-10 shadow-sm truncate" disabled>
-                                <option value="">Visit Day</option>
-                            </select>
-                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[10px] sm:text-[11px] px-1.5 font-bold outline-none text-gray-500 h-10 shadow-sm truncate" disabled>
-                                <option value="">Route Name</option>
-                            </select>
+                        <div class="grid grid-cols-3 gap-2">
+                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[10px] sm:text-[11px] py-1.5 px-1.5 font-bold text-gray-700"><option value="">Town</option></select>
+                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[10px] sm:text-[11px] py-1.5 px-1.5 font-bold text-gray-500" disabled><option value="">Day</option></select>
+                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[10px] sm:text-[11px] py-1.5 px-1.5 font-bold text-gray-500" disabled><option value="">Route</option></select>
                         </div>
                     </div>
                 </div>
 
-                <!-- Performance & Stats Summary -->
-                <div id="myDayImageStats" class="bg-white border border-gray-200 p-2.5 rounded-xl shadow-sm mb-2.5">
+                <!-- Performance Cards -->
+                <div class="bg-gradient-to-br from-red-50 to-white border border-red-100 p-2.5 rounded-xl shadow-sm mb-2.5 relative">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="text-gray-800 font-bold text-[12px] flex items-center"><i data-lucide="activity" class="h-3.5 w-3.5 mr-1 text-colgate"></i> আজকের পারফরম্যান্স</h3>
                         <p id="currentDateDisplay" class="text-colgate text-[10px] font-semibold"></p>
                     </div>
-                    <div class="grid grid-cols-3 gap-2 text-center mb-2">
+                    <div class="grid grid-cols-3 gap-2 text-center">
                         <div class="bg-white p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
                             <i data-lucide="play-circle" class="h-4 w-4 text-green-500 mb-0.5"></i>
                             <span id="statStartTime" class="text-[12px] font-bold text-gray-800">--:--</span>
@@ -250,6 +340,9 @@
                             <span class="text-gray-400 text-[9px] font-medium">মোট সময়</span>
                         </div>
                     </div>
+                </div>
+
+                <div id="myDayImageStats" class="bg-white border border-gray-200 p-2.5 rounded-xl shadow-sm mb-2.5">
                     <div class="grid grid-cols-3 gap-2">
                         <div class="bg-gray-50 p-1.5 text-center flex flex-col rounded-lg">
                             <span class="text-[9px] text-gray-500 font-bold uppercase mb-0.5">Total Outlet</span>
@@ -266,7 +359,6 @@
                     </div>
                 </div>
 
-                <!-- Outlet List Container -->
                 <div class="text-left relative z-10">
                     <div id="myDayLoader" class="hidden flex flex-col items-center justify-center py-6"><div class="loader mb-3"></div></div>
                     <div id="myDayPjpContainer" class="hidden bg-white border border-gray-200 rounded-xl p-3 shadow-sm">
@@ -314,9 +406,13 @@
         document.addEventListener('contextmenu', event => event.preventDefault());
         lucide.createIcons();
 
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlwcRjqEe67k7mWQnZEZg0PevJoFGm7TfVA0TS2rdu88_dT6atcunnWYbnqCao6mAQ/exec';
-        const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k';
+        // Constants
+        const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; 
+        
+        // YOUR NEWLY DEPLOYED SCRIPT URL
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkLhnjgv9VdgHoO1BscC5hKQJJk-0uEFsL4YSQo7GAgdGvK4eZt6OkNvbFEYaLv1Ih/exec';
 
+        // State
         let reportData = []; 
         let pjpData = [];    
         let isDataLoaded = false;
@@ -324,11 +420,12 @@
         let capturedImageData = null;
         let finalLocationName = "Location Unknown";
 
-        const areaDistData = { 
-            "CTG": ["Next Associates", "ARC Trading", "M/S Farid Enterprise", "P M Traders", "M/S Shihab Enterprise"], 
-            "DHAKA": ["Takwa Enterprise", "Unitrust Trading Co.", "Paragon Marketing Limited", "Self Tech Marketing Ltd", "M/s. Zerin Enterprise", "M/S Sanuar Enterprise", "M/S Hasan Brothers Corporation", "M/S Hasan Brothers Corporation 2"] 
-        };
+        // Background load of data on startup to ensure DB Codes are ready
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!isDataLoaded) loadAllData();
+        });
 
+        // --- FETCH DATA ---
         async function fetchSheetData(tabName) {
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${tabName}&t=${new Date().getTime()}`;
             try {
@@ -344,25 +441,27 @@
             if (isDataLoaded) return;
             const pjpRows = await fetchSheetData('PJP');
             pjpData = pjpRows.map(row => {
-                const getVal = (idx) => row.c[idx] ? row.c[idx].v : "";
+                const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
                 return {
                     distributor: getVal(0), region: getVal(1), townName: getVal(2),
                     code: getVal(3), name: getVal(4), slab: getVal(5),
                     routeCode: getVal(6), routeName: getVal(7), visitDay: getVal(8), 
                     merchandiser: getVal(9), status: getVal(10)
                 };
-            }).filter(i => i.townName && !["TOWN NAME", "DB NAME", "TOWN"].includes(String(i.townName).toUpperCase()));
+            }).filter(i => i.townName && !["TOWN NAME", "DB NAME", "TOWN"].includes(i.townName.toUpperCase()));
 
             const reportRows = await fetchSheetData('Report');
             reportData = reportRows.map(row => {
-                const getVal = (idx) => row.c[idx] ? row.c[idx].v : "";
+                const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
                 return { code: getVal(3), imageUpload: getVal(13) };
             }).filter(i => i.code !== "Outlet Code");
 
             isDataLoaded = true;
             initMyDayFilters();
+            initFormFilters(); // Initialize dynamic form dropdowns from PJP
         }
 
+        // --- TAB NAVIGATION ---
         const tabs = ['tabForm', 'tabMyDay', 'tabReport'];
         const views = ['formView', 'myDayView', 'reportView'];
 
@@ -410,6 +509,7 @@
             if(!town) {
                 myDayVisitDaySelect.disabled = true;
                 myDayVisitDaySelect.innerHTML = '<option value="">Visit Day</option>';
+                myDayRouteSelect.innerHTML = '<option value="">Route</option>';
                 myDayRouteSelect.disabled = true;
                 return;
             }
@@ -420,7 +520,11 @@
             myDayVisitDaySelect.classList.replace('text-gray-500', 'text-gray-700');
 
             const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-            if (days.includes(todayName)) myDayVisitDaySelect.value = todayName;
+            if (days.includes(todayName)) {
+                myDayVisitDaySelect.value = todayName;
+            } else if (days.length > 0) {
+                myDayVisitDaySelect.value = days[0]; 
+            }
             myDayVisitDaySelect.dispatchEvent(new Event('change'));
         });
 
@@ -428,8 +532,9 @@
             const town = myDayTownSelect.value;
             const day = myDayVisitDaySelect.value;
             if(!day) {
-                myDayRouteSelect.innerHTML = '<option value="">Route Name</option>';
+                myDayRouteSelect.innerHTML = '<option value="">Route</option>';
                 myDayRouteSelect.disabled = true;
+                document.getElementById('myDayPjpContainer').classList.add('hidden');
                 return;
             }
             const routes = [...new Set(pjpData.filter(i => i.townName === town && i.visitDay === day).map(i => i.routeName))].filter(Boolean).sort();
@@ -437,7 +542,13 @@
             myDayRouteSelect.disabled = false;
             myDayRouteSelect.classList.replace('bg-gray-100', 'bg-white');
             myDayRouteSelect.classList.replace('text-gray-500', 'text-gray-700');
-            document.getElementById('myDayPjpContainer').classList.add('hidden');
+            
+            if (routes.length > 0) {
+                myDayRouteSelect.value = routes[0];
+                myDayRouteSelect.dispatchEvent(new Event('change'));
+            } else {
+                document.getElementById('myDayPjpContainer').classList.add('hidden');
+            }
         });
 
         myDayRouteSelect.addEventListener('change', renderMyDayPJP);
@@ -470,8 +581,11 @@
                     `<span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-green-300 shadow-sm"><i data-lucide="check-circle-2" class="h-3 w-3 mr-1"></i> Uploaded</span>` :
                     `<button class="bg-colgate text-white px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-red-700 shadow-sm pointer-events-none"><i data-lucide="camera" class="h-3 w-3 mr-1"></i> Upload</button>`;
 
+                const safeTown = (out.townName || "").replace(/'/g, "\\'");
+                const safeSlab = (out.slab || "Regular").replace(/'/g, "\\'");
+
                 html += `
-                    <div onclick="window.openUploadForm('', '${out.townName}', '${out.distributor}', '${out.slab || 'Regular'}', '${outCode}')" 
+                    <div onclick="window.openUploadForm('', '${safeTown}', '${safeTown}', '${safeSlab}', '${outCode}')" 
                          class="flex items-center justify-between p-3 rounded-lg border ${isCompleted ? 'border-green-400 bg-green-50/60 shadow-sm' : 'border-red-200 bg-white shadow-sm'} transition-all cursor-pointer hover:shadow-md mb-2">
                         <div class="pointer-events-none flex-grow">
                             <div class="font-bold text-[13px] text-gray-800">${out.name}</div>
@@ -505,10 +619,54 @@
             lucide.createIcons();
         }
 
-        areaSelect.addEventListener('change', (e) => {
-            const list = areaDistData[e.target.value] || [];
-            distSelect.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউশন নাম</option>' + list.map(d => `<option value="${d}">${d}</option>`).join('');
-            distSelect.disabled = !areaSelect.value;
+        // Initialize Form Filters from PJP Sheet Data
+        function initFormFilters() {
+            const areaSelect = document.getElementById('areaSelect');
+            if(!areaSelect) return;
+            const areas = [...new Set(pjpData.map(i => i.region))].filter(Boolean).sort();
+            areaSelect.innerHTML = '<option value="" disabled selected>এরিয়া</option>' + areas.map(a => `<option value="${a}">${a}</option>`).join('');
+            areaSelect.disabled = false;
+        }
+
+        const areaSelectEl = document.getElementById('areaSelect');
+        if (areaSelectEl) {
+            areaSelectEl.addEventListener('change', (e) => {
+                const selectedArea = e.target.value;
+                const distSelectEl = document.getElementById('distSelect');
+                const dbCodeSelectEl = document.getElementById('formDbCode');
+                
+                const filteredPjp = pjpData.filter(item => item.region === selectedArea);
+                
+                const uniqueNames = [...new Set(filteredPjp.map(item => item.townName))].filter(Boolean).sort();
+                distSelectEl.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউশন নাম</option>' + uniqueNames.map(d => `<option value="${d}">${d}</option>`).join('');
+                distSelectEl.disabled = !selectedArea;
+                
+                const uniqueCodes = [...new Set(filteredPjp.map(item => item.distributor))].filter(Boolean).sort();
+                dbCodeSelectEl.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউশন কোড</option>' + uniqueCodes.map(c => `<option value="${c}">${c}</option>`).join('');
+                dbCodeSelectEl.disabled = !selectedArea;
+            });
+        }
+
+        document.getElementById('distSelect').addEventListener('change', (e) => {
+            const dbCodeInput = document.getElementById('formDbCode');
+            const selectedArea = document.getElementById('areaSelect').value;
+            if (dbCodeInput && pjpData.length > 0) {
+                const match = pjpData.find(item => item.region === selectedArea && String(item.townName).trim().toLowerCase() === String(e.target.value).trim().toLowerCase());
+                if (match && match.distributor) {
+                    dbCodeInput.value = match.distributor;
+                }
+            }
+        });
+
+        document.getElementById('formDbCode').addEventListener('change', (e) => {
+            const distSelectEl = document.getElementById('distSelect');
+            const selectedArea = document.getElementById('areaSelect').value;
+            if (distSelectEl && pjpData.length > 0) {
+                const match = pjpData.find(item => item.region === selectedArea && String(item.distributor).trim().toLowerCase() === String(e.target.value).trim().toLowerCase());
+                if (match && match.townName) {
+                    distSelectEl.value = match.townName;
+                }
+            }
         });
 
         window.openUploadForm = (month, town, dh, slab, code) => {
@@ -521,30 +679,46 @@
                 if (formMonth) formMonth.value = currentMonthName;
 
                 let detectedArea = "";
-                for (const area in areaDistData) {
-                    if (areaDistData[area].some(name => name.toLowerCase().trim() === (dh || "").toLowerCase().trim())) {
-                        detectedArea = area;
-                        break;
+                const cleanStr = str => String(str || "").toLowerCase().replace(/[\s\.\-\_\,\/\\]/g, "");
+                const cleanDh = cleanStr(dh);
+
+                // Auto Detect Area from PJP Data
+                if(dh) {
+                    const match = pjpData.find(item => cleanStr(item.townName) === cleanDh || cleanStr(item.distributor) === cleanDh);
+                    if(match && match.region) {
+                        detectedArea = match.region;
                     }
                 }
                 
                 if (!detectedArea) {
-                    detectedArea = (town || "").toUpperCase().includes("CTG") ? "CTG" : "DHAKA";
+                    detectedArea = (town || "").toUpperCase().includes("CTG") ? "CTG" : "DHAKA"; 
                 }
 
                 const as = document.getElementById('areaSelect');
                 const ds = document.getElementById('distSelect');
-                if (as && ds) {
+                const dbCodeInput = document.getElementById('formDbCode');
+
+                if (as) {
+                    if(!Array.from(as.options).some(opt => opt.value === detectedArea) && detectedArea) {
+                        as.add(new Option(detectedArea, detectedArea));
+                    }
                     as.value = detectedArea;
-                    const list = areaDistData[detectedArea] || [];
-                    ds.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউশন নাম</option>' + list.map(d => `<option value="${d}">${d}</option>`).join('');
-                    ds.disabled = false;
+                    as.dispatchEvent(new Event('change'));
 
                     setTimeout(() => {
                         if (dh) {
-                            const options = Array.from(ds.options);
-                            const match = options.find(opt => opt.value.toLowerCase().trim() === dh.toLowerCase().trim());
-                            if (match) ds.value = match.value;
+                            const pjpMatch = pjpData.find(item => cleanStr(item.townName) === cleanDh || cleanStr(item.distributor) === cleanDh);
+                            
+                            if (pjpMatch) {
+                                if (ds && !Array.from(ds.options).some(opt => opt.value === pjpMatch.townName)) ds.add(new Option(pjpMatch.townName, pjpMatch.townName));
+                                if (dbCodeInput && !Array.from(dbCodeInput.options).some(opt => opt.value === pjpMatch.distributor)) dbCodeInput.add(new Option(pjpMatch.distributor, pjpMatch.distributor));
+                                
+                                ds.value = pjpMatch.townName;
+                                dbCodeInput.value = pjpMatch.distributor;
+                            } else {
+                                if (ds && !Array.from(ds.options).some(opt => opt.value === dh)) ds.add(new Option(dh, dh));
+                                ds.value = dh;
+                            }
                         }
 
                         const fs = document.getElementById('formSlab');
@@ -569,10 +743,7 @@
         };
 
         // --- CAMERA & GALLERY LOGIC ---
-        
-        // Manual Upload / Gallery Functionality
         document.getElementById('manualUploadBtn').addEventListener('click', () => {
-            // Trigger location fetch to improve data accuracy even for gallery uploads
             initLocationFetch();
             document.getElementById('manualFileInput').click();
         });
@@ -587,15 +758,10 @@
                 img.onload = function() {
                     const c = document.getElementById('processCanvas');
                     const ctx = c.getContext('2d');
-                    
-                    // Maintain aspect ratio or use image dimensions
                     c.width = img.width;
                     c.height = img.height;
                     ctx.drawImage(img, 0, 0);
-                    
-                    // Apply watermark before generating data URL
                     applyWatermark(ctx, c.width, c.height);
-                    
                     capturedImageData = c.toDataURL('image/jpeg', 0.85);
                     document.getElementById('capturedImagePreview').src = capturedImageData;
                     document.getElementById('previewContainer').classList.remove('hidden');
@@ -607,11 +773,9 @@
             reader.readAsDataURL(file);
         });
 
-        // Shared Location Fetching Logic
         function initLocationFetch() {
             const locBadge = document.getElementById('cameraLocationBadge');
             if (locBadge) locBadge.textContent = "লোকেশন খোঁজা হচ্ছে...";
-            
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async p => {
                     const lat = p.coords.latitude, lon = p.coords.longitude;
@@ -660,35 +824,78 @@
         });
 
         function applyWatermark(ctx, w, h) {
-            const now = new Date(), dateStr = `${now.getDate()}-${now.toLocaleString('en-US',{month:'short'})}-${now.getFullYear()}`, timeStr = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-            const fontSize = Math.max(w * 0.025, 14), titleFontSize = Math.max(w * 0.03, 16), padding = 20, lineHeight = 1.3;
-            ctx.fillStyle = "rgba(0, 0, 0, 0.45)";
-            const barH = (fontSize * 2 + titleFontSize) * lineHeight + padding;
-            ctx.fillRect(0, h - barH, w, barH);
-            ctx.textBaseline = 'top'; ctx.lineWidth = w * 0.003; ctx.lineJoin = 'round'; ctx.strokeStyle = 'black';
+            const now = new Date();
+            const dateStr = `${now.getDate()}-${now.toLocaleString('en-US',{month:'short'})}-${now.getFullYear()}`;
+            const timeStr = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+            
+            // Dynamic Font Sizing (Smaller text)
+            const fontSize = Math.max(w * 0.018, 11);
+            const titleFontSize = Math.max(w * 0.025, 14);
+            const padding = Math.max(w * 0.02, 15); 
+            
+            // Reduced Height 
+            const barH = titleFontSize + fontSize + padding * 1.5; 
+            
+            // Premium Gradient Background
+            const gradient = ctx.createLinearGradient(0, h - (barH * 1.5), 0, h);
+            gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+            gradient.addColorStop(0.4, 'rgba(0, 0, 0, 0.6)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0.85)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, h - (barH * 1.5), w, barH * 1.5);
+
+            ctx.textBaseline = 'bottom'; 
+            ctx.lineJoin = 'round';
+            
+            // Base Y positions
+            const line2Y = h - (padding * 0.8);
+            const line1Y = line2Y - fontSize - (padding * 0.4);
+
+            // Left Side: Brand & Date/Time
             ctx.textAlign = 'left';
-            let y = h - barH + 10;
+            
+            // Colgate Smile Corner
+            ctx.font = `bold ${titleFontSize}px sans-serif`;
+            ctx.lineWidth = Math.max(w * 0.002, 1.5);
+            ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+            ctx.strokeText("Colgate Smile Corner", padding, line1Y);
+            ctx.fillStyle = '#da291c'; // Colgate Red
+            ctx.fillText("Colgate Smile Corner", padding, line1Y);
+            
+            // Date & Time
             ctx.font = `bold ${fontSize}px sans-serif`;
-            ctx.strokeText(dateStr, padding, y); ctx.fillStyle = '#FFFFFF'; ctx.fillText(dateStr, padding, y);
-            y += fontSize * lineHeight;
-            ctx.strokeText(timeStr, padding, y); ctx.fillText(timeStr, padding, y);
-            y += fontSize * lineHeight;
-            ctx.font = `bold ${titleFontSize}px sans-serif`; ctx.strokeStyle = 'white'; ctx.lineWidth = w * 0.004;
-            ctx.strokeText("Colgate Smile Corner", padding, y); ctx.fillStyle = '#da291c'; ctx.fillText("Colgate Smile Corner", padding, y);
-            ctx.textAlign = 'right'; ctx.font = `bold ${fontSize}px sans-serif`; ctx.strokeStyle = 'black'; ctx.lineWidth = w * 0.003;
-            let ry = h - barH + 10 + (fontSize * lineHeight);
+            ctx.strokeStyle = 'black';
+            ctx.strokeText(`${dateStr}  |  ${timeStr}`, padding, line2Y);
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillText(`${dateStr}  |  ${timeStr}`, padding, line2Y);
+
+            // Right Side: Shop Code & Location
+            ctx.textAlign = 'right';
+            
             const shopInp = document.getElementById('formShopCode');
             const sCode = shopInp ? shopInp.value.toUpperCase() || "N/A" : "N/A";
-            ctx.strokeText("Shop: "+sCode, w - padding, ry); ctx.fillStyle = '#FFFFFF'; ctx.fillText("Shop: "+sCode, w - padding, ry);
-            ry += fontSize * lineHeight;
-            ctx.strokeText(finalLocationName, w - padding, ry); ctx.fillStyle = '#fde047'; ctx.fillText(finalLocationName, w - padding, ry);
+            
+            // Shop Code
+            ctx.font = `bold ${titleFontSize}px sans-serif`;
+            ctx.strokeStyle = 'black';
+            ctx.strokeText(`Shop: ${sCode}`, w - padding, line1Y);
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(`Shop: ${sCode}`, w - padding, line1Y);
+            
+            // Location Name
+            ctx.font = `bold ${fontSize}px sans-serif`;
+            const locBadge = document.getElementById('cameraLocationBadge');
+            const locText = locBadge ? locBadge.textContent : "";
+            ctx.strokeText(locText, w - padding, line2Y);
+            ctx.fillStyle = '#fde047'; // Yellow
+            ctx.fillText(locText, w - padding, line2Y);
         }
 
         document.getElementById('retakeBtn').addEventListener('click', () => { 
             capturedImageData = null; 
             document.getElementById('previewContainer').classList.add('hidden'); 
             document.getElementById('cameraTriggerContainer').classList.remove('hidden'); 
-            document.getElementById('manualFileInput').value = ""; // Clear file input
+            document.getElementById('manualFileInput').value = ""; 
         });
         
         document.getElementById('closeCameraBtn').addEventListener('click', () => { 
@@ -697,14 +904,30 @@
             document.getElementById('cameraTriggerContainer').classList.remove('hidden'); 
         });
 
+        // ==========================================
+        // SUBMIT FORM WITH FORCED DATA EXTRACTION
+        // ==========================================
         document.getElementById('customForm').addEventListener('submit', async e => {
-            e.preventDefault(); if(!capturedImageData) return alert("ছবি তুলুন!");
+            e.preventDefault(); 
+            if(!capturedImageData) return alert("ছবি তুলুন!");
+            
             const btn = document.getElementById('submitBtn'), loader = document.getElementById('btnLoader'), text = document.getElementById('btnText');
             btn.disabled = true; loader.classList.remove('hidden'); text.textContent = "জমা হচ্ছে...";
             
+            const formDbCodeEl = document.getElementById('formDbCode');
+            const distSelectEl = document.getElementById('distSelect');
+            const areaSelectEl = document.getElementById('areaSelect');
+
+            // Get all standard form data
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
-            data.shop_image = { data: capturedImageData, name: `pjp_${data.shop_code}_${Date.now()}.jpg` };
+            
+            // Forcefully add disabled dropdown values into the 'data' object.
+            data.db_code = formDbCodeEl && formDbCodeEl.value ? formDbCodeEl.value : "Not Found";
+            data.distribution_name = distSelectEl && distSelectEl.value ? distSelectEl.value : "Not Found";
+            data.area_name = areaSelectEl && areaSelectEl.value ? areaSelectEl.value : "Not Found";
+
+            data.shop_image = { data: capturedImageData, name: `pjp_${Date.now()}.jpg` };
             
             try {
                 await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data), mode: 'no-cors' });
@@ -747,6 +970,19 @@
             document.getElementById('successMessage').classList.add('hidden'); 
             document.getElementById('previewContainer').classList.add('hidden'); 
             document.getElementById('cameraTriggerContainer').classList.remove('hidden'); 
+            
+            // Reset DB Code and Distribution Name dropdowns
+            const distSelectEl = document.getElementById('distSelect');
+            if(distSelectEl) {
+                distSelectEl.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
+                distSelectEl.disabled = true;
+            }
+            const formDbCodeEl = document.getElementById('formDbCode');
+            if(formDbCodeEl) {
+                formDbCodeEl.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
+                formDbCodeEl.disabled = true;
+            }
+            
             capturedImageData = null; 
         };
     </script>
