@@ -189,7 +189,7 @@
 
                         <div class="input-group relative">
                             <input type="file" id="manualFileInput" accept="image/*" class="hidden">
-                            <div id="cameraTriggerContainer" class="flex flex-col items-center">
+                            <div id="cameraTriggerContainer" class="flex flex-col items-center gap-3">
                                 <button type="button" id="openCameraBtn" class="flex flex-row items-center justify-center w-full py-4 border-[1.5px] border-dashed border-red-300 rounded-2xl bg-white hover:bg-red-50 transition-colors group">
                                     <div class="bg-red-50 p-2 rounded-full mr-3 shadow-sm border border-red-100 group-hover:scale-105 transition-transform">
                                         <i data-lucide="scan" class="h-[22px] w-[22px] text-colgate"></i>
@@ -199,8 +199,9 @@
                                         <span class="text-[11px] text-red-400 font-medium">ছবি তুলতে এখানে ক্লিক করুন</span>
                                     </div>
                                 </button>
-                                <button type="button" id="manualUploadBtn" class="hidden mt-4 flex items-center text-[13px] font-medium text-gray-500 hover:text-colgate">
-                                    <i data-lucide="cloud-upload" class="h-4 w-4 mr-2"></i> গ্যালারি থেকে আপলোড
+                                <button type="button" id="manualUploadBtn" class="flex items-center justify-center w-full py-3 border-[1.5px] border-dashed border-gray-300 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-colors group">
+                                    <i data-lucide="image" class="h-[18px] w-[18px] text-gray-500 mr-2"></i>
+                                    <span class="text-[13px] font-semibold text-gray-600">গ্যালারি থেকে ছবি নির্বাচন করুন</span>
                                 </button>
                             </div>
 
@@ -922,7 +923,8 @@
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
             
-            // Forcefully add disabled dropdown values into the 'data' object.
+            // 🔴 FIX: Forcefully add disabled dropdown values into the 'data' object.
+            // ব্রাউজার disabled ডাটা স্কিপ করে, তাই আমরা জোড় করে এটি যুক্ত করে দিচ্ছি।
             data.db_code = formDbCodeEl && formDbCodeEl.value ? formDbCodeEl.value : "Not Found";
             data.distribution_name = distSelectEl && distSelectEl.value ? distSelectEl.value : "Not Found";
             data.area_name = areaSelectEl && areaSelectEl.value ? areaSelectEl.value : "Not Found";
