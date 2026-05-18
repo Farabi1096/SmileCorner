@@ -216,7 +216,8 @@
                                     </div>
 
                                     <div class="absolute inset-x-0 bottom-6 flex justify-center items-center z-20 px-6">
-                                        <button type="button" id="captureBtn" class="bg-white rounded-full p-1 animate-subtle-pulse shadow-lg mx-auto">
+                                        <!-- Captured button has transition for disabled state visually -->
+                                        <button type="button" id="captureBtn" class="bg-white rounded-full p-1 animate-subtle-pulse shadow-lg mx-auto transition-all duration-300">
                                             <div class="w-12 h-12 rounded-full border-[3px] border-colgate flex items-center justify-center bg-white">
                                                 <div class="w-9 h-9 rounded-full bg-colgate flex items-center justify-center text-white"><i data-lucide="camera" class="h-4 w-4"></i></div>
                                             </div>
@@ -465,7 +466,7 @@
         let finalLocationName = "Location Unknown";
         let isLocationAcquired = false;
         
-        // NEW: Camera Facing Mode State
+        // Camera Facing Mode State
         let currentFacingMode = 'environment';
 
         // Detailed Report State
@@ -995,9 +996,11 @@
             }, 400);
         };
 
+        // LOCATION FETCH WITHOUT STRICT REQUIREMENT
         function initLocationFetch() {
             isLocationAcquired = false;
             const locBadge = document.getElementById('cameraLocationBadge');
+            
             if (locBadge) locBadge.textContent = "লোকেশন খোঁজা হচ্ছে...";
             
             if (navigator.geolocation) {
@@ -1050,7 +1053,10 @@
                     c.width = img.width;
                     c.height = img.height;
                     ctx.drawImage(img, 0, 0);
-                    applyWatermark(ctx, c.width, c.height);
+                    
+                    // গ্যালারি থেকে আপলোডের ক্ষেত্রে ওয়াটারমার্ক বন্ধ করা হয়েছে
+                    // applyWatermark(ctx, c.width, c.height); 
+                    
                     capturedImageData = c.toDataURL('image/jpeg', 0.85);
                     document.getElementById('capturedImagePreview').src = capturedImageData;
                     document.getElementById('previewContainer').classList.remove('hidden');
@@ -1213,11 +1219,6 @@
         document.getElementById('customForm').addEventListener('submit', async e => {
             e.preventDefault(); 
             if(!capturedImageData) return alert("ছবি তুলুন!");
-            
-            // 🔥 NEW: Check if location is acquired before submitting
-            if(!isLocationAcquired) {
-                return alert("লোকেশন পাওয়া যায়নি! দয়া করে আপনার মোবাইলের জিপিএস (Location/GPS) চালু করুন এবং পুনরায় সঠিক লোকেশন আসা পর্যন্ত অপেক্ষা করে ছবি তুলুন।");
-            }
             
             const btn = document.getElementById('submitBtn'), loader = document.getElementById('btnLoader'), text = document.getElementById('btnText');
             btn.disabled = true; loader.classList.remove('hidden'); text.textContent = "জমা হচ্ছে...";
