@@ -206,18 +206,25 @@
 
                             <div id="cameraContainer" class="hidden mt-2 relative">
                                 <div class="relative rounded-2xl overflow-hidden bg-black aspect-[3/4] w-full flex items-center justify-center shadow-inner">
-                                    <video id="cameraFeed" autoplay playsinline class="w-full h-full object-cover"></video>
+                                    <video id="cameraFeed" autoplay playsinline class="w-full h-full object-cover transition-transform duration-300"></video>
+                                    
                                     <div class="absolute top-3 inset-x-0 flex justify-center z-20 pointer-events-none px-4">
                                         <div class="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-sm flex items-center gap-1.5">
                                             <i data-lucide="map-pin" id="locationIconBadge" class="h-3.5 w-3.5 text-colgate"></i>
                                             <span id="cameraLocationBadge" class="text-white text-[11px] font-medium truncate">লোকেশন খোঁজা হচ্ছে...</span>
                                         </div>
                                     </div>
-                                    <div class="absolute inset-x-0 bottom-6 flex justify-center z-20">
-                                        <button type="button" id="captureBtn" class="bg-white rounded-full p-1 animate-subtle-pulse shadow-lg">
+
+                                    <div class="absolute inset-x-0 bottom-6 flex justify-center items-center z-20 px-6">
+                                        <button type="button" id="captureBtn" class="bg-white rounded-full p-1 animate-subtle-pulse shadow-lg mx-auto">
                                             <div class="w-12 h-12 rounded-full border-[3px] border-colgate flex items-center justify-center bg-white">
                                                 <div class="w-9 h-9 rounded-full bg-colgate flex items-center justify-center text-white"><i data-lucide="camera" class="h-4 w-4"></i></div>
                                             </div>
+                                        </button>
+
+                                        <!-- NEW: Switch Camera Button -->
+                                        <button type="button" id="switchCameraBtn" class="absolute right-6 bg-black/40 p-2.5 rounded-full text-white backdrop-blur-md shadow-lg border border-white/20 hover:bg-black/60 transition-all">
+                                            <i data-lucide="switch-camera" class="h-5 w-5"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -457,6 +464,9 @@
         let capturedImageData = null;
         let finalLocationName = "Location Unknown";
         let isLocationAcquired = false;
+        
+        // NEW: Camera Facing Mode State
+        let currentFacingMode = 'environment';
 
         // Detailed Report State
         let detailedReportData = [];
@@ -986,7 +996,7 @@
         };
 
         function initLocationFetch() {
-            isLocationAcquired = false; // Reset on new capture attempt
+            isLocationAcquired = false;
             const locBadge = document.getElementById('cameraLocationBadge');
             if (locBadge) locBadge.textContent = "লোকেশন খোঁজা হচ্ছে...";
             
@@ -1004,17 +1014,17 @@
                         
                         finalLocationName = parts.slice(0, 2).join(", ") || "Location Found";
                         if (locBadge) locBadge.textContent = finalLocationName;
-                        isLocationAcquired = true; // 🔥 Set to true when successfully fetched
+                        isLocationAcquired = true;
                     } catch(e) { 
                         finalLocationName = `${lat.toFixed(4)}, ${lon.toFixed(4)}`; 
                         if (locBadge) locBadge.textContent = finalLocationName;
-                        isLocationAcquired = true; // Use coordinates as fallback but allow submit
+                        isLocationAcquired = true; 
                     }
                 }, () => { 
                     finalLocationName = "GPS Off"; 
                     if (locBadge) locBadge.textContent = "GPS Off"; 
-                    isLocationAcquired = false; // 🔥 User denied or GPS is off
-                }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }); // Better mobile accuracy
+                    isLocationAcquired = false; 
+                }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }); 
             } else {
                 finalLocationName = "No GPS Support";
                 if (locBadge) locBadge.textContent = "No GPS Support";
@@ -1022,22 +1032,92 @@
             }
         }
 
+        document.getElementById('manualUploadBtn').addEventListener('click', () => {
+            initLocationFetch();
+            document.getElementById('manualFileInput').click();
+        });
+
+        document.getElementById('manualFileInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const c = document.getElementById('processCanvas');
+                    const ctx = c.getContext('2d');
+                    c.width = img.width;
+                    c.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    applyWatermark(ctx, c.width, c.height);
+                    capturedImageData = c.toDataURL('image/jpeg', 0.85);
+                    document.getElementById('capturedImagePreview').src = capturedImageData;
+                    document.getElementById('previewContainer').classList.remove('hidden');
+                    document.getElementById('cameraTriggerContainer').classList.add('hidden');
+                    document.getElementById('cameraContainer').classList.add('hidden');
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // NEW: Function to handle Camera Starting with Facing Mode
+        async function startCamera(facingMode) {
+            if (stream) {
+                stream.getTracks().forEach(t => t.stop());
+            }
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: facingMode, width: { ideal: 1280 }, height: { ideal: 720 } } 
+                });
+                const videoFeed = document.getElementById('cameraFeed');
+                if (videoFeed) {
+                    videoFeed.srcObject = stream;
+                    // Mirror the preview if it's the front camera
+                    if (facingMode === 'user') {
+                        videoFeed.style.transform = 'scaleX(-1)';
+                    } else {
+                        videoFeed.style.transform = 'scaleX(1)';
+                    }
+                }
+            } catch (e) { 
+                alert("ক্যামেরা ওপেন করা যাচ্ছে না।"); 
+            }
+        }
+
         document.getElementById('openCameraBtn').addEventListener('click', async () => {
             initLocationFetch();
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } } });
-                const videoFeed = document.getElementById('cameraFeed');
-                if (videoFeed) videoFeed.srcObject = stream;
-                document.getElementById('cameraContainer').classList.remove('hidden');
-                document.getElementById('cameraTriggerContainer').classList.add('hidden');
-            } catch (e) { alert("ক্যামেরা ওপেন করা যাচ্ছে না।"); }
+            document.getElementById('cameraContainer').classList.remove('hidden');
+            document.getElementById('cameraTriggerContainer').classList.add('hidden');
+            
+            // Start with back camera by default
+            currentFacingMode = 'environment';
+            await startCamera(currentFacingMode);
+        });
+
+        // NEW: Switch Camera Button Event Listener
+        document.getElementById('switchCameraBtn').addEventListener('click', async () => {
+            currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+            await startCamera(currentFacingMode);
         });
 
         document.getElementById('captureBtn').addEventListener('click', () => {
             const v = document.getElementById('cameraFeed'), c = document.getElementById('processCanvas'), ctx = c.getContext('2d');
             if (!v) return;
             c.width = v.videoWidth; c.height = v.videoHeight;
+            
+            // NEW: Mirror the actual capture if front camera is used
+            if (currentFacingMode === 'user') {
+                ctx.translate(c.width, 0);
+                ctx.scale(-1, 1);
+            }
+            
             ctx.drawImage(v, 0, 0);
+            
+            // Reset transform before adding watermark
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            
             applyWatermark(ctx, c.width, c.height);
             capturedImageData = c.toDataURL('image/jpeg', 0.85);
             document.getElementById('capturedImagePreview').src = capturedImageData;
