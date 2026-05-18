@@ -55,7 +55,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="flex items-start sm:items-center justify-center min-h-screen p-0 sm:p-4">
+<body class="flex items-start sm:items-center justify-center min-h-screen p-0 sm:p-4" oncontextmenu="return false;">
 
     <div class="bg-white w-full max-w-md sm:rounded-2xl sm:shadow-2xl min-h-screen sm:min-h-0 flex flex-col relative">
         
@@ -189,7 +189,7 @@
 
                         <div class="input-group relative">
                             <input type="file" id="manualFileInput" accept="image/*" class="hidden">
-                            <div id="cameraTriggerContainer" class="flex flex-col items-center gap-3">
+                            <div id="cameraTriggerContainer" class="flex flex-col items-center">
                                 <button type="button" id="openCameraBtn" class="flex flex-row items-center justify-center w-full py-4 border-[1.5px] border-dashed border-red-300 rounded-2xl bg-white hover:bg-red-50 transition-colors group">
                                     <div class="bg-red-50 p-2 rounded-full mr-3 shadow-sm border border-red-100 group-hover:scale-105 transition-transform">
                                         <i data-lucide="scan" class="h-[22px] w-[22px] text-colgate"></i>
@@ -199,7 +199,7 @@
                                         <span class="text-[11px] text-red-400 font-medium">ছবি তুলতে এখানে ক্লিক করুন</span>
                                     </div>
                                 </button>
-                                <button type="button" id="manualUploadBtn" class="mt-1 flex items-center text-[13px] font-medium text-gray-500 hover:text-colgate transition-colors">
+                                <button type="button" id="manualUploadBtn" class="mt-3 flex items-center text-[13px] font-medium text-gray-500 hover:text-colgate transition-colors">
                                     <i data-lucide="cloud-upload" class="h-4 w-4 mr-1.5"></i> গ্যালারি থেকে আপলোড
                                 </button>
                             </div>
@@ -376,21 +376,36 @@
 
             <!-- ================= VIEW 3: REPORT ================= -->
             <div id="reportView" class="hidden animate-fade-in">
-                <div class="flex flex-col items-center justify-center py-16 text-center space-y-4">
-                    <div class="bg-yellow-50 p-6 rounded-full border border-yellow-100 shadow-inner">
-                        <i data-lucide="construction" class="h-16 w-16 text-yellow-500"></i>
-                    </div>
-                    <div class="space-y-2">
-                        <h3 class="text-xl font-bold text-gray-800">রিপোর্ট সেকশনটির কাজ চলছে</h3>
-                        <p class="text-sm text-gray-500 px-6 max-w-[280px] mx-auto leading-relaxed">
-                            এই বিভাগটি বর্তমানে আপডেটের জন্য বন্ধ আছে। খুব শীঘ্রই এটি সচল করা হবে।
-                        </p>
-                    </div>
-                    <div class="pt-4">
-                        <div class="inline-flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-full text-[12px] font-bold text-gray-400">
-                            <span class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
-                            <span>Under Construction</span>
+                <div class="mb-3 text-left">
+                    <h3 class="font-bold text-gray-800 text-[14px] mb-3 flex items-center"><i data-lucide="bar-chart-2" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আউটলেট রিপোর্ট</h3>
+                    
+                    <!-- DB Name & Route Filters -->
+                    <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm mb-4">
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="reportDbNameSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors">
+                                <option value="">DB Name নির্বাচন করুন</option>
+                            </select>
+                            <select id="reportRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors" disabled>
+                                <option value="">রুট নির্বাচন করুন</option>
+                            </select>
                         </div>
+                    </div>
+
+                    <!-- Loader -->
+                    <div id="reportLoader" class="flex flex-col items-center justify-center py-10 hidden">
+                        <div class="loader mb-3"></div>
+                        <p class="text-[11px] text-gray-500 font-medium">রিপোর্ট লোড হচ্ছে...</p>
+                    </div>
+
+                    <!-- Outlet Count Display -->
+                    <div id="reportCountDisplay" class="hidden mb-2 px-1 flex justify-between items-center">
+                        <span class="text-[11px] font-bold text-gray-600">মোট আউটলেট:</span>
+                        <span id="reportCountNumber" class="text-[12px] font-extrabold text-colgate bg-red-50 px-2 py-0.5 rounded border border-red-100">0</span>
+                    </div>
+
+                    <!-- Report List -->
+                    <div id="reportList" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1 custom-scrollbar">
+                        <!-- Report Cards will be injected here via JS -->
                     </div>
                 </div>
             </div>
@@ -403,7 +418,26 @@
     </div>
 
     <script>
+        // Security: Disable Right-click, Text Selection, and Developer Tools for Safety
         document.addEventListener('contextmenu', event => event.preventDefault());
+        
+        // Prevent Text Selection (except in input fields)
+        document.addEventListener('selectstart', event => {
+            const tagName = event.target.tagName.toLowerCase();
+            if (tagName !== 'input' && tagName !== 'textarea') {
+                event.preventDefault();
+            }
+        });
+        
+        // Prevent Developer Tools Keyboard Shortcuts
+        document.onkeydown = function(e) {
+            if (e.keyCode === 123 || // Block F12
+               (e.ctrlKey && e.shiftKey && ['I', 'C', 'J'].includes(String.fromCharCode(e.keyCode))) || // Block Ctrl+Shift+I/C/J
+               (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))) { // Block Ctrl+U (View Source)
+                return false;
+            }
+        };
+
         lucide.createIcons();
 
         // Constants
@@ -412,6 +446,9 @@
         // YOUR NEWLY DEPLOYED SCRIPT URL
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkLhnjgv9VdgHoO1BscC5hKQJJk-0uEFsL4YSQo7GAgdGvK4eZt6OkNvbFEYaLv1Ih/exec';
 
+        // NEW REPORT CSV URL
+        const REPORT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYcd2eba30rLXPA3OHxVcHYKVpUK9RweS5WD7g-IFM46AUsI6zSu6YESkPxmbg9xyj4gs7UUgL13a/pub?gid=857310602&single=true&output=csv';
+
         // State
         let reportData = []; 
         let pjpData = [];    
@@ -419,6 +456,11 @@
         let stream = null;
         let capturedImageData = null;
         let finalLocationName = "Location Unknown";
+        let isLocationAcquired = false;
+
+        // Detailed Report State
+        let detailedReportData = [];
+        let isDetailedReportLoaded = false;
 
         // Background load of data on startup to ensure DB Codes are ready
         window.addEventListener('DOMContentLoaded', () => {
@@ -461,6 +503,204 @@
             initFormFilters(); // Initialize dynamic form dropdowns from PJP
         }
 
+        // --- CSV PARSER FOR DETAILED REPORT ---
+        function parseCSV(str) {
+            const arr = [];
+            let quote = false;
+            let col = 0, row = 0;
+            for (let c = 0; c < str.length; c++) {
+                let cc = str[c], nc = str[c+1];
+                arr[row] = arr[row] || [];
+                arr[row][col] = arr[row][col] || '';
+                if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+                if (cc == '"') { quote = !quote; continue; }
+                if (cc == ',' && !quote) { ++col; continue; }
+                if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+                if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+                if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+                arr[row][col] += cc;
+            }
+            return arr;
+        }
+
+        async function fetchDetailedReport() {
+            if (isDetailedReportLoaded) return;
+            const loader = document.getElementById('reportLoader');
+            const list = document.getElementById('reportList');
+            loader.classList.remove('hidden');
+            list.classList.add('hidden');
+            
+            try {
+                const res = await fetch(REPORT_CSV_URL);
+                const text = await res.text();
+                const rows = parseCSV(text);
+                
+                detailedReportData = [];
+                // Skip header (index 0)
+                for(let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
+                    if(row.length > 4 && row[4]) { // Ensure outlet code exists
+                        detailedReportData.push({
+                            month: row[0],
+                            zone: row[1],
+                            dbCode: row[2],
+                            dhName: row[3],
+                            code: row[4].trim().toUpperCase(),
+                            name: row[5],
+                            route: row[6],
+                            slab: row[7],
+                            enrolled: row[8],
+                            target: row[9],
+                            totStt: row[10],
+                            ach: row[11],
+                            balance: row[12],
+                            eligible: row[13],
+                            imgUpload: row[14],
+                            imgUploadCount: row[15],
+                            payout: row[16]
+                        });
+                    }
+                }
+                isDetailedReportLoaded = true;
+                initReportFilters();
+                renderDetailedReport();
+            } catch (e) {
+                console.error('Failed to load report CSV', e);
+                list.innerHTML = `<div class="text-center text-red-500 text-sm py-4">রিপোর্ট লোড করতে সমস্যা হয়েছে। ইন্টারনেট কানেকশন চেক করুন।</div>`;
+            } finally {
+                loader.classList.add('hidden');
+                list.classList.remove('hidden');
+            }
+        }
+
+        function initReportFilters() {
+            const dbNames = [...new Set(detailedReportData.map(d => d.dhName))].filter(Boolean).sort();
+            const dbSelect = document.getElementById('reportDbNameSelect');
+            dbSelect.innerHTML = '<option value="">DB Name নির্বাচন করুন</option>' + dbNames.map(name => `<option value="${name}">${name}</option>`).join('');
+            
+            const routeSelect = document.getElementById('reportRouteSelect');
+            routeSelect.innerHTML = '<option value="">রুট নির্বাচন করুন</option>';
+            routeSelect.disabled = true;
+            routeSelect.classList.replace('bg-white', 'bg-gray-100');
+            routeSelect.classList.replace('text-gray-700', 'text-gray-500');
+        }
+
+        document.getElementById('reportDbNameSelect').addEventListener('change', (e) => {
+            const dbName = e.target.value;
+            const routeSelect = document.getElementById('reportRouteSelect');
+            
+            if (!dbName) {
+                routeSelect.innerHTML = '<option value="">রুট নির্বাচন করুন</option>';
+                routeSelect.disabled = true;
+                routeSelect.classList.replace('bg-white', 'bg-gray-100');
+                routeSelect.classList.replace('text-gray-700', 'text-gray-500');
+            } else {
+                const routes = [...new Set(detailedReportData.filter(d => d.dhName === dbName).map(d => d.route))].filter(Boolean).sort();
+                routeSelect.innerHTML = '<option value="">সকল রুট</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
+                routeSelect.disabled = false;
+                routeSelect.classList.replace('bg-gray-100', 'bg-white');
+                routeSelect.classList.replace('text-gray-500', 'text-gray-700');
+            }
+            renderDetailedReport();
+        });
+
+        document.getElementById('reportRouteSelect').addEventListener('change', () => {
+            renderDetailedReport();
+        });
+
+        function renderDetailedReport() {
+            const list = document.getElementById('reportList');
+            const countDisplay = document.getElementById('reportCountDisplay');
+            const countNumber = document.getElementById('reportCountNumber');
+            const dbName = document.getElementById('reportDbNameSelect').value;
+            const route = document.getElementById('reportRouteSelect').value;
+
+            if (!dbName) {
+                countDisplay.classList.add('hidden');
+                list.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-10 opacity-70">
+                        <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
+                        <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে DB Name নির্বাচন করুন</p>
+                    </div>`;
+                lucide.createIcons();
+                return;
+            }
+            
+            let filtered = detailedReportData.filter(d => d.dhName === dbName);
+            if (route) {
+                filtered = filtered.filter(d => d.route === route);
+            }
+
+            if (filtered.length === 0) {
+                countDisplay.classList.add('hidden');
+                list.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-10 opacity-70">
+                        <i data-lucide="search-x" class="h-10 w-10 text-gray-400 mb-2"></i>
+                        <p class="text-[12px] text-gray-500 mt-2">কোনো তথ্য পাওয়া যায়নি</p>
+                    </div>`;
+                lucide.createIcons();
+                return;
+            }
+
+            countNumber.textContent = filtered.length;
+            countDisplay.classList.remove('hidden');
+
+            let html = '';
+            filtered.forEach(d => {
+                const isEligible = d.eligible && d.eligible.toUpperCase().trim() === 'Y';
+                const statusColor = isEligible ? 'text-green-700 bg-green-50 border-green-200' : 'text-red-700 bg-red-50 border-red-200';
+                const payoutText = d.payout ? d.payout + ' TK' : '0 TK';
+                
+                const isUploaded = d.imgUpload && d.imgUpload.toUpperCase().trim() === 'Y';
+                const uploadBadge = isUploaded 
+                    ? `<span class="inline-flex items-center bg-green-50 text-green-600 border border-green-200 px-1.5 py-0.5 rounded text-[9px] font-bold ml-2"><i data-lucide="check-circle-2" class="h-2.5 w-2.5 mr-0.5"></i>Uploaded</span>`
+                    : `<span class="inline-flex items-center bg-red-50 text-red-500 border border-red-200 px-1.5 py-0.5 rounded text-[9px] font-bold ml-2"><i data-lucide="x-circle" class="h-2.5 w-2.5 mr-0.5"></i>No Image</span>`;
+                
+                html += `
+                <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-sm flex flex-col gap-2 relative overflow-hidden transition-all hover:shadow-md">
+                    <div class="flex justify-between items-start border-b border-gray-100 pb-2.5">
+                        <div class="pr-2">
+                            <div class="font-bold text-[13px] text-gray-800 leading-tight">${d.name || 'Unknown'}</div>
+                            <div class="text-[10px] text-gray-500 font-medium mt-1 flex items-center flex-wrap">
+                                #${d.code} • ${d.route || ''}
+                                ${uploadBadge}
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 px-2.5 py-1 rounded-md text-[10px] font-extrabold border ${statusColor} shadow-sm whitespace-nowrap">
+                            Payout: ${payoutText}
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-5 gap-1.5 mt-1">
+                        <div class="bg-gray-50 p-1.5 rounded-lg border border-gray-100 flex flex-col items-center text-center">
+                            <span class="text-[7px] sm:text-[8px] text-gray-500 font-bold uppercase mb-0.5">Target</span>
+                            <span class="text-[11px] font-extrabold text-gray-800">${d.target || '0'}</span>
+                        </div>
+                        <div class="bg-blue-50 p-1.5 rounded-lg border border-blue-100 flex flex-col items-center text-center">
+                            <span class="text-[7px] sm:text-[8px] text-blue-500 font-bold uppercase mb-0.5">Achieve</span>
+                            <span class="text-[11px] font-extrabold text-blue-700">${d.totStt || '0'}</span>
+                        </div>
+                        <div class="bg-purple-50 p-1.5 rounded-lg border border-purple-100 flex flex-col items-center text-center">
+                            <span class="text-[7px] sm:text-[8px] text-purple-500 font-bold uppercase mb-0.5">ACH %</span>
+                            <span class="text-[11px] font-extrabold text-purple-700">${d.ach || '0%'}</span>
+                        </div>
+                        <div class="bg-orange-50 p-1.5 rounded-lg border border-orange-100 flex flex-col items-center text-center">
+                            <span class="text-[7px] sm:text-[8px] text-orange-500 font-bold uppercase mb-0.5">Balance</span>
+                            <span class="text-[11px] font-extrabold text-orange-700">${d.balance || '0'}</span>
+                        </div>
+                        <div class="bg-green-50 p-1.5 rounded-lg border border-green-100 flex flex-col items-center text-center">
+                            <span class="text-[7px] sm:text-[8px] text-green-600 font-bold uppercase mb-0.5">Images</span>
+                            <span class="text-[11px] font-extrabold text-green-700">${d.imgUploadCount || '0'}</span>
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+            
+            list.innerHTML = html;
+            lucide.createIcons(); // আইকনগুলো রেন্ডার করার জন্য
+        }
+
         // --- TAB NAVIGATION ---
         const tabs = ['tabForm', 'tabMyDay', 'tabReport'];
         const views = ['formView', 'myDayView', 'reportView'];
@@ -493,6 +733,9 @@
                     } else if (idx === 1) {
                         renderMyDayPJP();
                         updateTimeUI();
+                    } else if (idx === 2) {
+                        // Fetch detailed report when Report tab is clicked
+                        fetchDetailedReport();
                     }
                 });
             }
@@ -743,8 +986,10 @@
         };
 
         function initLocationFetch() {
+            isLocationAcquired = false; // Reset on new capture attempt
             const locBadge = document.getElementById('cameraLocationBadge');
             if (locBadge) locBadge.textContent = "লোকেশন খোঁজা হচ্ছে...";
+            
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async p => {
                     const lat = p.coords.latitude, lon = p.coords.longitude;
@@ -759,12 +1004,21 @@
                         
                         finalLocationName = parts.slice(0, 2).join(", ") || "Location Found";
                         if (locBadge) locBadge.textContent = finalLocationName;
+                        isLocationAcquired = true; // 🔥 Set to true when successfully fetched
                     } catch(e) { 
-                        if (locBadge) locBadge.textContent = `${lat.toFixed(4)}, ${lon.toFixed(4)}`; 
+                        finalLocationName = `${lat.toFixed(4)}, ${lon.toFixed(4)}`; 
+                        if (locBadge) locBadge.textContent = finalLocationName;
+                        isLocationAcquired = true; // Use coordinates as fallback but allow submit
                     }
                 }, () => { 
+                    finalLocationName = "GPS Off"; 
                     if (locBadge) locBadge.textContent = "GPS Off"; 
-                });
+                    isLocationAcquired = false; // 🔥 User denied or GPS is off
+                }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }); // Better mobile accuracy
+            } else {
+                finalLocationName = "No GPS Support";
+                if (locBadge) locBadge.textContent = "No GPS Support";
+                isLocationAcquired = false;
             }
         }
 
@@ -880,6 +1134,11 @@
             e.preventDefault(); 
             if(!capturedImageData) return alert("ছবি তুলুন!");
             
+            // 🔥 NEW: Check if location is acquired before submitting
+            if(!isLocationAcquired) {
+                return alert("লোকেশন পাওয়া যায়নি! দয়া করে আপনার মোবাইলের জিপিএস (Location/GPS) চালু করুন এবং পুনরায় সঠিক লোকেশন আসা পর্যন্ত অপেক্ষা করে ছবি তুলুন।");
+            }
+            
             const btn = document.getElementById('submitBtn'), loader = document.getElementById('btnLoader'), text = document.getElementById('btnText');
             btn.disabled = true; loader.classList.remove('hidden'); text.textContent = "জমা হচ্ছে...";
             
@@ -891,8 +1150,7 @@
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
             
-            // 🔴 FIX: Forcefully add disabled dropdown values into the 'data' object.
-            // ব্রাউজার disabled ডাটা স্কিপ করে, তাই আমরা জোড় করে এটি যুক্ত করে দিচ্ছি।
+            // Forcefully add disabled dropdown values into the 'data' object.
             data.db_code = formDbCodeEl && formDbCodeEl.value ? formDbCodeEl.value : "Not Found";
             data.distribution_name = distSelectEl && distSelectEl.value ? distSelectEl.value : "Not Found";
             data.area_name = areaSelectEl && areaSelectEl.value ? areaSelectEl.value : "Not Found";
@@ -954,6 +1212,8 @@
             }
             
             capturedImageData = null; 
+            isLocationAcquired = false; // 🔥 Reset location state
+            finalLocationName = "Location Unknown";
         };
     </script>
 </body>
