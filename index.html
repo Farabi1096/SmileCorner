@@ -431,7 +431,7 @@
         
         // Prevent Text Selection (except in input fields)
         document.addEventListener('selectstart', event => {
-            const tagName = event.target.tagName.toLowerCase();
+            const tagName = (event.target.tagName || '').toLowerCase();
             if (tagName !== 'input' && tagName !== 'textarea') {
                 event.preventDefault();
             }
@@ -812,9 +812,11 @@
             if (!town || !day || !route) return;
 
             const outlets = pjpData.filter(i => i.townName === town && i.visitDay === day && i.routeName === route);
-            const session = JSON.parse(localStorage.getItem('colgate_merch_session')) || { submittedCodes: [] };
+            
+            // 🔥 FIXED: Robust check for Local Storage Session
+            const session = JSON.parse(localStorage.getItem('colgate_merch_session')) || {};
             const todayStr = new Date().toDateString();
-            const localSubmitted = session.date === todayStr ? (session.submittedCodes || []) : [];
+            const localSubmitted = (session.date === todayStr && Array.isArray(session.submittedCodes)) ? session.submittedCodes : [];
 
             const pjpContainer = document.getElementById('myDayPjpContainer');
             if (pjpContainer) pjpContainer.classList.remove('hidden');
@@ -825,8 +827,11 @@
             let html = '', completedCount = 0, displayCount = 0, regularCount = 0;
             outlets.forEach(out => {
                 const outCode = (out.code || "").toUpperCase().trim();
-                const reportInfo = reportData.find(r => r.code.toUpperCase().trim() === outCode);
+                const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
+                
+                // Check if uploaded either in Sheet Data or Local Cache
                 const isCompleted = (reportInfo && reportInfo.imageUpload === 'Y') || localSubmitted.includes(outCode);
+                
                 if (isCompleted) completedCount++;
                 const statusStr = (out.status || "").toLowerCase();
                 if (statusStr.includes('display')) displayCount++; else regularCount++;
@@ -1240,12 +1245,35 @@
             
             try {
                 await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data), mode: 'no-cors' });
+                
+                // 🔥 FIXED: Robust Local Storage handling to prevent errors
                 const todayStr = new Date().toDateString();
-                const s = JSON.parse(localStorage.getItem('colgate_merch_session')) || { date: todayStr, startTime: Date.now(), submittedCodes: [], count: 0 };
-                s.count++; s.endTime = Date.now(); if(!s.submittedCodes.includes(data.shop_code.toUpperCase().trim())) s.submittedCodes.push(data.shop_code.toUpperCase().trim());
+                let s = JSON.parse(localStorage.getItem('colgate_merch_session'));
+                
+                // Reset session if it's a new day or invalid format
+                if (!s || s.date !== todayStr) {
+                    s = { date: todayStr, startTime: Date.now(), submittedCodes: [], count: 0 };
+                }
+                // Ensure submittedCodes is always an array
+                if (!Array.isArray(s.submittedCodes)) {
+                    s.submittedCodes = [];
+                }
+                
+                s.count = (s.count || 0) + 1; 
+                s.endTime = Date.now(); 
+                
+                const currentShopCode = (data.shop_code || "").toUpperCase().trim();
+                if (currentShopCode && !s.submittedCodes.includes(currentShopCode)) {
+                    s.submittedCodes.push(currentShopCode);
+                }
+                
                 localStorage.setItem('colgate_merch_session', JSON.stringify(s));
-                document.getElementById('customForm').classList.add('hidden'); document.getElementById('successMessage').classList.remove('hidden');
-                updateTimeUI(); renderMyDayPJP();
+                
+                document.getElementById('customForm').classList.add('hidden'); 
+                document.getElementById('successMessage').classList.remove('hidden');
+                
+                updateTimeUI(); 
+                renderMyDayPJP();
             } catch(e) { alert("Error sending data."); }
             btn.disabled = false; loader.classList.add('hidden'); text.textContent = "জমা দিন (Submit)";
         });
