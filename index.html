@@ -28,6 +28,14 @@
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+        @keyframes float-sparkle {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.5; }
+            50% { transform: translateY(-5px) scale(1.15) rotate(10deg); opacity: 1; }
+        }
+        .animate-sparkle { animation: float-sparkle 3s ease-in-out infinite; }
+        .sparkle-delay-1 { animation-delay: 1s; }
+        .sparkle-delay-2 { animation-delay: 2s; }
+
         @keyframes subtlePulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(218, 41, 28, 0.4); }
             50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(218, 41, 28, 0); }
@@ -57,18 +65,106 @@
 </head>
 <body class="flex items-start sm:items-center justify-center min-h-screen p-0 sm:p-4" oncontextmenu="return false;">
 
-    <div class="bg-white w-full max-w-md sm:rounded-2xl sm:shadow-2xl min-h-screen sm:min-h-0 flex flex-col relative">
+    <!-- ================= ROLE SELECTION SCREEN (MINIMAL) ================= -->
+    <div id="roleSelectionContainer" class="flex flex-col h-screen w-full items-center justify-center p-6 text-center bg-white z-[100] fixed inset-0">
+        
+        <div class="mb-8 relative w-full max-w-[280px] mx-auto flex flex-col items-center">
+            
+            <!-- Blueprint Art 1: Vertical Tube -->
+            <div class="absolute -top-2 -left-10 sm:-left-16 text-red-400 animate-sparkle opacity-60 z-0" style="transform: rotate(-12deg);">
+                <svg viewBox="0 0 40 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-20">
+                    <path d="M12 5 L28 5 L28 15 L12 15 Z" />
+                    <line x1="12" y1="10" x2="28" y2="10" />
+                    <path d="M12 15 L28 15 L32 90 L8 90 Z" />
+                    <rect x="5" y="90" width="30" height="6" />
+                    <line x1="10" y1="90" x2="10" y2="96" />
+                    <line x1="15" y1="90" x2="15" y2="96" />
+                    <line x1="20" y1="90" x2="20" y2="96" />
+                    <line x1="25" y1="90" x2="25" y2="96" />
+                    <line x1="30" y1="90" x2="30" y2="96" />
+                    <rect x="15" y="30" width="10" height="45" rx="2" />
+                </svg>
+            </div>
+
+            <!-- Blueprint Art 2: Squeezing Tube -->
+            <div class="absolute top-12 -right-12 sm:-right-20 text-red-400 animate-sparkle sparkle-delay-1 opacity-60 z-0" style="transform: rotate(-30deg);">
+                <svg viewBox="0 0 100 50" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-20 h-10">
+                    <rect x="85" y="10" width="6" height="30" />
+                    <line x1="88" y1="10" x2="88" y2="40" />
+                    <path d="M85 10 L35 15 L35 35 L85 40 Z" />
+                    <path d="M75 16 L45 19 L45 31 L75 34 Z" />
+                    <rect x="25" y="18" width="10" height="14" />
+                    <line x1="30" y1="18" x2="30" y2="32" />
+                    <path d="M25 25 C 10 15, 15 40, 2 30" stroke-width="3" />
+                </svg>
+            </div>
+
+            <!-- Blueprint Art 3: Tooth -->
+            <div class="absolute -top-10 right-0 sm:-top-12 sm:right-4 text-red-400 animate-sparkle sparkle-delay-2 opacity-60 z-0" style="transform: rotate(15deg);">
+                <svg viewBox="0 0 50 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-12">
+                    <path d="M10 25 Q 10 15 25 15 Q 40 15 40 25 C 40 40 35 55 30 55 C 25 55 25 45 25 45 C 25 45 25 55 20 55 C 15 55 10 40 10 25 Z" />
+                    <path d="M15 15 Q 25 5 35 15" />
+                    <line x1="18" y1="12" x2="22" y2="8" />
+                    <line x1="24" y1="13" x2="28" y2="9" />
+                    <line x1="30" y1="14" x2="34" y2="10" />
+                </svg>
+            </div>
+
+            <!-- Blueprint Art 4: Toothbrush -->
+            <div class="absolute top-24 -left-6 sm:top-28 sm:-left-16 text-red-400 animate-sparkle opacity-60 z-0" style="transform: rotate(10deg);">
+                <svg viewBox="0 0 120 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-24 h-8">
+                    <rect x="30" y="25" width="85" height="6" rx="3" />
+                    <path d="M35 25 L10 25 L10 31 L35 31" />
+                    <path d="M10 25 C 5 25, 5 31, 10 31" />
+                    <rect x="12" y="8" width="20" height="17" />
+                    <line x1="16" y1="8" x2="16" y2="25" />
+                    <line x1="20" y1="8" x2="20" y2="25" />
+                    <line x1="24" y1="8" x2="24" y2="25" />
+                    <line x1="28" y1="8" x2="28" y2="25" />
+                    <path d="M8 8 C 12 -2, 28 -2, 32 8" stroke-width="3" />
+                </svg>
+            </div>
+
+            <div class="bg-red-50 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-red-100 shadow-sm relative z-10">
+                <i data-lucide="smile" class="h-11 w-11 text-colgate"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight relative z-10">Smile Corner</h1>
+            <p class="text-gray-500 text-[13px] mt-1 relative z-10">Select your access level</p>
+        </div>
+
+        <div class="w-full max-w-[280px] space-y-4">
+            <button type="button" id="btnRoleMerch" class="w-full relative flex items-center justify-center py-3.5 px-4 bg-white border-[1.5px] border-gray-200 rounded-2xl hover:border-colgate hover:bg-red-50 transition-all duration-200 shadow-sm group">
+                <i data-lucide="user" class="h-[18px] w-[18px] absolute left-4 text-gray-400 group-hover:text-colgate transition-colors"></i>
+                <span class="font-semibold text-[14px] text-gray-800 group-hover:text-colgate transition-colors">Merchandiser</span>
+            </button>
+
+            <button type="button" id="btnRoleSR" class="w-full relative flex items-center justify-center py-3.5 px-4 bg-white border-[1.5px] border-gray-200 rounded-2xl hover:border-colgate hover:bg-red-50 transition-all duration-200 shadow-sm group">
+                <i data-lucide="briefcase" class="h-[18px] w-[18px] absolute left-4 text-gray-400 group-hover:text-colgate transition-colors"></i>
+                <span class="font-semibold text-[14px] text-gray-800 group-hover:text-colgate transition-colors">Sales Team (TM / SR)</span>
+            </button>
+        </div>
+        
+        <div class="mt-14 text-[11px] text-gray-400 font-medium flex items-center justify-center">
+            <i data-lucide="shield-check" class="h-3.5 w-3.5 mr-1"></i> Secured Panel
+        </div>
+    </div>
+
+    <!-- ================= MAIN APP ================= -->
+    <div id="mainAppContainer" class="hidden bg-white w-full max-w-md sm:rounded-2xl sm:shadow-2xl min-h-screen sm:min-h-0 flex-col relative mx-auto">
         
         <!-- Header -->
-        <div class="bg-colgate px-5 py-4 sm:py-6 text-center sm:rounded-t-2xl sticky top-0 z-50 shadow-md">
-            <div class="flex items-center justify-center gap-2 mb-2 sm:mb-3">
+        <div class="bg-colgate px-5 py-4 sm:py-6 text-center sm:rounded-t-2xl sticky top-0 z-50 shadow-md relative">
+            <button onclick="logoutRole()" class="absolute left-4 top-4 sm:top-6 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors flex items-center justify-center backdrop-blur-sm">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+            </button>
+            <div class="flex items-center justify-center gap-2 mb-1.5">
                 <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm">
-                    <i data-lucide="store" class="h-[18px] w-[18px] sm:h-5 sm:w-5 text-colgate"></i>
+                    <i data-lucide="smile" class="h-[18px] w-[18px] sm:h-5 sm:w-5 text-colgate"></i>
                 </div>
                 <h2 class="text-lg sm:text-xl font-bold text-white tracking-wide">কোলগেট স্মাইল কর্ণার</h2>
             </div>
-            <p class="text-white/90 text-[11px] sm:text-[13px] leading-relaxed px-1 font-medium">
-                আউটলেট ভিজিট এবং ফটো আপলোড সিস্টেম।
+            <p id="headerSubtitle" class="text-white/90 text-[11px] sm:text-[12px] leading-relaxed px-3 py-0.5 bg-red-800/30 rounded-full inline-block font-medium">
+                Loading Panel...
             </p>
         </div>
 
@@ -76,7 +172,7 @@
         <div class="px-4 sm:px-5 py-5 flex-grow">
             
             <!-- Toggle Tabs -->
-            <div class="flex p-1 bg-gray-100 rounded-xl mb-6 shadow-inner overflow-x-auto hide-scrollbar">
+            <div id="tabsContainer" class="flex p-1 bg-gray-100 rounded-xl mb-6 shadow-inner overflow-x-auto hide-scrollbar">
                 <button type="button" id="tabForm" class="flex-1 min-w-[100px] flex items-center justify-center py-2.5 text-[12px] sm:text-[13px] font-bold rounded-lg bg-white shadow-sm text-colgate transition-all whitespace-nowrap px-2">
                     <i data-lucide="camera" class="h-4 w-4 mr-1.5"></i> ফর্ম
                 </button>
@@ -127,7 +223,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-group relative">
+                            <div class="input-group relative hidden">
                                 <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">ডিস্ট্রিবিউশন কোড <span class="text-colgate">*</span></label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
@@ -151,28 +247,61 @@
                                 </div>
                             </div>
 
-                            <div class="input-group relative">
-                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">স্ল্যাব <span class="text-colgate">*</span></label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                        <i data-lucide="layers" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
+                            <!-- SR SPECIFIC FIELDS (Hidden for Merchandiser) -->
+                            <div id="srFieldsGroup" class="space-y-4 hidden">
+                                <div class="input-group relative">
+                                    <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">রুট নাম <span class="text-colgate">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                            <i data-lucide="map" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
+                                        </div>
+                                        <select name="sr_route" id="srRouteSelect" class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium" disabled>
+                                            <option value="" disabled selected>প্রথমে ডিস্ট্রিবিউশন সিলেক্ট করুন</option>
+                                        </select>
                                     </div>
-                                    <select name="slab" id="formSlab" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium">
-                                        <option value="" disabled selected>স্ল্যাব</option>
-                                        <option value="Slab 1">Slab 1</option>
-                                        <option value="Slab 2">Slab 2</option>
-                                        <option value="Regular">Regular (No Slab)</option>
-                                    </select>
+                                </div>
+                                <div class="input-group relative">
+                                    <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">আউটলেট (শুধুমাত্র স্ল্যাব) <span class="text-colgate">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                            <i data-lucide="shopping-bag" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
+                                        </div>
+                                        <select name="sr_outlet" id="srOutletSelect" class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium" disabled>
+                                            <option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="input-group relative">
-                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">কোড <span class="text-colgate">*</span></label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                        <i data-lucide="hash" class="h-[18px] w-[18px] text-gray-300 icon-left"></i>
+                            <!-- MERCHANDISER SPECIFIC FIELDS (Hidden for SR) -->
+                            <div id="merchFieldsGroup" class="space-y-4">
+                                <div class="input-group relative">
+                                    <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">স্ল্যাব <span class="text-colgate">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                            <i data-lucide="layers" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
+                                        </div>
+                                        <select name="slab" id="formSlab" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium">
+                                            <option value="" disabled selected>স্ল্যাব সিলেক্ট করুন</option>
+                                            <option value="Slab 1">Slab 1</option>
+                                            <option value="Slab 2">Slab 2</option>
+                                            <option value="Slab 3">Slab 3</option>
+                                            <option value="Slab 4">Slab 4</option>
+                                            <option value="Slab 5">Slab 5</option>
+                                            <option value="Slab 6">Slab 6</option>
+                                            <option value="Regular">Regular</option>
+                                        </select>
                                     </div>
-                                    <input type="text" name="shop_code" id="formShopCode" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none uppercase font-semibold tracking-wide" placeholder="BDC...">
+                                </div>
+
+                                <div class="input-group relative">
+                                    <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">কোড <span class="text-colgate">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                            <i data-lucide="hash" class="h-[18px] w-[18px] text-gray-300 icon-left"></i>
+                                        </div>
+                                        <input type="text" name="shop_code" id="formShopCode" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none uppercase font-semibold tracking-wide" placeholder="BDC...">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -473,10 +602,82 @@
         let detailedReportData = [];
         let isDetailedReportLoaded = false;
 
-        // Background load of data on startup to ensure DB Codes are ready
+        // ==========================================
+        // ROLE MANAGEMENT
+        // ==========================================
         window.addEventListener('DOMContentLoaded', () => {
-            if (!isDataLoaded) loadAllData();
+            checkRole();
         });
+
+        function checkRole() {
+            const role = localStorage.getItem('colgate_app_role');
+            const roleSelection = document.getElementById('roleSelectionContainer');
+            const mainApp = document.getElementById('mainAppContainer');
+            const tabsContainer = document.getElementById('tabsContainer');
+
+            if (!role) {
+                roleSelection.classList.remove('hidden');
+                roleSelection.classList.add('flex');
+                mainApp.classList.add('hidden');
+                mainApp.classList.remove('flex');
+                return;
+            }
+
+            // User is logged in
+            roleSelection.classList.add('hidden');
+            roleSelection.classList.remove('flex');
+            mainApp.classList.remove('hidden');
+            mainApp.classList.add('flex');
+
+            if (role === 'merchandiser') {
+                document.getElementById('headerSubtitle').textContent = "Merchandiser Panel";
+                if (tabsContainer) tabsContainer.classList.remove('hidden');
+                
+                // Show Merchandiser fields, hide SR fields
+                document.getElementById('srFieldsGroup').classList.add('hidden');
+                document.getElementById('merchFieldsGroup').classList.remove('hidden');
+                
+                document.getElementById('srRouteSelect').removeAttribute('required');
+                document.getElementById('srOutletSelect').removeAttribute('required');
+                document.getElementById('formSlab').setAttribute('required', 'true');
+                document.getElementById('formShopCode').setAttribute('required', 'true');
+
+            } else if (role === 'sr') {
+                document.getElementById('headerSubtitle').textContent = "Sales Team (TM / SR) Panel";
+                if (tabsContainer) tabsContainer.classList.add('hidden');
+                
+                // Force Form View Only
+                document.getElementById('tabForm').click();
+
+                // Show SR fields, hide Merchandiser specific fields
+                document.getElementById('srFieldsGroup').classList.remove('hidden');
+                document.getElementById('merchFieldsGroup').classList.add('hidden');
+
+                document.getElementById('srRouteSelect').setAttribute('required', 'true');
+                document.getElementById('srOutletSelect').setAttribute('required', 'true');
+                document.getElementById('formSlab').removeAttribute('required');
+                document.getElementById('formShopCode').removeAttribute('required');
+            }
+
+            if (!isDataLoaded) loadAllData();
+        }
+
+        document.getElementById('btnRoleMerch')?.addEventListener('click', () => {
+            localStorage.setItem('colgate_app_role', 'merchandiser');
+            checkRole();
+        });
+
+        document.getElementById('btnRoleSR')?.addEventListener('click', () => {
+            localStorage.setItem('colgate_app_role', 'sr');
+            checkRole();
+        });
+
+        window.logoutRole = () => {
+            if(confirm("আপনি কি নিশ্চিত যে আপনি লগআউট করতে চান?")) {
+                localStorage.removeItem('colgate_app_role');
+                checkRole();
+            }
+        };
 
         // --- FETCH DATA ---
         async function fetchSheetData(tabName) {
@@ -813,7 +1014,7 @@
 
             const outlets = pjpData.filter(i => i.townName === town && i.visitDay === day && i.routeName === route);
             
-            // 🔥 FIXED: Robust check for Local Storage Session
+            // Fixed Session Track
             const session = JSON.parse(localStorage.getItem('colgate_merch_session')) || {};
             const todayStr = new Date().toDateString();
             const localSubmitted = (session.date === todayStr && Array.isArray(session.submittedCodes)) ? session.submittedCodes : [];
@@ -903,19 +1104,91 @@
                 const uniqueCodes = [...new Set(filteredPjp.map(item => item.distributor))].filter(Boolean).sort();
                 dbCodeSelectEl.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউশন কোড</option>' + uniqueCodes.map(c => `<option value="${c}">${c}</option>`).join('');
                 dbCodeSelectEl.disabled = !selectedArea;
+
+                // SR Reset specific dropdowns
+                const srRouteSelect = document.getElementById('srRouteSelect');
+                const srOutletSelect = document.getElementById('srOutletSelect');
+                if(srRouteSelect) {
+                    srRouteSelect.innerHTML = '<option value="" disabled selected>প্রথমে ডিস্ট্রিবিউশন সিলেক্ট করুন</option>';
+                    srRouteSelect.disabled = true;
+                }
+                if(srOutletSelect) {
+                    srOutletSelect.innerHTML = '<option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>';
+                    srOutletSelect.disabled = true;
+                }
             });
         }
 
         document.getElementById('distSelect').addEventListener('change', (e) => {
             const dbCodeInput = document.getElementById('formDbCode');
             const selectedArea = document.getElementById('areaSelect').value;
+            const dbName = e.target.value;
             if (dbCodeInput && pjpData.length > 0) {
-                const match = pjpData.find(item => item.region === selectedArea && String(item.townName).trim().toLowerCase() === String(e.target.value).trim().toLowerCase());
+                const match = pjpData.find(item => item.region === selectedArea && String(item.townName).trim().toLowerCase() === String(dbName).trim().toLowerCase());
                 if (match && match.distributor) {
                     dbCodeInput.value = match.distributor;
                 }
             }
+
+            // SR Logic
+            if (localStorage.getItem('colgate_app_role') === 'sr') {
+                const routes = [...new Set(pjpData.filter(i => i.region === selectedArea && i.townName === dbName).map(i => i.routeName))].filter(Boolean).sort();
+                const srRouteSelect = document.getElementById('srRouteSelect');
+                if (srRouteSelect) {
+                    srRouteSelect.innerHTML = '<option value="" disabled selected>রুট সিলেক্ট করুন</option>' + 
+                                            routes.map(r => `<option value="${r}">${r}</option>`).join('');
+                    srRouteSelect.disabled = routes.length === 0;
+                }
+                const srOutletSelect = document.getElementById('srOutletSelect');
+                if (srOutletSelect) {
+                    srOutletSelect.innerHTML = '<option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>';
+                    srOutletSelect.disabled = true;
+                }
+                document.getElementById('formShopCode').value = '';
+                document.getElementById('formSlab').value = '';
+            }
         });
+
+        // SR Event Listeners
+        const srRouteSelect = document.getElementById('srRouteSelect');
+        if (srRouteSelect) {
+            srRouteSelect.addEventListener('change', (e) => {
+                const selectedArea = document.getElementById('areaSelect').value;
+                const dbName = document.getElementById('distSelect').value;
+                const route = e.target.value;
+
+                // Filter for SLAB only (exclude regular)
+                const outlets = pjpData.filter(i => i.region === selectedArea && 
+                                                    i.townName === dbName && 
+                                                    i.routeName === route && 
+                                                    i.slab && 
+                                                    !i.slab.toLowerCase().includes('regular'));
+                
+                const srOutletSelect = document.getElementById('srOutletSelect');
+                if (srOutletSelect) {
+                    srOutletSelect.innerHTML = '<option value="" disabled selected>আউটলেট সিলেক্ট করুন</option>' + 
+                                            outlets.map(o => `<option value="${o.code}">${o.name} (${o.code} - ${o.slab})</option>`).join('');
+                    srOutletSelect.disabled = outlets.length === 0;
+                }
+                document.getElementById('formShopCode').value = '';
+                document.getElementById('formSlab').value = '';
+            });
+        }
+
+        const srOutletSelect = document.getElementById('srOutletSelect');
+        if (srOutletSelect) {
+            srOutletSelect.addEventListener('change', (e) => {
+                const selectedCode = e.target.value;
+                const outlet = pjpData.find(i => i.code === selectedCode);
+                if(outlet) {
+                    document.getElementById('formShopCode').value = outlet.code;
+                    let finalSlab = "Regular";
+                    if(outlet.slab && outlet.slab.toLowerCase().includes("slab 1")) finalSlab = "Slab 1"; 
+                    else if(outlet.slab && outlet.slab.toLowerCase().includes("slab 2")) finalSlab = "Slab 2";
+                    document.getElementById('formSlab').value = finalSlab;
+                }
+            });
+        }
 
         document.getElementById('formDbCode').addEventListener('change', (e) => {
             const distSelectEl = document.getElementById('distSelect');
@@ -1059,7 +1332,6 @@
                     c.height = img.height;
                     ctx.drawImage(img, 0, 0);
                     
-                    // গ্যালারি থেকে আপলোডের ক্ষেত্রে ওয়াটারমার্ক বন্ধ করা হয়েছে
                     // applyWatermark(ctx, c.width, c.height); 
                     
                     capturedImageData = c.toDataURL('image/jpeg', 0.85);
@@ -1073,7 +1345,7 @@
             reader.readAsDataURL(file);
         });
 
-        // NEW: Function to handle Camera Starting with Facing Mode
+        // Function to handle Camera Starting with Facing Mode
         async function startCamera(facingMode) {
             if (stream) {
                 stream.getTracks().forEach(t => t.stop());
@@ -1107,7 +1379,7 @@
             await startCamera(currentFacingMode);
         });
 
-        // NEW: Switch Camera Button Event Listener
+        // Switch Camera Button Event Listener
         document.getElementById('switchCameraBtn').addEventListener('click', async () => {
             currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
             await startCamera(currentFacingMode);
@@ -1118,7 +1390,7 @@
             if (!v) return;
             c.width = v.videoWidth; c.height = v.videoHeight;
             
-            // NEW: Mirror the actual capture if front camera is used
+            // Mirror the actual capture if front camera is used
             if (currentFacingMode === 'user') {
                 ctx.translate(c.width, 0);
                 ctx.scale(-1, 1);
@@ -1142,15 +1414,12 @@
             const dateStr = `${now.getDate()}-${now.toLocaleString('en-US',{month:'short'})}-${now.getFullYear()}`;
             const timeStr = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
             
-            // Dynamic Font Sizing (Smaller text)
             const fontSize = Math.max(w * 0.018, 11);
             const titleFontSize = Math.max(w * 0.025, 14);
             const padding = Math.max(w * 0.02, 15); 
             
-            // Reduced Height 
             const barH = titleFontSize + fontSize + padding * 1.5; 
             
-            // Premium Gradient Background
             const gradient = ctx.createLinearGradient(0, h - (barH * 1.5), 0, h);
             gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
             gradient.addColorStop(0.4, 'rgba(0, 0, 0, 0.6)');
@@ -1161,22 +1430,19 @@
             ctx.textBaseline = 'bottom'; 
             ctx.lineJoin = 'round';
             
-            // Base Y positions
             const line2Y = h - (padding * 0.8);
             const line1Y = line2Y - fontSize - (padding * 0.4);
 
             // Left Side: Brand & Date/Time
             ctx.textAlign = 'left';
             
-            // Colgate Smile Corner
             ctx.font = `bold ${titleFontSize}px sans-serif`;
             ctx.lineWidth = Math.max(w * 0.002, 1.5);
             ctx.strokeStyle = 'rgba(255,255,255,0.8)';
             ctx.strokeText("Colgate Smile Corner", padding, line1Y);
-            ctx.fillStyle = '#da291c'; // Colgate Red
+            ctx.fillStyle = '#da291c'; 
             ctx.fillText("Colgate Smile Corner", padding, line1Y);
             
-            // Date & Time
             ctx.font = `bold ${fontSize}px sans-serif`;
             ctx.strokeStyle = 'black';
             ctx.strokeText(`${dateStr}  |  ${timeStr}`, padding, line2Y);
@@ -1189,19 +1455,17 @@
             const shopInp = document.getElementById('formShopCode');
             const sCode = shopInp ? shopInp.value.toUpperCase() || "N/A" : "N/A";
             
-            // Shop Code
             ctx.font = `bold ${titleFontSize}px sans-serif`;
             ctx.strokeStyle = 'black';
             ctx.strokeText(`Shop: ${sCode}`, w - padding, line1Y);
             ctx.fillStyle = '#ffffff';
             ctx.fillText(`Shop: ${sCode}`, w - padding, line1Y);
             
-            // Location Name
             ctx.font = `bold ${fontSize}px sans-serif`;
             const locBadge = document.getElementById('cameraLocationBadge');
             const locText = locBadge ? locBadge.textContent : "";
             ctx.strokeText(locText, w - padding, line2Y);
-            ctx.fillStyle = '#fde047'; // Yellow
+            ctx.fillStyle = '#fde047'; 
             ctx.fillText(locText, w - padding, line2Y);
         }
 
@@ -1232,29 +1496,34 @@
             const distSelectEl = document.getElementById('distSelect');
             const areaSelectEl = document.getElementById('areaSelect');
 
-            // Get all standard form data
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
             
-            // Forcefully add disabled dropdown values into the 'data' object.
             data.db_code = formDbCodeEl && formDbCodeEl.value ? formDbCodeEl.value : "Not Found";
             data.distribution_name = distSelectEl && distSelectEl.value ? distSelectEl.value : "Not Found";
             data.area_name = areaSelectEl && areaSelectEl.value ? areaSelectEl.value : "Not Found";
+            
+            data.role = localStorage.getItem('colgate_app_role') || 'merchandiser';
+
+            if (data.role === 'sr') {
+                const srOutlet = document.getElementById('srOutletSelect');
+                if (srOutlet && srOutlet.value) {
+                    data.shop_code = srOutlet.value;
+                    data.slab = document.getElementById('formSlab').value || 'Regular'; 
+                }
+            }
 
             data.shop_image = { data: capturedImageData, name: `pjp_${Date.now()}.jpg` };
             
             try {
                 await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data), mode: 'no-cors' });
                 
-                // 🔥 FIXED: Robust Local Storage handling to prevent errors
                 const todayStr = new Date().toDateString();
                 let s = JSON.parse(localStorage.getItem('colgate_merch_session'));
                 
-                // Reset session if it's a new day or invalid format
                 if (!s || s.date !== todayStr) {
                     s = { date: todayStr, startTime: Date.now(), submittedCodes: [], count: 0 };
                 }
-                // Ensure submittedCodes is always an array
                 if (!Array.isArray(s.submittedCodes)) {
                     s.submittedCodes = [];
                 }
@@ -1308,7 +1577,6 @@
             document.getElementById('previewContainer').classList.add('hidden'); 
             document.getElementById('cameraTriggerContainer').classList.remove('hidden'); 
             
-            // Reset DB Code and Distribution Name dropdowns
             const distSelectEl = document.getElementById('distSelect');
             if(distSelectEl) {
                 distSelectEl.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
@@ -1319,9 +1587,20 @@
                 formDbCodeEl.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
                 formDbCodeEl.disabled = true;
             }
+
+            const srRouteSelect = document.getElementById('srRouteSelect');
+            if(srRouteSelect) {
+                srRouteSelect.innerHTML = '<option value="" disabled selected>প্রথমে ডিস্ট্রিবিউশন সিলেক্ট করুন</option>';
+                srRouteSelect.disabled = true;
+            }
+            const srOutletSelect = document.getElementById('srOutletSelect');
+            if(srOutletSelect) {
+                srOutletSelect.innerHTML = '<option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>';
+                srOutletSelect.disabled = true;
+            }
             
             capturedImageData = null; 
-            isLocationAcquired = false; // 🔥 Reset location state
+            isLocationAcquired = false; 
             finalLocationName = "Location Unknown";
         };
     </script>
