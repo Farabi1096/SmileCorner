@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>কোলগেট স্মাইল কর্ণার - লাইভ অ্যাপ</title>
-    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Noto Sans Bengali for better Bangla rendering -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
@@ -65,7 +62,6 @@
 </head>
 <body class="flex items-start sm:items-center justify-center min-h-screen p-0 sm:p-4" oncontextmenu="return false;">
 
-    <!-- ================= ROLE SELECTION SCREEN (MINIMAL) ================= -->
     <div id="roleSelectionContainer" class="flex flex-col h-screen w-full items-center justify-center p-6 text-center bg-white z-[100] fixed inset-0">
         
         <div class="mb-8 relative w-full max-w-[280px] mx-auto flex flex-col items-center">
@@ -132,7 +128,7 @@
             <p class="text-gray-500 text-[13px] mt-1 relative z-10">Select your access level</p>
         </div>
 
-        <div class="w-full max-w-[280px] space-y-4">
+        <div class="w-full max-w-[280px] space-y-4 relative z-10">
             <button type="button" id="btnRoleMerch" class="w-full relative flex items-center justify-center py-3.5 px-4 bg-white border-[1.5px] border-gray-200 rounded-2xl hover:border-colgate hover:bg-red-50 transition-all duration-200 shadow-sm group">
                 <i data-lucide="user" class="h-[18px] w-[18px] absolute left-4 text-gray-400 group-hover:text-colgate transition-colors"></i>
                 <span class="font-semibold text-[14px] text-gray-800 group-hover:text-colgate transition-colors">Merchandiser</span>
@@ -144,12 +140,11 @@
             </button>
         </div>
         
-        <div class="mt-14 text-[11px] text-gray-400 font-medium flex items-center justify-center">
+        <div class="mt-14 text-[11px] text-gray-400 font-medium flex items-center justify-center relative z-10">
             <i data-lucide="shield-check" class="h-3.5 w-3.5 mr-1"></i> Secured Panel
         </div>
     </div>
 
-    <!-- ================= MAIN APP ================= -->
     <div id="mainAppContainer" class="hidden bg-white w-full max-w-md sm:rounded-2xl sm:shadow-2xl min-h-screen sm:min-h-0 flex-col relative mx-auto">
         
         <!-- Header -->
@@ -317,7 +312,6 @@
                         </div>
 
                         <div class="input-group relative">
-                            <input type="file" id="manualFileInput" accept="image/*" class="hidden">
                             <div id="cameraTriggerContainer" class="flex flex-col items-center">
                                 <button type="button" id="openCameraBtn" class="flex flex-row items-center justify-center w-full py-4 border-[1.5px] border-dashed border-red-300 rounded-2xl bg-white hover:bg-red-50 transition-colors group">
                                     <div class="bg-red-50 p-2 rounded-full mr-3 shadow-sm border border-red-100 group-hover:scale-105 transition-transform">
@@ -327,9 +321,6 @@
                                         <span class="text-[15px] font-bold text-colgate leading-tight">স্মার্ট ক্যামেরা স্ক্যানার</span>
                                         <span class="text-[11px] text-red-400 font-medium">ছবি তুলতে এখানে ক্লিক করুন</span>
                                     </div>
-                                </button>
-                                <button type="button" id="manualUploadBtn" class="mt-3 flex items-center text-[13px] font-medium text-gray-500 hover:text-colgate transition-colors">
-                                    <i data-lucide="cloud-upload" class="h-4 w-4 mr-1.5"></i> গ্যালারি থেকে আপলোড
                                 </button>
                             </div>
 
@@ -345,14 +336,12 @@
                                     </div>
 
                                     <div class="absolute inset-x-0 bottom-6 flex justify-center items-center z-20 px-6">
-                                        <!-- Captured button has transition for disabled state visually -->
                                         <button type="button" id="captureBtn" class="bg-white rounded-full p-1 animate-subtle-pulse shadow-lg mx-auto transition-all duration-300">
                                             <div class="w-12 h-12 rounded-full border-[3px] border-colgate flex items-center justify-center bg-white">
                                                 <div class="w-9 h-9 rounded-full bg-colgate flex items-center justify-center text-white"><i data-lucide="camera" class="h-4 w-4"></i></div>
                                             </div>
                                         </button>
 
-                                        <!-- NEW: Switch Camera Button -->
                                         <button type="button" id="switchCameraBtn" class="absolute right-6 bg-black/40 p-2.5 rounded-full text-white backdrop-blur-md shadow-lg border border-white/20 hover:bg-black/60 transition-all">
                                             <i data-lucide="switch-camera" class="h-5 w-5"></i>
                                         </button>
@@ -364,24 +353,20 @@
                             <!-- PREVIEW CONTAINER WITH GUIDELINE LAYOUT -->
                             <div id="previewContainer" class="hidden mt-4 relative animate-fade-in">
                                 
-                                <!-- Captured/Uploaded Image Show here -->
                                 <div class="relative rounded-2xl overflow-hidden border-2 border-colgate shadow-md w-full bg-black mb-4">
                                     <img id="capturedImagePreview" class="w-full h-auto block" alt="Preview">
                                     
-                                    <!-- Retake Button -->
                                     <button type="button" id="retakeBtn" class="absolute top-3 right-3 bg-white/90 text-colgate rounded-full p-2.5 shadow-lg transform transition-transform hover:scale-110">
                                         <i data-lucide="refresh-cw" class="h-5 w-5"></i>
                                     </button>
                                 </div>
 
-                                <!-- Guidelines Box: Left (Correct), Right Top/Bottom (Incorrect) -->
                                 <div class="bg-white border border-gray-200 rounded-2xl p-3 shadow-sm">
                                     <h4 class="text-[13px] font-bold text-gray-800 mb-3 text-center flex items-center justify-center">
                                         <i data-lucide="info" class="h-4 w-4 mr-1.5 text-blue-500"></i> সাবমিট করার আগে মিলিয়ে নিন
                                     </h4>
                                     
                                     <div class="flex gap-2">
-                                        <!-- LEFT: Correct Image -->
                                         <div class="flex-1 flex flex-col">
                                             <div class="bg-green-100 text-green-700 text-[11px] font-bold text-center py-1.5 rounded-t-lg border border-green-300 border-b-0 flex items-center justify-center z-10">
                                                 <i data-lucide="check-circle" class="h-3.5 w-3.5 mr-1"></i> সঠিক ছবি
@@ -391,10 +376,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- RIGHT: Incorrect Images (Top & Bottom) -->
                                         <div class="flex-1 flex flex-col gap-2">
-                                            
-                                            <!-- Top Incorrect -->
                                             <div class="flex-1 flex flex-col relative aspect-video">
                                                 <div class="bg-red-100 text-red-700 text-[10px] font-bold text-center py-1 rounded-t-lg border border-red-300 border-b-0 flex items-center justify-center absolute top-0 inset-x-0 z-10">
                                                     <i data-lucide="x-circle" class="h-3 w-3 mr-1"></i> ভুল (জুম বেশি)
@@ -404,7 +386,6 @@
                                                 </div>
                                             </div>
                                             
-                                            <!-- Bottom Incorrect -->
                                             <div class="flex-1 flex flex-col relative aspect-video">
                                                 <div class="bg-red-100 text-red-700 text-[10px] font-bold text-center py-1 rounded-t-lg border border-red-300 border-b-0 flex items-center justify-center absolute top-0 inset-x-0 z-10">
                                                     <i data-lucide="x-circle" class="h-3 w-3 mr-1"></i> ভুল (কাটা পড়া)
@@ -413,7 +394,6 @@
                                                     <img src="https://i.postimg.cc/4KfN97yx/image.jpg" alt="Incorrect 2" class="w-full h-full object-contain object-center absolute inset-0 pt-7 pb-1 px-1">
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -557,20 +537,12 @@
     <script>
         // Security: Disable Right-click, Text Selection, and Developer Tools for Safety
         document.addEventListener('contextmenu', event => event.preventDefault());
-        
-        // Prevent Text Selection (except in input fields)
         document.addEventListener('selectstart', event => {
             const tagName = (event.target.tagName || '').toLowerCase();
-            if (tagName !== 'input' && tagName !== 'textarea') {
-                event.preventDefault();
-            }
+            if (tagName !== 'input' && tagName !== 'textarea') event.preventDefault();
         });
-        
-        // Prevent Developer Tools Keyboard Shortcuts
         document.onkeydown = function(e) {
-            if (e.keyCode === 123 || // Block F12
-               (e.ctrlKey && e.shiftKey && ['I', 'C', 'J'].includes(String.fromCharCode(e.keyCode))) || // Block Ctrl+Shift+I/C/J
-               (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))) { // Block Ctrl+U (View Source)
+            if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && ['I', 'C', 'J'].includes(String.fromCharCode(e.keyCode))) || (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))) {
                 return false;
             }
         };
@@ -579,35 +551,22 @@
 
         // Constants
         const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; 
-        
-        // YOUR NEWLY DEPLOYED SCRIPT URL
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkLhnjgv9VdgHoO1BscC5hKQJJk-0uEFsL4YSQo7GAgdGvK4eZt6OkNvbFEYaLv1Ih/exec';
 
-        // NEW REPORT CSV URL
-        const REPORT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYcd2eba30rLXPA3OHxVcHYKVpUK9RweS5WD7g-IFM46AUsI6zSu6YESkPxmbg9xyj4gs7UUgL13a/pub?gid=857310602&single=true&output=csv';
-
-        // State
-        let reportData = []; 
-        let pjpData = [];    
+        // State Variables
+        let pjpData = [];
+        let reportData = [];
         let isDataLoaded = false;
         let stream = null;
         let capturedImageData = null;
         let finalLocationName = "Location Unknown";
         let isLocationAcquired = false;
-        
-        // Camera Facing Mode State
         let currentFacingMode = 'environment';
-
-        // Detailed Report State
-        let detailedReportData = [];
-        let isDetailedReportLoaded = false;
 
         // ==========================================
         // ROLE MANAGEMENT
         // ==========================================
-        window.addEventListener('DOMContentLoaded', () => {
-            checkRole();
-        });
+        window.addEventListener('DOMContentLoaded', () => { checkRole(); });
 
         function checkRole() {
             const role = localStorage.getItem('colgate_app_role');
@@ -623,7 +582,6 @@
                 return;
             }
 
-            // User is logged in
             roleSelection.classList.add('hidden');
             roleSelection.classList.remove('flex');
             mainApp.classList.remove('hidden');
@@ -632,11 +590,8 @@
             if (role === 'merchandiser') {
                 document.getElementById('headerSubtitle').textContent = "Merchandiser Panel";
                 if (tabsContainer) tabsContainer.classList.remove('hidden');
-                
-                // Show Merchandiser fields, hide SR fields
                 document.getElementById('srFieldsGroup').classList.add('hidden');
                 document.getElementById('merchFieldsGroup').classList.remove('hidden');
-                
                 document.getElementById('srRouteSelect').removeAttribute('required');
                 document.getElementById('srOutletSelect').removeAttribute('required');
                 document.getElementById('formSlab').setAttribute('required', 'true');
@@ -645,14 +600,9 @@
             } else if (role === 'sr') {
                 document.getElementById('headerSubtitle').textContent = "Sales Team (TM / SR) Panel";
                 if (tabsContainer) tabsContainer.classList.add('hidden');
-                
-                // Force Form View Only
                 document.getElementById('tabForm').click();
-
-                // Show SR fields, hide Merchandiser specific fields
                 document.getElementById('srFieldsGroup').classList.remove('hidden');
                 document.getElementById('merchFieldsGroup').classList.add('hidden');
-
                 document.getElementById('srRouteSelect').setAttribute('required', 'true');
                 document.getElementById('srOutletSelect').setAttribute('required', 'true');
                 document.getElementById('formSlab').removeAttribute('required');
@@ -679,43 +629,9 @@
             }
         };
 
-        // --- FETCH DATA ---
-        async function fetchSheetData(tabName) {
-            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${tabName}&t=${new Date().getTime()}`;
-            try {
-                const response = await fetch(url);
-                const text = await response.text();
-                const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
-                const data = JSON.parse(jsonString);
-                return data.table.rows;
-            } catch (error) { console.error("Error fetching " + tabName, error); return []; }
-        }
-
-        async function loadAllData() {
-            if (isDataLoaded) return;
-            const pjpRows = await fetchSheetData('PJP');
-            pjpData = pjpRows.map(row => {
-                const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
-                return {
-                    distributor: getVal(0), region: getVal(1), townName: getVal(2),
-                    code: getVal(3), name: getVal(4), slab: getVal(5),
-                    routeCode: getVal(6), routeName: getVal(7), visitDay: getVal(8), 
-                    merchandiser: getVal(9), status: getVal(10)
-                };
-            }).filter(i => i.townName && !["TOWN NAME", "DB NAME", "TOWN"].includes(i.townName.toUpperCase()));
-
-            const reportRows = await fetchSheetData('Report');
-            reportData = reportRows.map(row => {
-                const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
-                return { code: getVal(3), imageUpload: getVal(13) };
-            }).filter(i => i.code !== "Outlet Code");
-
-            isDataLoaded = true;
-            initMyDayFilters();
-            initFormFilters(); // Initialize dynamic form dropdowns from PJP
-        }
-
-        // --- CSV PARSER FOR DETAILED REPORT ---
+        // ==========================================
+        // DATA LOADING & PARSING
+        // ==========================================
         function parseCSV(str) {
             const arr = [];
             let quote = false;
@@ -732,289 +648,215 @@
                 if (cc == '\r' && !quote) { ++row; col = 0; continue; }
                 arr[row][col] += cc;
             }
-            return arr;
-        }
-
-        async function fetchDetailedReport() {
-            if (isDetailedReportLoaded) return;
-            const loader = document.getElementById('reportLoader');
-            const list = document.getElementById('reportList');
-            loader.classList.remove('hidden');
-            list.classList.add('hidden');
-            
-            try {
-                const res = await fetch(REPORT_CSV_URL);
-                const text = await res.text();
-                const rows = parseCSV(text);
-                
-                detailedReportData = [];
-                // Skip header (index 0)
-                for(let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    if(row.length > 4 && row[4]) { // Ensure outlet code exists
-                        detailedReportData.push({
-                            month: row[0],
-                            zone: row[1],
-                            dbCode: row[2],
-                            dhName: row[3],
-                            code: row[4].trim().toUpperCase(),
-                            name: row[5],
-                            route: row[6],
-                            slab: row[7],
-                            enrolled: row[8],
-                            target: row[9],
-                            totStt: row[10],
-                            ach: row[11],
-                            balance: row[12],
-                            eligible: row[13],
-                            imgUpload: row[14],
-                            imgUploadCount: row[15],
-                            payout: row[16]
-                        });
-                    }
+            if(arr.length < 2) return [];
+            const headers = arr[0].map(h => h.trim());
+            const result = [];
+            for(let i=1; i<arr.length; i++) {
+                if(arr[i].length === 1 && arr[i][0].trim() === '') continue;
+                let obj = {};
+                for(let j=0; j<headers.length; j++) {
+                    obj[headers[j]] = arr[i][j] ? arr[i][j].trim() : '';
                 }
-                isDetailedReportLoaded = true;
-                initReportFilters();
-                renderDetailedReport();
-            } catch (e) {
-                console.error('Failed to load report CSV', e);
-                list.innerHTML = `<div class="text-center text-red-500 text-sm py-4">রিপোর্ট লোড করতে সমস্যা হয়েছে। ইন্টারনেট কানেকশন চেক করুন।</div>`;
-            } finally {
-                loader.classList.add('hidden');
-                list.classList.remove('hidden');
+                result.push(obj);
             }
+            return result;
         }
 
-        function initReportFilters() {
-            const dbNames = [...new Set(detailedReportData.map(d => d.dhName))].filter(Boolean).sort();
-            const dbSelect = document.getElementById('reportDbNameSelect');
-            dbSelect.innerHTML = '<option value="">DB Name নির্বাচন করুন</option>' + dbNames.map(name => `<option value="${name}">${name}</option>`).join('');
-            
-            const routeSelect = document.getElementById('reportRouteSelect');
-            routeSelect.innerHTML = '<option value="">রুট নির্বাচন করুন</option>';
-            routeSelect.disabled = true;
-            routeSelect.classList.replace('bg-white', 'bg-gray-100');
-            routeSelect.classList.replace('text-gray-700', 'text-gray-500');
-        }
-
-        document.getElementById('reportDbNameSelect').addEventListener('change', (e) => {
-            const dbName = e.target.value;
-            const routeSelect = document.getElementById('reportRouteSelect');
-            
-            if (!dbName) {
-                routeSelect.innerHTML = '<option value="">রুট নির্বাচন করুন</option>';
-                routeSelect.disabled = true;
-                routeSelect.classList.replace('bg-white', 'bg-gray-100');
-                routeSelect.classList.replace('text-gray-700', 'text-gray-500');
-            } else {
-                const routes = [...new Set(detailedReportData.filter(d => d.dhName === dbName).map(d => d.route))].filter(Boolean).sort();
-                routeSelect.innerHTML = '<option value="">সকল রুট</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
-                routeSelect.disabled = false;
-                routeSelect.classList.replace('bg-gray-100', 'bg-white');
-                routeSelect.classList.replace('text-gray-500', 'text-gray-700');
-            }
-            renderDetailedReport();
-        });
-
-        document.getElementById('reportRouteSelect').addEventListener('change', () => {
-            renderDetailedReport();
-        });
-
-        function renderDetailedReport() {
-            const list = document.getElementById('reportList');
-            const countDisplay = document.getElementById('reportCountDisplay');
-            const countNumber = document.getElementById('reportCountNumber');
-            const dbName = document.getElementById('reportDbNameSelect').value;
-            const route = document.getElementById('reportRouteSelect').value;
-
-            if (!dbName) {
-                countDisplay.classList.add('hidden');
-                list.innerHTML = `
-                    <div class="flex flex-col items-center justify-center py-10 opacity-70">
-                        <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
-                        <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে DB Name নির্বাচন করুন</p>
-                    </div>`;
-                lucide.createIcons();
-                return;
-            }
-            
-            let filtered = detailedReportData.filter(d => d.dhName === dbName);
-            if (route) {
-                filtered = filtered.filter(d => d.route === route);
-            }
-
-            if (filtered.length === 0) {
-                countDisplay.classList.add('hidden');
-                list.innerHTML = `
-                    <div class="flex flex-col items-center justify-center py-10 opacity-70">
-                        <i data-lucide="search-x" class="h-10 w-10 text-gray-400 mb-2"></i>
-                        <p class="text-[12px] text-gray-500 mt-2">কোনো তথ্য পাওয়া যায়নি</p>
-                    </div>`;
-                lucide.createIcons();
-                return;
-            }
-
-            countNumber.textContent = filtered.length;
-            countDisplay.classList.remove('hidden');
-
-            let html = '';
-            filtered.forEach(d => {
-                const isEligible = d.eligible && d.eligible.toUpperCase().trim() === 'Y';
-                const statusColor = isEligible ? 'text-green-700 bg-green-50 border-green-200' : 'text-red-700 bg-red-50 border-red-200';
-                const payoutText = d.payout ? d.payout + ' TK' : '0 TK';
+        async function loadAllData() {
+            const loader = document.getElementById('myDayLoader');
+            if (loader) loader.classList.remove('hidden');
+            try {
+                // Fetch PJP Data directly from Google Sheets CSV Export
+                const pjpUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=PJP`;
+                const pjpResponse = await fetch(pjpUrl);
+                if (!pjpResponse.ok) throw new Error("PJP Network response was not ok");
+                const pjpText = await pjpResponse.text();
                 
-                const isUploaded = d.imgUpload && d.imgUpload.toUpperCase().trim() === 'Y';
-                const uploadBadge = isUploaded 
-                    ? `<span class="inline-flex items-center bg-green-50 text-green-600 border border-green-200 px-1.5 py-0.5 rounded text-[9px] font-bold ml-2"><i data-lucide="check-circle-2" class="h-2.5 w-2.5 mr-0.5"></i>Uploaded</span>`
-                    : `<span class="inline-flex items-center bg-red-50 text-red-500 border border-red-200 px-1.5 py-0.5 rounded text-[9px] font-bold ml-2"><i data-lucide="x-circle" class="h-2.5 w-2.5 mr-0.5"></i>No Image</span>`;
+                const rawData = parseCSV(pjpText);
+                pjpData = rawData.map(item => ({
+                    region: item['Region'] || item['Area'] || '',
+                    distributor: item['Distributor Code'] || item['DB Code'] || '',
+                    townName: item['Town Name'] || item['Distributor Name'] || '',
+                    routeName: item['Route Name'] || '',
+                    code: item['Store Code'] || item['Code'] || '',
+                    name: item['Store Name'] || item['Outlet Name'] || '',
+                    slab: item['Slab'] || item['Category'] || '',
+                    visitDay: item['Visit Day'] || item['Day'] || ''
+                })).filter(i => i.region && i.townName);
+
+                // Fetch Report Data directly from Google Sheets CSV Export
+                const reportUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Images`;
+                const reportResponse = await fetch(reportUrl);
+                if (reportResponse.ok) {
+                    const reportText = await reportResponse.text();
+                    reportData = parseCSV(reportText).map(item => ({
+                        code: item['Store Code'] || item['Code'] || item['Shop Code'] || '',
+                        imageUpload: item['Image Upload'] || item['CDC'] || item['Status'] || ''
+                    }));
+                }
+
+                isDataLoaded = true;
+                populateDropdowns();
+                updateReportDropdowns();
                 
-                html += `
-                <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-sm flex flex-col gap-2 relative overflow-hidden transition-all hover:shadow-md">
-                    <div class="flex justify-between items-start border-b border-gray-100 pb-2.5">
-                        <div class="pr-2">
-                            <div class="font-bold text-[13px] text-gray-800 leading-tight">${d.name || 'Unknown'}</div>
-                            <div class="text-[10px] text-gray-500 font-medium mt-1 flex items-center flex-wrap">
-                                #${d.code} • ${d.route || ''}
-                                ${uploadBadge}
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 px-2.5 py-1 rounded-md text-[10px] font-extrabold border ${statusColor} shadow-sm whitespace-nowrap">
-                            Payout: ${payoutText}
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-5 gap-1.5 mt-1">
-                        <div class="bg-gray-50 p-1.5 rounded-lg border border-gray-100 flex flex-col items-center text-center">
-                            <span class="text-[7px] sm:text-[8px] text-gray-500 font-bold uppercase mb-0.5">Target</span>
-                            <span class="text-[11px] font-extrabold text-gray-800">${d.target || '0'}</span>
-                        </div>
-                        <div class="bg-blue-50 p-1.5 rounded-lg border border-blue-100 flex flex-col items-center text-center">
-                            <span class="text-[7px] sm:text-[8px] text-blue-500 font-bold uppercase mb-0.5">Achieve</span>
-                            <span class="text-[11px] font-extrabold text-blue-700">${d.totStt || '0'}</span>
-                        </div>
-                        <div class="bg-purple-50 p-1.5 rounded-lg border border-purple-100 flex flex-col items-center text-center">
-                            <span class="text-[7px] sm:text-[8px] text-purple-500 font-bold uppercase mb-0.5">ACH %</span>
-                            <span class="text-[11px] font-extrabold text-purple-700">${d.ach || '0%'}</span>
-                        </div>
-                        <div class="bg-orange-50 p-1.5 rounded-lg border border-orange-100 flex flex-col items-center text-center">
-                            <span class="text-[7px] sm:text-[8px] text-orange-500 font-bold uppercase mb-0.5">Balance</span>
-                            <span class="text-[11px] font-extrabold text-orange-700">${d.balance || '0'}</span>
-                        </div>
-                        <div class="bg-green-50 p-1.5 rounded-lg border border-green-100 flex flex-col items-center text-center">
-                            <span class="text-[7px] sm:text-[8px] text-green-600 font-bold uppercase mb-0.5">Images</span>
-                            <span class="text-[11px] font-extrabold text-green-700">${d.imgUploadCount || '0'}</span>
-                        </div>
-                    </div>
-                </div>
-                `;
-            });
-            
-            list.innerHTML = html;
-            lucide.createIcons(); // আইকনগুলো রেন্ডার করার জন্য
+                // If My Day view is active, render it
+                const myDayView = document.getElementById('myDayView');
+                if (myDayView && !myDayView.classList.contains('hidden')) {
+                    renderMyDayPJP();
+                }
+                
+                if (loader) loader.classList.add('hidden');
+            } catch (error) {
+                console.error("Data loading error:", error);
+                alert("ডেটা লোড করতে সমস্যা হয়েছে। দয়া করে ইন্টারনেট কানেকশন চেক করুন।");
+                if (loader) loader.classList.add('hidden');
+            }
         }
 
-        // --- TAB NAVIGATION ---
-        const tabs = ['tabForm', 'tabMyDay', 'tabReport'];
-        const views = ['formView', 'myDayView', 'reportView'];
+        // ==========================================
+        // DROPDOWN POPULATION (FORM)
+        // ==========================================
+        function populateDropdowns() {
+            if(!pjpData || pjpData.length === 0) return;
 
-        tabs.forEach((tabId, idx) => {
-            const btn = document.getElementById(tabId);
-            if (btn) {
-                btn.addEventListener('click', async () => {
-                    tabs.forEach(t => {
-                        const el = document.getElementById(t);
-                        if (el) {
-                            el.classList.remove('bg-white', 'shadow-sm', 'text-colgate');
-                            el.classList.add('text-gray-500');
-                        }
-                    });
-                    btn.classList.add('bg-white', 'shadow-sm', 'text-colgate');
-                    views.forEach(v => {
-                        const viewEl = document.getElementById(v);
-                        if (viewEl) viewEl.classList.add('hidden');
-                    });
-                    const targetView = document.getElementById(views[idx]);
-                    if (targetView) targetView.classList.remove('hidden');
-
-                    if (idx === 1 && !isDataLoaded) {
-                        const loader = document.getElementById('myDayLoader');
-                        if (loader) loader.classList.remove('hidden');
-                        await loadAllData();
-                        if (loader) loader.classList.add('hidden');
-                        updateTimeUI();
-                    } else if (idx === 1) {
-                        renderMyDayPJP();
-                        updateTimeUI();
-                    } else if (idx === 2) {
-                        // Fetch detailed report when Report tab is clicked
-                        fetchDetailedReport();
-                    }
-                });
+            const areas = [...new Set(pjpData.map(i => i.region))].filter(Boolean).sort();
+            const areaSelect = document.getElementById('areaSelect');
+            if (areaSelect) {
+                areaSelect.innerHTML = '<option value="" disabled selected>এরিয়া সিলেক্ট করুন</option>' + 
+                                    areas.map(a => `<option value="${a}">${a}</option>`).join('');
             }
-        });
 
-        function initMyDayFilters() {
             const towns = [...new Set(pjpData.map(i => i.townName))].filter(Boolean).sort();
             const myDayTownSelect = document.getElementById('myDayTownSelect');
-            myDayTownSelect.innerHTML = '<option value="">DB Name</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
+            if(myDayTownSelect) {
+                myDayTownSelect.innerHTML = '<option value="" disabled selected>টাউন (Town) সিলেক্ট করুন</option>' + 
+                                            towns.map(t => `<option value="${t}">${t}</option>`).join('');
+            }
         }
 
-        myDayTownSelect.addEventListener('change', () => {
-            const town = myDayTownSelect.value;
-            if(!town) {
-                myDayVisitDaySelect.disabled = true;
-                myDayVisitDaySelect.innerHTML = '<option value="">Visit Day</option>';
-                myDayRouteSelect.innerHTML = '<option value="">Route</option>';
-                myDayRouteSelect.disabled = true;
-                return;
+        document.getElementById('areaSelect')?.addEventListener('change', (e) => {
+            const selectedArea = e.target.value;
+            const dists = [...new Set(pjpData.filter(i => i.region === selectedArea).map(i => i.townName))].filter(Boolean).sort();
+            const distSelect = document.getElementById('distSelect');
+            if(distSelect) {
+                distSelect.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউশন সিলেক্ট করুন</option>' + 
+                                    dists.map(d => `<option value="${d}">${d}</option>`).join('');
+                distSelect.disabled = dists.length === 0;
             }
-            const days = [...new Set(pjpData.filter(i => i.townName === town).map(i => i.visitDay))].filter(Boolean).sort();
-            myDayVisitDaySelect.innerHTML = '<option value="">Visit Day</option>' + days.map(d => `<option value="${d}">${d}</option>`).join('');
-            myDayVisitDaySelect.disabled = false;
-            myDayVisitDaySelect.classList.replace('bg-gray-100', 'bg-white');
-            myDayVisitDaySelect.classList.replace('text-gray-500', 'text-gray-700');
-
-            const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-            if (days.includes(todayName)) {
-                myDayVisitDaySelect.value = todayName;
-            } else if (days.length > 0) {
-                myDayVisitDaySelect.value = days[0]; 
-            }
-            myDayVisitDaySelect.dispatchEvent(new Event('change'));
-        });
-
-        myDayVisitDaySelect.addEventListener('change', () => {
-            const town = myDayTownSelect.value;
-            const day = myDayVisitDaySelect.value;
-            if(!day) {
-                myDayRouteSelect.innerHTML = '<option value="">Route</option>';
-                myDayRouteSelect.disabled = true;
-                document.getElementById('myDayPjpContainer').classList.add('hidden');
-                return;
-            }
-            const routes = [...new Set(pjpData.filter(i => i.townName === town && i.visitDay === day).map(i => i.routeName))].filter(Boolean).sort();
-            myDayRouteSelect.innerHTML = '<option value="">Route Name</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
-            myDayRouteSelect.disabled = false;
-            myDayRouteSelect.classList.replace('bg-gray-100', 'bg-white');
-            myDayRouteSelect.classList.replace('text-gray-500', 'text-gray-700');
             
-            if (routes.length > 0) {
-                myDayRouteSelect.value = routes[0];
-                myDayRouteSelect.dispatchEvent(new Event('change'));
-            } else {
-                document.getElementById('myDayPjpContainer').classList.add('hidden');
+            const formDbCode = document.getElementById('formDbCode');
+            if (formDbCode) formDbCode.value = '';
+            
+            const srRouteSelect = document.getElementById('srRouteSelect');
+            if (srRouteSelect) {
+                srRouteSelect.innerHTML = '<option value="" disabled selected>প্রথমে ডিস্ট্রিবিউশন সিলেক্ট করুন</option>';
+                srRouteSelect.disabled = true;
+            }
+            
+            const srOutletSelect = document.getElementById('srOutletSelect');
+            if (srOutletSelect) {
+                srOutletSelect.innerHTML = '<option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>';
+                srOutletSelect.disabled = true;
             }
         });
 
-        myDayRouteSelect.addEventListener('change', renderMyDayPJP);
+        document.getElementById('distSelect')?.addEventListener('change', (e) => {
+            const selectedArea = document.getElementById('areaSelect').value;
+            const dbName = e.target.value;
+            
+            const match = pjpData.find(item => item.region === selectedArea && item.townName === dbName);
+            if (match && match.distributor) {
+                document.getElementById('formDbCode').value = match.distributor;
+            }
+
+            if (localStorage.getItem('colgate_app_role') === 'sr') {
+                const routes = [...new Set(pjpData.filter(i => i.region === selectedArea && i.townName === dbName).map(i => i.routeName))].filter(Boolean).sort();
+                const srRouteSelect = document.getElementById('srRouteSelect');
+                if (srRouteSelect) {
+                    srRouteSelect.innerHTML = '<option value="" disabled selected>রুট সিলেক্ট করুন</option>' + 
+                                            routes.map(r => `<option value="${r}">${r}</option>`).join('');
+                    srRouteSelect.disabled = routes.length === 0;
+                }
+                const srOutletSelect = document.getElementById('srOutletSelect');
+                if (srOutletSelect) {
+                    srOutletSelect.innerHTML = '<option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>';
+                    srOutletSelect.disabled = true;
+                }
+                document.getElementById('formShopCode').value = '';
+                document.getElementById('formSlab').value = 'Regular';
+            }
+        });
+
+        document.getElementById('srRouteSelect')?.addEventListener('change', (e) => {
+            const selectedArea = document.getElementById('areaSelect').value;
+            const dbName = document.getElementById('distSelect').value;
+            const route = e.target.value;
+
+            const outlets = pjpData.filter(i => i.region === selectedArea && 
+                                                i.townName === dbName && 
+                                                i.routeName === route && 
+                                                i.slab && 
+                                                !i.slab.toLowerCase().includes('regular'));
+            
+            const srOutletSelect = document.getElementById('srOutletSelect');
+            if (srOutletSelect) {
+                srOutletSelect.innerHTML = '<option value="" disabled selected>আউটলেট সিলেক্ট করুন</option>' + 
+                                        outlets.map(o => `<option value="${o.code}">${o.name} (${o.code} - ${o.slab})</option>`).join('');
+                srOutletSelect.disabled = outlets.length === 0;
+            }
+            document.getElementById('formShopCode').value = '';
+            document.getElementById('formSlab').value = '';
+        });
+
+        document.getElementById('srOutletSelect')?.addEventListener('change', (e) => {
+            const selectedCode = e.target.value;
+            const outlet = pjpData.find(i => i.code === selectedCode);
+            if(outlet) {
+                document.getElementById('formShopCode').value = outlet.code;
+                document.getElementById('formSlab').value = outlet.slab;
+            }
+        });
+
+        // ==========================================
+        // MY DAY LOGIC
+        // ==========================================
+        document.getElementById('myDayTownSelect')?.addEventListener('change', (e) => {
+            const town = e.target.value;
+            const days = [...new Set(pjpData.filter(i => i.townName === town).map(i => i.visitDay))].filter(Boolean).sort();
+            const daySelect = document.getElementById('myDayVisitDaySelect');
+            if(daySelect) {
+                daySelect.innerHTML = '<option value="" disabled selected>বার (Visit Day) সিলেক্ট করুন</option>' + 
+                                    days.map(d => `<option value="${d}">${d}</option>`).join('');
+                daySelect.disabled = days.length === 0;
+            }
+            const container = document.getElementById('myDayPjpContainer');
+            if (container) container.classList.add('hidden');
+            const list = document.getElementById('myDayPjpList');
+            if (list) list.innerHTML = '';
+        });
+
+        document.getElementById('myDayVisitDaySelect')?.addEventListener('change', () => {
+            const town = document.getElementById('myDayTownSelect').value;
+            const day = document.getElementById('myDayVisitDaySelect').value;
+            const routes = [...new Set(pjpData.filter(i => i.townName === town && i.visitDay === day).map(i => i.routeName))].filter(Boolean).sort();
+            const routeSelect = document.getElementById('myDayRouteSelect');
+            if(routeSelect) {
+                routeSelect.innerHTML = '<option value="" disabled selected>Route Name</option>' + 
+                                        routes.map(r => `<option value="${r}">${r}</option>`).join('');
+                routeSelect.disabled = routes.length === 0;
+            }
+        });
+
+        document.getElementById('myDayRouteSelect')?.addEventListener('change', renderMyDayPJP);
 
         function renderMyDayPJP() {
-            const town = myDayTownSelect.value, day = myDayVisitDaySelect.value, route = myDayRouteSelect.value;
+            const town = document.getElementById('myDayTownSelect')?.value;
+            const day = document.getElementById('myDayVisitDaySelect')?.value;
+            const route = document.getElementById('myDayRouteSelect')?.value;
             if (!town || !day || !route) return;
 
             const outlets = pjpData.filter(i => i.townName === town && i.visitDay === day && i.routeName === route);
             
-            // Fixed Session Track
             const session = JSON.parse(localStorage.getItem('colgate_merch_session')) || {};
             const todayStr = new Date().toDateString();
             const localSubmitted = (session.date === todayStr && Array.isArray(session.submittedCodes)) ? session.submittedCodes : [];
@@ -1029,24 +871,18 @@
             outlets.forEach(out => {
                 const outCode = (out.code || "").toUpperCase().trim();
                 const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
-                
-                // Check if uploaded either in Sheet Data or Local Cache
-                const isCompleted = (reportInfo && reportInfo.imageUpload === 'Y') || localSubmitted.includes(outCode);
+                const isCompleted = (reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode);
                 
                 if (isCompleted) completedCount++;
-                const statusStr = (out.status || "").toLowerCase();
-                if (statusStr.includes('display')) displayCount++; else regularCount++;
+                const statusStr = (out.slab || "").toLowerCase();
+                if (statusStr.includes('regular')) regularCount++; else displayCount++;
 
                 const statusBadge = isCompleted ? 
                     `<span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-green-300 shadow-sm"><i data-lucide="check-circle-2" class="h-3 w-3 mr-1"></i> Uploaded</span>` :
                     `<button class="bg-colgate text-white px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-red-700 shadow-sm pointer-events-none"><i data-lucide="camera" class="h-3 w-3 mr-1"></i> Upload</button>`;
 
-                const safeTown = (out.townName || "").replace(/'/g, "\\'");
-                const safeSlab = (out.slab || "Regular").replace(/'/g, "\\'");
-
                 html += `
-                    <div onclick="window.openUploadForm('', '${safeTown}', '${safeTown}', '${safeSlab}', '${outCode}')" 
-                         class="flex items-center justify-between p-3 rounded-lg border ${isCompleted ? 'border-green-400 bg-green-50/60 shadow-sm' : 'border-red-200 bg-white shadow-sm'} transition-all cursor-pointer hover:shadow-md mb-2">
+                    <div class="flex items-center justify-between p-3 rounded-lg border ${isCompleted ? 'border-green-400 bg-green-50/60 shadow-sm' : 'border-red-200 bg-white shadow-sm'} transition-all hover:shadow-md mb-2">
                         <div class="pointer-events-none flex-grow">
                             <div class="font-bold text-[13px] text-gray-800">${out.name}</div>
                             <div class="text-[11px] text-gray-500 mt-1 flex items-center">
@@ -1079,233 +915,157 @@
             lucide.createIcons();
         }
 
-        // Initialize Form Filters from PJP Sheet Data
-        function initFormFilters() {
-            const areaSelect = document.getElementById('areaSelect');
-            if(!areaSelect) return;
-            const areas = [...new Set(pjpData.map(i => i.region))].filter(Boolean).sort();
-            areaSelect.innerHTML = '<option value="" disabled selected>এরিয়া</option>' + areas.map(a => `<option value="${a}">${a}</option>`).join('');
-            areaSelect.disabled = false;
+        // ==========================================
+        // REPORT LOGIC
+        // ==========================================
+        function updateReportDropdowns() {
+            if(!pjpData || pjpData.length === 0) return;
+            const dbList = [...new Set(pjpData.map(i => i.townName))].filter(Boolean).sort();
+            const reportDbSelect = document.getElementById('reportDbNameSelect');
+            if(reportDbSelect) {
+                reportDbSelect.innerHTML = '<option value="">DB Name নির্বাচন করুন</option>' + 
+                                           dbList.map(db => `<option value="${db}">${db}</option>`).join('');
+            }
         }
 
-        const areaSelectEl = document.getElementById('areaSelect');
-        if (areaSelectEl) {
-            areaSelectEl.addEventListener('change', (e) => {
-                const selectedArea = e.target.value;
-                const distSelectEl = document.getElementById('distSelect');
-                const dbCodeSelectEl = document.getElementById('formDbCode');
-                
-                const filteredPjp = pjpData.filter(item => item.region === selectedArea);
-                
-                const uniqueNames = [...new Set(filteredPjp.map(item => item.townName))].filter(Boolean).sort();
-                distSelectEl.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউশন নাম</option>' + uniqueNames.map(d => `<option value="${d}">${d}</option>`).join('');
-                distSelectEl.disabled = !selectedArea;
-                
-                const uniqueCodes = [...new Set(filteredPjp.map(item => item.distributor))].filter(Boolean).sort();
-                dbCodeSelectEl.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউশন কোড</option>' + uniqueCodes.map(c => `<option value="${c}">${c}</option>`).join('');
-                dbCodeSelectEl.disabled = !selectedArea;
-
-                // SR Reset specific dropdowns
-                const srRouteSelect = document.getElementById('srRouteSelect');
-                const srOutletSelect = document.getElementById('srOutletSelect');
-                if(srRouteSelect) {
-                    srRouteSelect.innerHTML = '<option value="" disabled selected>প্রথমে ডিস্ট্রিবিউশন সিলেক্ট করুন</option>';
-                    srRouteSelect.disabled = true;
-                }
-                if(srOutletSelect) {
-                    srOutletSelect.innerHTML = '<option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>';
-                    srOutletSelect.disabled = true;
-                }
-            });
-        }
-
-        document.getElementById('distSelect').addEventListener('change', (e) => {
-            const dbCodeInput = document.getElementById('formDbCode');
-            const selectedArea = document.getElementById('areaSelect').value;
+        document.getElementById('reportDbNameSelect')?.addEventListener('change', (e) => {
             const dbName = e.target.value;
-            if (dbCodeInput && pjpData.length > 0) {
-                const match = pjpData.find(item => item.region === selectedArea && String(item.townName).trim().toLowerCase() === String(dbName).trim().toLowerCase());
-                if (match && match.distributor) {
-                    dbCodeInput.value = match.distributor;
-                }
+            const reportRouteSelect = document.getElementById('reportRouteSelect');
+            if(!dbName) {
+                reportRouteSelect.innerHTML = '<option value="">রুট নির্বাচন করুন</option>';
+                reportRouteSelect.disabled = true;
+                return;
             }
 
-            // SR Logic
-            if (localStorage.getItem('colgate_app_role') === 'sr') {
-                const routes = [...new Set(pjpData.filter(i => i.region === selectedArea && i.townName === dbName).map(i => i.routeName))].filter(Boolean).sort();
-                const srRouteSelect = document.getElementById('srRouteSelect');
-                if (srRouteSelect) {
-                    srRouteSelect.innerHTML = '<option value="" disabled selected>রুট সিলেক্ট করুন</option>' + 
-                                            routes.map(r => `<option value="${r}">${r}</option>`).join('');
-                    srRouteSelect.disabled = routes.length === 0;
-                }
-                const srOutletSelect = document.getElementById('srOutletSelect');
-                if (srOutletSelect) {
-                    srOutletSelect.innerHTML = '<option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>';
-                    srOutletSelect.disabled = true;
-                }
-                document.getElementById('formShopCode').value = '';
-                document.getElementById('formSlab').value = '';
+            const routes = [...new Set(pjpData.filter(i => i.townName === dbName).map(i => i.routeName))].filter(Boolean).sort();
+            reportRouteSelect.innerHTML = '<option value="">রুট নির্বাচন করুন</option>' + 
+                                          routes.map(r => `<option value="${r}">${r}</option>`).join('');
+            reportRouteSelect.disabled = routes.length === 0;
+        });
+
+        document.getElementById('reportRouteSelect')?.addEventListener('change', renderReportCards);
+
+        function renderReportCards() {
+            const dbName = document.getElementById('reportDbNameSelect').value;
+            const route = document.getElementById('reportRouteSelect').value;
+            const container = document.getElementById('reportList');
+            const countDisplay = document.getElementById('reportCountDisplay');
+            const countNumber = document.getElementById('reportCountNumber');
+
+            if(!dbName || !route) {
+                container.innerHTML = `<div class="text-center py-8 text-gray-400"><i data-lucide="bar-chart-2" class="h-10 w-10 mx-auto mb-2 opacity-50"></i><p class="text-sm">রিপোর্ট দেখতে DB এবং রুট সিলেক্ট করুন</p></div>`;
+                countDisplay.classList.add('hidden');
+                lucide.createIcons();
+                return;
+            }
+
+            const outlets = pjpData.filter(i => i.townName === dbName && i.routeName === route);
+            if(outlets.length === 0) {
+                container.innerHTML = `<div class="text-center py-8 text-gray-500">এই রুটে কোনো আউটলেট নেই।</div>`;
+                countDisplay.classList.add('hidden');
+                return;
+            }
+
+            countNumber.textContent = outlets.length;
+            countDisplay.classList.remove('hidden');
+
+            const session = JSON.parse(localStorage.getItem('colgate_merch_session')) || {};
+            const todayStr = new Date().toDateString();
+            const localSubmitted = (session.date === todayStr && Array.isArray(session.submittedCodes)) ? session.submittedCodes : [];
+
+            let html = '';
+            outlets.forEach(out => {
+                const code = (out.code || "").toUpperCase().trim();
+                const rInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === code);
+                const isUploaded = (rInfo && (rInfo.imageUpload === 'Y' || rInfo.imageUpload === 'Yes')) || localSubmitted.includes(code);
+                
+                const target = 1;
+                const achieve = isUploaded ? 1 : 0;
+                const balance = target - achieve;
+
+                html += `
+                    <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full ${isUploaded ? 'bg-green-500' : 'bg-orange-400'}"></div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="pl-2">
+                                <h4 class="font-bold text-gray-800 text-sm leading-tight">${out.name}</h4>
+                                <p class="text-xs text-gray-500 mt-1">#${code} • ${out.slab || 'Regular'}</p>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-1 rounded-full ${isUploaded ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}">
+                                ${isUploaded ? 'Uploaded' : 'Pending'}
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 border-t border-gray-50 pt-3">
+                            <div class="text-center bg-gray-50 rounded py-1.5">
+                                <div class="text-[10px] text-gray-400 font-semibold uppercase">Target</div>
+                                <div class="font-bold text-gray-700">${target}</div>
+                            </div>
+                            <div class="text-center bg-gray-50 rounded py-1.5">
+                                <div class="text-[10px] text-gray-400 font-semibold uppercase">Achieve</div>
+                                <div class="font-bold text-${isUploaded ? 'green' : 'gray'}-600">${achieve}</div>
+                            </div>
+                            <div class="text-center bg-gray-50 rounded py-1.5">
+                                <div class="text-[10px] text-gray-400 font-semibold uppercase">Balance</div>
+                                <div class="font-bold text-${balance > 0 ? 'orange' : 'gray'}-600">${balance}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Tabs Logic
+        const tabBtns = ['tabForm', 'tabMyDay', 'tabReport'];
+        const viewIds = ['formView', 'myDayView', 'reportView'];
+
+        tabBtns.forEach((tabId, idx) => {
+            const btn = document.getElementById(tabId);
+            if (btn) {
+                btn.addEventListener('click', async () => {
+                    tabBtns.forEach(t => {
+                        const el = document.getElementById(t);
+                        if (el) {
+                            el.classList.remove('bg-white', 'shadow-sm', 'text-colgate');
+                            el.classList.add('text-gray-500');
+                        }
+                    });
+                    btn.classList.add('bg-white', 'shadow-sm', 'text-colgate');
+                    viewIds.forEach(v => {
+                        const viewEl = document.getElementById(v);
+                        if (viewEl) viewEl.classList.add('hidden');
+                    });
+                    const targetView = document.getElementById(viewIds[idx]);
+                    if (targetView) targetView.classList.remove('hidden');
+
+                    if (idx === 1 && !isDataLoaded) {
+                        await loadAllData();
+                    } else if (idx === 1) {
+                        renderMyDayPJP();
+                    }
+                });
             }
         });
 
-        // SR Event Listeners
-        const srRouteSelect = document.getElementById('srRouteSelect');
-        if (srRouteSelect) {
-            srRouteSelect.addEventListener('change', (e) => {
-                const selectedArea = document.getElementById('areaSelect').value;
-                const dbName = document.getElementById('distSelect').value;
-                const route = e.target.value;
-
-                // Filter for SLAB only (exclude regular)
-                const outlets = pjpData.filter(i => i.region === selectedArea && 
-                                                    i.townName === dbName && 
-                                                    i.routeName === route && 
-                                                    i.slab && 
-                                                    !i.slab.toLowerCase().includes('regular'));
-                
-                const srOutletSelect = document.getElementById('srOutletSelect');
-                if (srOutletSelect) {
-                    srOutletSelect.innerHTML = '<option value="" disabled selected>আউটলেট সিলেক্ট করুন</option>' + 
-                                            outlets.map(o => `<option value="${o.code}">${o.name} (${o.code} - ${o.slab})</option>`).join('');
-                    srOutletSelect.disabled = outlets.length === 0;
-                }
-                document.getElementById('formShopCode').value = '';
-                document.getElementById('formSlab').value = '';
-            });
-        }
-
-        const srOutletSelect = document.getElementById('srOutletSelect');
-        if (srOutletSelect) {
-            srOutletSelect.addEventListener('change', (e) => {
-                const selectedCode = e.target.value;
-                const outlet = pjpData.find(i => i.code === selectedCode);
-                if(outlet) {
-                    document.getElementById('formShopCode').value = outlet.code;
-                    let finalSlab = "Regular";
-                    if(outlet.slab && outlet.slab.toLowerCase().includes("slab 1")) finalSlab = "Slab 1"; 
-                    else if(outlet.slab && outlet.slab.toLowerCase().includes("slab 2")) finalSlab = "Slab 2";
-                    document.getElementById('formSlab').value = finalSlab;
-                }
-            });
-        }
-
-        document.getElementById('formDbCode').addEventListener('change', (e) => {
-            const distSelectEl = document.getElementById('distSelect');
-            const selectedArea = document.getElementById('areaSelect').value;
-            if (distSelectEl && pjpData.length > 0) {
-                const match = pjpData.find(item => item.region === selectedArea && String(item.distributor).trim().toLowerCase() === String(e.target.value).trim().toLowerCase());
-                if (match && match.townName) {
-                    distSelectEl.value = match.townName;
-                }
-            }
-        });
-
-        window.openUploadForm = (month, town, dh, slab, code) => {
-            const tabForm = document.getElementById('tabForm');
-            if (tabForm) tabForm.click();
-            
-            setTimeout(() => {
-                const currentMonthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][new Date().getMonth()];
-                const formMonth = document.getElementById('formMonth');
-                if (formMonth) formMonth.value = currentMonthName;
-
-                let detectedArea = "";
-                const cleanStr = str => String(str || "").toLowerCase().replace(/[\s\.\-\_\,\/\\]/g, "");
-                const cleanDh = cleanStr(dh);
-
-                // Auto Detect Area from PJP Data
-                if(dh) {
-                    const match = pjpData.find(item => cleanStr(item.townName) === cleanDh || cleanStr(item.distributor) === cleanDh);
-                    if(match && match.region) {
-                        detectedArea = match.region;
-                    }
-                }
-                
-                if (!detectedArea) {
-                    detectedArea = (town || "").toUpperCase().includes("CTG") ? "CTG" : "DHAKA"; 
-                }
-
-                const as = document.getElementById('areaSelect');
-                const ds = document.getElementById('distSelect');
-                const dbCodeInput = document.getElementById('formDbCode');
-
-                if (as) {
-                    if(!Array.from(as.options).some(opt => opt.value === detectedArea) && detectedArea) {
-                        as.add(new Option(detectedArea, detectedArea));
-                    }
-                    as.value = detectedArea;
-                    as.dispatchEvent(new Event('change'));
-
-                    setTimeout(() => {
-                        if (dh) {
-                            const pjpMatch = pjpData.find(item => cleanStr(item.townName) === cleanDh || cleanStr(item.distributor) === cleanDh);
-                            
-                            if (pjpMatch) {
-                                if (ds && !Array.from(ds.options).some(opt => opt.value === pjpMatch.townName)) ds.add(new Option(pjpMatch.townName, pjpMatch.townName));
-                                if (dbCodeInput && !Array.from(dbCodeInput.options).some(opt => opt.value === pjpMatch.distributor)) dbCodeInput.add(new Option(pjpMatch.distributor, pjpMatch.distributor));
-                                
-                                ds.value = pjpMatch.townName;
-                                dbCodeInput.value = pjpMatch.distributor;
-                            } else {
-                                if (ds && !Array.from(ds.options).some(opt => opt.value === dh)) ds.add(new Option(dh, dh));
-                                ds.value = dh;
-                            }
-                        }
-
-                        const fs = document.getElementById('formSlab');
-                        if (fs) {
-                            let finalSlab = "Regular";
-                            if(slab && slab.toLowerCase().includes("slab 1")) finalSlab = "Slab 1"; 
-                            else if(slab && slab.toLowerCase().includes("slab 2")) finalSlab = "Slab 2";
-                            fs.value = finalSlab;
-                        }
-
-                        const sc = document.getElementById('formShopCode');
-                        if (sc) sc.value = code;
-
-                        const camTrigger = document.getElementById('cameraTriggerContainer');
-                        if (camTrigger) camTrigger.scrollIntoView({ behavior: 'smooth' });
-                        
-                        const camBtn = document.getElementById('openCameraBtn');
-                        setTimeout(() => { if (camBtn) camBtn.click(); }, 500);
-                    }, 150);
-                }
-            }, 400);
-        };
-
-        // LOCATION FETCH WITHOUT STRICT REQUIREMENT
+        // ==========================================
+        // CAMERA & LOCATION LOGIC
+        // ==========================================
         function initLocationFetch() {
             isLocationAcquired = false;
             const locBadge = document.getElementById('cameraLocationBadge');
-            
             if (locBadge) locBadge.textContent = "লোকেশন খোঁজা হচ্ছে...";
             
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async p => {
                     const lat = p.coords.latitude, lon = p.coords.longitude;
-                    try {
-                        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`);
-                        const d = await res.json();
-                        const addr = d.address;
-                        let parts = [];
-                        if (addr.suburb || addr.neighbourhood || addr.residential) parts.push(addr.suburb || addr.neighbourhood || addr.residential);
-                        if (addr.village || addr.town || addr.city_district) parts.push(addr.village || addr.town || addr.city_district);
-                        if (addr.city || addr.state) parts.push(addr.city || addr.state);
-                        
-                        finalLocationName = parts.slice(0, 2).join(", ") || "Location Found";
-                        if (locBadge) locBadge.textContent = finalLocationName;
-                        isLocationAcquired = true;
-                    } catch(e) { 
-                        finalLocationName = `${lat.toFixed(4)}, ${lon.toFixed(4)}`; 
-                        if (locBadge) locBadge.textContent = finalLocationName;
-                        isLocationAcquired = true; 
-                    }
+                    finalLocationName = `${lat.toFixed(4)}, ${lon.toFixed(4)}`; 
+                    if (locBadge) locBadge.textContent = finalLocationName;
+                    isLocationAcquired = true; 
                 }, () => { 
                     finalLocationName = "GPS Off"; 
                     if (locBadge) locBadge.textContent = "GPS Off"; 
                     isLocationAcquired = false; 
-                }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }); 
+                }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }); 
             } else {
                 finalLocationName = "No GPS Support";
                 if (locBadge) locBadge.textContent = "No GPS Support";
@@ -1313,39 +1073,6 @@
             }
         }
 
-        document.getElementById('manualUploadBtn').addEventListener('click', () => {
-            initLocationFetch();
-            document.getElementById('manualFileInput').click();
-        });
-
-        document.getElementById('manualFileInput').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const img = new Image();
-                img.onload = function() {
-                    const c = document.getElementById('processCanvas');
-                    const ctx = c.getContext('2d');
-                    c.width = img.width;
-                    c.height = img.height;
-                    ctx.drawImage(img, 0, 0);
-                    
-                    // applyWatermark(ctx, c.width, c.height); 
-                    
-                    capturedImageData = c.toDataURL('image/jpeg', 0.85);
-                    document.getElementById('capturedImagePreview').src = capturedImageData;
-                    document.getElementById('previewContainer').classList.remove('hidden');
-                    document.getElementById('cameraTriggerContainer').classList.add('hidden');
-                    document.getElementById('cameraContainer').classList.add('hidden');
-                };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-
-        // Function to handle Camera Starting with Facing Mode
         async function startCamera(facingMode) {
             if (stream) {
                 stream.getTracks().forEach(t => t.stop());
@@ -1357,7 +1084,6 @@
                 const videoFeed = document.getElementById('cameraFeed');
                 if (videoFeed) {
                     videoFeed.srcObject = stream;
-                    // Mirror the preview if it's the front camera
                     if (facingMode === 'user') {
                         videoFeed.style.transform = 'scaleX(-1)';
                     } else {
@@ -1369,36 +1095,29 @@
             }
         }
 
-        document.getElementById('openCameraBtn').addEventListener('click', async () => {
+        document.getElementById('openCameraBtn')?.addEventListener('click', async () => {
             initLocationFetch();
             document.getElementById('cameraContainer').classList.remove('hidden');
             document.getElementById('cameraTriggerContainer').classList.add('hidden');
-            
-            // Start with back camera by default
             currentFacingMode = 'environment';
             await startCamera(currentFacingMode);
         });
 
-        // Switch Camera Button Event Listener
-        document.getElementById('switchCameraBtn').addEventListener('click', async () => {
+        document.getElementById('switchCameraBtn')?.addEventListener('click', async () => {
             currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
             await startCamera(currentFacingMode);
         });
 
-        document.getElementById('captureBtn').addEventListener('click', () => {
+        document.getElementById('captureBtn')?.addEventListener('click', () => {
             const v = document.getElementById('cameraFeed'), c = document.getElementById('processCanvas'), ctx = c.getContext('2d');
             if (!v) return;
             c.width = v.videoWidth; c.height = v.videoHeight;
             
-            // Mirror the actual capture if front camera is used
             if (currentFacingMode === 'user') {
                 ctx.translate(c.width, 0);
                 ctx.scale(-1, 1);
             }
-            
             ctx.drawImage(v, 0, 0);
-            
-            // Reset transform before adding watermark
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             
             applyWatermark(ctx, c.width, c.height);
@@ -1433,9 +1152,7 @@
             const line2Y = h - (padding * 0.8);
             const line1Y = line2Y - fontSize - (padding * 0.4);
 
-            // Left Side: Brand & Date/Time
             ctx.textAlign = 'left';
-            
             ctx.font = `bold ${titleFontSize}px sans-serif`;
             ctx.lineWidth = Math.max(w * 0.002, 1.5);
             ctx.strokeStyle = 'rgba(255,255,255,0.8)';
@@ -1449,12 +1166,9 @@
             ctx.fillStyle = '#f8fafc';
             ctx.fillText(`${dateStr}  |  ${timeStr}`, padding, line2Y);
 
-            // Right Side: Shop Code & Location
             ctx.textAlign = 'right';
-            
             const shopInp = document.getElementById('formShopCode');
             const sCode = shopInp ? shopInp.value.toUpperCase() || "N/A" : "N/A";
-            
             ctx.font = `bold ${titleFontSize}px sans-serif`;
             ctx.strokeStyle = 'black';
             ctx.strokeText(`Shop: ${sCode}`, w - padding, line1Y);
@@ -1462,32 +1176,29 @@
             ctx.fillText(`Shop: ${sCode}`, w - padding, line1Y);
             
             ctx.font = `bold ${fontSize}px sans-serif`;
-            const locBadge = document.getElementById('cameraLocationBadge');
-            const locText = locBadge ? locBadge.textContent : "";
-            ctx.strokeText(locText, w - padding, line2Y);
+            ctx.strokeText(finalLocationName, w - padding, line2Y);
             ctx.fillStyle = '#fde047'; 
-            ctx.fillText(locText, w - padding, line2Y);
+            ctx.fillText(finalLocationName, w - padding, line2Y);
         }
 
-        document.getElementById('retakeBtn').addEventListener('click', () => { 
+        document.getElementById('retakeBtn')?.addEventListener('click', () => { 
             capturedImageData = null; 
             document.getElementById('previewContainer').classList.add('hidden'); 
             document.getElementById('cameraTriggerContainer').classList.remove('hidden'); 
-            document.getElementById('manualFileInput').value = ""; 
         });
         
-        document.getElementById('closeCameraBtn').addEventListener('click', () => { 
+        document.getElementById('closeCameraBtn')?.addEventListener('click', () => { 
             if(stream) stream.getTracks().forEach(t => t.stop()); 
             document.getElementById('cameraContainer').classList.add('hidden'); 
             document.getElementById('cameraTriggerContainer').classList.remove('hidden'); 
         });
 
         // ==========================================
-        // SUBMIT FORM WITH FORCED DATA EXTRACTION
+        // SUBMISSION
         // ==========================================
-        document.getElementById('customForm').addEventListener('submit', async e => {
+        document.getElementById('customForm')?.addEventListener('submit', async e => {
             e.preventDefault(); 
-            if(!capturedImageData) return alert("ছবি তুলুন!");
+            if(!capturedImageData) return alert("দয়া করে আউটলেটের ছবি তুলুন!");
             
             const btn = document.getElementById('submitBtn'), loader = document.getElementById('btnLoader'), text = document.getElementById('btnText');
             btn.disabled = true; loader.classList.remove('hidden'); text.textContent = "জমা হচ্ছে...";
@@ -1519,14 +1230,8 @@
                 await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data), mode: 'no-cors' });
                 
                 const todayStr = new Date().toDateString();
-                let s = JSON.parse(localStorage.getItem('colgate_merch_session'));
-                
-                if (!s || s.date !== todayStr) {
-                    s = { date: todayStr, startTime: Date.now(), submittedCodes: [], count: 0 };
-                }
-                if (!Array.isArray(s.submittedCodes)) {
-                    s.submittedCodes = [];
-                }
+                let s = JSON.parse(localStorage.getItem('colgate_merch_session')) || { date: todayStr, startTime: Date.now(), submittedCodes: [], count: 0 };
+                if (s.date !== todayStr) s = { date: todayStr, startTime: Date.now(), submittedCodes: [], count: 0 };
                 
                 s.count = (s.count || 0) + 1; 
                 s.endTime = Date.now(); 
@@ -1535,14 +1240,15 @@
                 if (currentShopCode && !s.submittedCodes.includes(currentShopCode)) {
                     s.submittedCodes.push(currentShopCode);
                 }
-                
                 localStorage.setItem('colgate_merch_session', JSON.stringify(s));
                 
                 document.getElementById('customForm').classList.add('hidden'); 
                 document.getElementById('successMessage').classList.remove('hidden');
                 
                 updateTimeUI(); 
-                renderMyDayPJP();
+                if (document.getElementById('myDayView').classList.contains('hidden') === false) {
+                    renderMyDayPJP();
+                }
             } catch(e) { alert("Error sending data."); }
             btn.disabled = false; loader.classList.add('hidden'); text.textContent = "জমা দিন (Submit)";
         });
@@ -1567,8 +1273,6 @@
             }
         }
         
-        updateTimeUI();
-        
         window.resetForm = () => { 
             const form = document.getElementById('customForm');
             if (form) form.reset();
@@ -1584,8 +1288,7 @@
             }
             const formDbCodeEl = document.getElementById('formDbCode');
             if(formDbCodeEl) {
-                formDbCodeEl.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
-                formDbCodeEl.disabled = true;
+                formDbCodeEl.value = '';
             }
 
             const srRouteSelect = document.getElementById('srRouteSelect');
