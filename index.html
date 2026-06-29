@@ -133,12 +133,12 @@
         </div>
 
         <div class="w-full max-w-[280px] space-y-4 relative z-10">
-            <button type="button" id="btnRoleMerch" class="w-full relative flex items-center justify-center py-3.5 px-4 bg-white border-[1.5px] border-gray-200 rounded-2xl hover:border-colgate hover:bg-red-50 transition-all duration-200 shadow-sm group">
+            <button type="button" id="btnRoleMerch" class="w-full relative flex items-center justify-center py-3.5 px-4 bg-white border-[1.5px] border-gray-200 rounded-xl hover:border-colgate hover:bg-red-50 transition-all duration-200 shadow-sm group">
                 <i data-lucide="user" class="h-[18px] w-[18px] absolute left-4 text-gray-400 group-hover:text-colgate transition-colors"></i>
                 <span class="font-semibold text-[14px] text-gray-800 group-hover:text-colgate transition-colors">Merchandiser</span>
             </button>
 
-            <button type="button" id="btnRoleSR" class="w-full relative flex items-center justify-center py-3.5 px-4 bg-white border-[1.5px] border-gray-200 rounded-2xl hover:border-colgate hover:bg-red-50 transition-all duration-200 shadow-sm group">
+            <button type="button" id="btnRoleSR" class="w-full relative flex items-center justify-center py-3.5 px-4 bg-white border-[1.5px] border-gray-200 rounded-xl hover:border-colgate hover:bg-red-50 transition-all duration-200 shadow-sm group">
                 <i data-lucide="briefcase" class="h-[18px] w-[18px] absolute left-4 text-gray-400 group-hover:text-colgate transition-colors"></i>
                 <span class="font-semibold text-[14px] text-gray-800 group-hover:text-colgate transition-colors">Sales Team (TM / SR)</span>
             </button>
@@ -150,7 +150,7 @@
     </div>
 
     <!-- ================= MAIN APP CONTAINER ================= -->
-    <div id="mainAppContainer" class="hidden bg-white w-full max-w-md sm:rounded-2xl sm:shadow-2xl min-h-screen sm:min-h-0 flex-col relative mx-auto">
+    <div id="mainAppContainer" class="hidden bg-white w-full max-w-md sm:rounded-2xl sm:shadow-2xl min-h-screen sm:min-h-0 flex-col relative mx-auto overflow-hidden">
         
         <!-- Header -->
         <div class="bg-colgate px-5 py-4 sm:py-6 text-center sm:rounded-t-2xl sticky top-0 z-50 shadow-md relative">
@@ -158,7 +158,6 @@
                 <i data-lucide="log-out" class="w-4 h-4"></i>
             </button>
             
-            <!-- 3-Dot Admin Menu Button -->
             <button id="adminMenuBtn" class="absolute right-4 top-4 sm:top-6 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors flex items-center justify-center backdrop-blur-sm">
                 <i data-lucide="more-vertical" class="w-4 h-4"></i>
             </button>
@@ -175,7 +174,7 @@
         </div>
 
         <!-- Content Area -->
-        <div class="px-4 sm:px-5 py-5 flex-grow">
+        <div class="px-4 sm:px-5 py-5 flex-grow overflow-y-auto">
             
             <!-- Toggle Tabs -->
             <div id="tabsContainer" class="flex p-1 bg-gray-100 rounded-xl mb-6 shadow-inner overflow-x-auto hide-scrollbar">
@@ -195,11 +194,29 @@
                 <form id="customForm" class="space-y-6">
                     <!-- Section 1 -->
                     <div class="bg-gray-50 border border-gray-100 p-4 sm:p-5 rounded-2xl shadow-sm">
-                        <div class="border-b border-gray-200 pb-3 mb-4">
-                            <h3 class="text-[17px] font-bold text-gray-800 flex items-center">
-                                <span class="bg-white shadow-sm text-colgate rounded-full w-7 h-7 flex items-center justify-center text-sm mr-2.5 font-bold">১</span>
+                        
+                        <!-- Header & Outlet Type Toggle -->
+                        <div class="border-b border-gray-200 pb-3 mb-4 flex justify-between items-center gap-2">
+                            <h3 class="text-[15px] sm:text-[17px] font-bold text-gray-800 flex items-center leading-tight">
+                                <span class="bg-white shadow-sm text-colgate rounded-full w-7 h-7 flex items-center justify-center text-sm mr-2 font-bold shrink-0">১</span>
                                 দোকানের তথ্য
                             </h3>
+                            
+                            <!-- OUTLET TYPE TOGGLE -->
+                            <div class="flex bg-gray-100 p-1 rounded-xl w-[170px] sm:w-[210px] shrink-0 shadow-inner border border-gray-200 mr-1">
+                                <label class="flex-1 text-center cursor-pointer m-0">
+                                    <input type="radio" name="outlet_type" value="DCC" class="peer hidden" required>
+                                    <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">DCC</div>
+                                </label>
+                                <label class="flex-1 text-center cursor-pointer m-0">
+                                    <input type="radio" name="outlet_type" value="ROB" class="peer hidden" required>
+                                    <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">ROB</div>
+                                </label>
+                                <label class="flex-1 text-center cursor-pointer m-0">
+                                    <input type="radio" name="outlet_type" value="SMT" class="peer hidden" required>
+                                    <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">SMT</div>
+                                </label>
+                            </div>
                         </div>
 
                         <div class="space-y-4">
@@ -213,6 +230,8 @@
                                         <option value="" disabled selected>মাস</option>
                                         <option value="June">June</option>
                                         <option value="July">July</option>
+                                        <option value="August">August</option>
+                                        <option value="September">September</option>
                                     </select>
                                 </div>
                             </div>
@@ -223,8 +242,8 @@
                                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                                         <i data-lucide="map-pin" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
                                     </div>
-                                    <select name="area_name" id="areaSelect" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium">
-                                        <option value="" disabled selected>লোড হচ্ছে...</option>
+                                    <select name="area_name" id="areaSelect" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium disabled:opacity-50" disabled>
+                                        <option value="" disabled selected>প্রথমে টাইপ সিলেক্ট করুন</option>
                                     </select>
                                 </div>
                             </div>
@@ -235,7 +254,7 @@
                                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                                         <i data-lucide="key" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
                                     </div>
-                                    <select name="db_code" id="formDbCode" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium" disabled>
+                                    <select name="db_code" id="formDbCode" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium disabled:opacity-50" disabled>
                                         <option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>
                                     </select>
                                 </div>
@@ -247,13 +266,13 @@
                                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                                         <i data-lucide="truck" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
                                     </div>
-                                    <select name="distribution_name" id="distSelect" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium" disabled>
+                                    <select name="distribution_name" id="distSelect" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium disabled:opacity-50" disabled>
                                         <option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <!-- SR SPECIFIC FIELDS -->
+                            <!-- SR SPECIFIC FIELDS (Hidden for Merchandiser) -->
                             <div id="srFieldsGroup" class="space-y-4 hidden">
                                 <div class="input-group relative">
                                     <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">রুট নাম <span class="text-colgate">*</span></label>
@@ -261,25 +280,25 @@
                                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                                             <i data-lucide="map" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
                                         </div>
-                                        <select name="sr_route" id="srRouteSelect" class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium" disabled>
-                                            <option value="" disabled selected>প্রথমে ডিস্ট্রিবিউশন সিলেক্ট করুন</option>
+                                        <select name="sr_route" id="srRouteSelect" class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium disabled:opacity-50" disabled>
+                                            <option value="" disabled selected>প্রথমে ডিস্ট্রিবিউটর সিলেক্ট করুন</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="input-group relative">
-                                    <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">আউটলেট (শুধুমাত্র স্ল্যাব) <span class="text-colgate">*</span></label>
+                                    <label id="srOutletLabel" class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">আউটলেট (শুধুমাত্র স্ল্যাব) <span class="text-colgate">*</span></label>
                                     <div class="relative">
                                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                                             <i data-lucide="shopping-bag" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
                                         </div>
-                                        <select name="sr_outlet" id="srOutletSelect" class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium" disabled>
+                                        <select name="sr_outlet" id="srOutletSelect" class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium disabled:opacity-50" disabled>
                                             <option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- MERCHANDISER SPECIFIC FIELDS -->
+                            <!-- MERCHANDISER SPECIFIC FIELDS (Hidden for SR) -->
                             <div id="merchFieldsGroup" class="space-y-4">
                                 <div class="input-group relative">
                                     <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">স্ল্যাব <span class="text-colgate">*</span></label>
@@ -291,6 +310,10 @@
                                             <option value="" disabled selected>স্ল্যাব সিলেক্ট করুন</option>
                                             <option value="Slab 1">Slab 1</option>
                                             <option value="Slab 2">Slab 2</option>
+                                            <option value="Slab 3">Slab 3</option>
+                                            <option value="Slab 4">Slab 4</option>
+                                            <option value="Slab 5">Slab 5</option>
+                                            <option value="Slab 6">Slab 6</option>
                                             <option value="Regular">Regular (No Slab)</option>
                                         </select>
                                     </div>
@@ -306,6 +329,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
@@ -319,6 +343,7 @@
                         </div>
 
                         <div class="input-group relative">
+                            <!-- Manual Upload Input (Hidden) -->
                             <input type="file" id="manualFileInput" accept="image/*" class="hidden">
                             
                             <div id="cameraTriggerContainer" class="flex flex-col items-center">
@@ -333,7 +358,7 @@
                                 </button>
                                 
                                 <!-- Minimalist Gallery Button (Unlocked via Sidebar) -->
-                                <button type="button" id="manualUploadBtn" class="hidden mt-3 flex items-center text-[13px] font-medium text-gray-500 hover:text-colgate transition-colors">
+                                <button type="button" id="manualUploadBtn" class="hidden mt-3 text-[13px] font-medium text-gray-500 hover:text-colgate transition-colors flex items-center justify-center">
                                     <i data-lucide="cloud-upload" class="h-4 w-4 mr-1.5"></i> গ্যালারি থেকে আপলোড
                                 </button>
                             </div>
@@ -434,14 +459,41 @@
 
             <!-- ================= VIEW 2: MY DAY ================= -->
             <div id="myDayView" class="hidden animate-fade-in">
-                <!-- PJP Filters -->
+                <!-- PJP Filters & Outlet Type Toggle -->
                 <div class="mb-3 text-left">
-                    <h3 class="font-bold text-gray-800 text-[14px] mb-2.5 flex items-center"><i data-lucide="map" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আজকের PJP (রুট প্ল্যান)</h3>
+                    
+                    <div class="flex justify-between items-center mb-2.5 gap-2">
+                        <h3 class="font-bold text-gray-800 text-[13px] sm:text-[14px] flex items-center whitespace-nowrap">
+                            <i data-lucide="map" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আজকের PJP
+                        </h3>
+                        
+                        <!-- MY DAY OUTLET TYPE TOGGLE (Acts as Filter) -->
+                        <div class="flex bg-gray-100 p-1 rounded-xl w-[200px] sm:w-[240px] shrink-0 shadow-inner border border-gray-200">
+                            <label class="flex-1 text-center cursor-pointer m-0">
+                                <input type="radio" name="myday_outlet_type" value="ALL" class="peer hidden" checked>
+                                <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">All</div>
+                            </label>
+                            <label class="flex-1 text-center cursor-pointer m-0">
+                                <input type="radio" name="myday_outlet_type" value="DCC" class="peer hidden" required>
+                                <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">DCC</div>
+                            </label>
+                            <label class="flex-1 text-center cursor-pointer m-0">
+                                <input type="radio" name="myday_outlet_type" value="ROB" class="peer hidden" required>
+                                <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">ROB</div>
+                            </label>
+                            <label class="flex-1 text-center cursor-pointer m-0">
+                                <input type="radio" name="myday_outlet_type" value="SMT" class="peer hidden" required>
+                                <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">SMT</div>
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm">
-                        <div class="grid grid-cols-3 gap-2">
-                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[10px] sm:text-[11px] py-1.5 px-1.5 font-bold text-gray-700"><option value="">Town</option></select>
-                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[10px] sm:text-[11px] py-1.5 px-1.5 font-bold text-gray-500" disabled><option value="">Day</option></select>
-                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[10px] sm:text-[11px] py-1.5 px-1.5 font-bold text-gray-500" disabled><option value="">Route</option></select>
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="myDayRegionSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Region (এরিয়া)</option></select>
+                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Town (টাউন)</option></select>
+                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Day (বার)</option></select>
+                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Route (রুট)</option></select>
                         </div>
                     </div>
                 </div>
@@ -466,7 +518,7 @@
                         <div class="bg-white p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
                             <i data-lucide="hourglass" class="h-4 w-4 text-purple-500 mb-0.5"></i>
                             <span id="statTotalTime" class="text-[12px] font-bold text-gray-800">0ঘ 0মি</span>
-                            <span class="text-gray-400 text-[9px] font-medium">মোট সময়</span>
+                            <span class="text-gray-400 text-[9px] font-medium">মোট সময়</span>
                         </div>
                     </div>
                 </div>
@@ -506,15 +558,43 @@
             <!-- ================= VIEW 3: REPORT ================= -->
             <div id="reportView" class="hidden animate-fade-in">
                 <div class="mb-3 text-left">
-                    <h3 class="font-bold text-gray-800 text-[14px] mb-3 flex items-center"><i data-lucide="bar-chart-2" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আউটলেট রিপোর্ট</h3>
                     
-                    <!-- DB Name & Route Filters -->
+                    <div class="flex justify-between items-center mb-2.5 gap-2">
+                        <h3 class="font-bold text-gray-800 text-[13px] sm:text-[14px] flex items-center whitespace-nowrap">
+                            <i data-lucide="bar-chart-2" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আউটলেট রিপোর্ট
+                        </h3>
+                        
+                        <!-- REPORT OUTLET TYPE TOGGLE -->
+                        <div class="flex bg-gray-100 p-1 rounded-xl w-[200px] sm:w-[240px] shrink-0 shadow-inner border border-gray-200">
+                            <label class="flex-1 text-center cursor-pointer m-0">
+                                <input type="radio" name="report_outlet_type" value="ALL" class="peer hidden" checked>
+                                <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">All</div>
+                            </label>
+                            <label class="flex-1 text-center cursor-pointer m-0">
+                                <input type="radio" name="report_outlet_type" value="DCC" class="peer hidden" required>
+                                <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">DCC</div>
+                            </label>
+                            <label class="flex-1 text-center cursor-pointer m-0">
+                                <input type="radio" name="report_outlet_type" value="ROB" class="peer hidden" required>
+                                <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">ROB</div>
+                            </label>
+                            <label class="flex-1 text-center cursor-pointer m-0">
+                                <input type="radio" name="report_outlet_type" value="SMT" class="peer hidden" required>
+                                <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">SMT</div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- DB Name & Route Filters with Region Filter Kept -->
                     <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm mb-4">
-                        <div class="grid grid-cols-2 gap-2">
-                            <select id="reportDbNameSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors">
-                                <option value="">DB Name নির্বাচন করুন</option>
+                        <div class="grid grid-cols-3 gap-2">
+                            <select id="reportRegionSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
+                                <option value="">প্রথমে টাইপ সিলেক্ট করুন</option>
                             </select>
-                            <select id="reportRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors" disabled>
+                            <select id="reportDbNameSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
+                                <option value="">DB নির্বাচন করুন</option>
+                            </select>
+                            <select id="reportRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
                                 <option value="">রুট নির্বাচন করুন</option>
                             </select>
                         </div>
@@ -534,47 +614,148 @@
 
                     <!-- Report List -->
                     <div id="reportList" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1 custom-scrollbar">
-                        <!-- Report Cards will be injected here via JS -->
+                        <!-- Default Message before type selection -->
+                        <div class="flex flex-col items-center justify-center py-10 opacity-70">
+                            <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
+                            <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে টাইপ এবং DB নির্বাচন করুন</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ================= ADMIN SIDEBAR OVERLAY & PANEL ================= -->
+        <!-- Admin Sidebar Overlay -->
         <div id="adminSidebarOverlay" class="fixed inset-0 bg-black/50 z-[200] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm"></div>
 
+        <!-- Admin Sidebar Panel -->
         <div id="adminSidebar" class="fixed top-0 right-0 h-full w-[85%] sm:w-80 bg-gray-50 z-[210] transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
+            <!-- Sidebar Header -->
             <div class="bg-colgate text-white p-5 flex justify-between items-center shadow-md">
                 <h3 class="text-lg font-bold flex items-center tracking-wide"><i data-lucide="settings" class="w-5 h-5 mr-2"></i> অ্যাডমিন প্যানেল</h3>
                 <button id="closeAdminSidebar" class="text-white hover:text-red-200 transition-colors bg-white/20 p-1.5 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             
-            <div class="p-5 overflow-y-auto flex-grow space-y-5">
-                <!-- Feature 1: Gallery Unlock (Accordion Style) -->
+            <!-- Sidebar Content -->
+            <div class="p-5 overflow-y-auto flex-grow space-y-4">
+                
+                <!-- Feature 1: Gallery Unlock (Accordion) -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <button id="toggleGalleryUnlock" class="w-full flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
                         <div class="flex items-center">
-                            <i data-lucide="unlock" class="w-4 h-4 text-colgate mr-2"></i>
-                            <span class="text-sm font-bold text-gray-800">গ্যালারি আনলক</span>
+                            <i data-lucide="image" class="w-4 h-4 text-colgate mr-2"></i>
+                            <span class="text-sm font-bold text-gray-800">গ্যালারি আপলোড আনলক</span>
                         </div>
-                        <i data-lucide="chevron-down" id="galleryUnlockChevron" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        <i data-lucide="chevron-down" id="galleryUnlockChevron" class="w-4 h-4 text-gray-400 transition-transform duration-300"></i>
                     </button>
                     
-                    <div id="galleryUnlockContent" class="hidden px-5 pb-5 pt-1 border-t border-gray-50">
-                        <p class="text-[12px] text-gray-500 mb-4 leading-relaxed">গ্যালারি আপলোড অপশনটি চালু করতে অ্যাডমিন পিন কোড দিন।</p>
-                        <input type="password" id="adminPinInput" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-2.5 text-center text-xl tracking-[0.4em] font-bold outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all mb-3" placeholder="••••">
+                    <div id="galleryUnlockContent" class="hidden px-5 pb-5 border-t border-gray-100 mt-2 pt-4 bg-gray-50/50">
+                        <p class="text-[12px] text-gray-500 mb-3 leading-relaxed">গ্যালারি অপশন চালু করতে পিন কোড দিন।</p>
+                        <input type="password" id="adminPinInput" class="w-full bg-white border border-gray-200 rounded-xl p-2.5 text-center text-xl tracking-[0.4em] font-bold outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all mb-3" placeholder="••••">
                         <button id="unlockFeaturesBtn" class="w-full bg-colgate text-white font-bold py-2.5 rounded-xl hover:bg-red-700 transition-all shadow-md text-[13px]">আনলক করুন</button>
                         <p id="adminErrorMsg" class="text-red-500 text-[11px] text-center mt-2.5 hidden font-bold"><i data-lucide="alert-circle" class="inline w-3 h-3 mr-1"></i> ভুল পিন কোড!</p>
                     </div>
                 </div>
 
+                <!-- Feature 2: New Smile Corner Entry -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button id="btnOpenNewOutlet" class="w-full flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center">
+                            <i data-lucide="store" class="w-4 h-4 text-colgate mr-2"></i>
+                            <span class="text-sm font-bold text-gray-800">নতুন স্মাইল কর্ণার</span>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                    </button>
+                </div>
+
                 <!-- Placeholder for Future Features -->
-                <div class="bg-white p-5 rounded-2xl shadow-sm border-2 border-gray-200 border-dashed opacity-60 flex flex-col items-center justify-center text-center py-8">
-                    <div class="bg-gray-100 p-3 rounded-full mb-3">
-                        <i data-lucide="plus" class="w-6 h-6 text-gray-400"></i>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border-2 border-gray-200 border-dashed opacity-60 flex flex-col items-center justify-center text-center py-6">
+                    <div class="bg-gray-100 p-2.5 rounded-full mb-2">
+                        <i data-lucide="plus" class="w-5 h-5 text-gray-400"></i>
                     </div>
-                    <h4 class="text-[13px] font-bold text-gray-500 mb-1">More Features Soon</h4>
-                    <p class="text-[10px] text-gray-400 leading-tight">ভবিষ্যতে আরও সেটিংস এবং অপশন এখানে যুক্ত করা হবে।</p>
+                    <h4 class="text-[12px] font-bold text-gray-500 mb-1">More Features Soon</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Outlet Entry Modal -->
+        <div id="newOutletModal" class="fixed inset-0 bg-black/60 z-[300] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
+            <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="newOutletContent">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+                    <h3 class="text-lg font-bold text-gray-800 flex items-center"><i data-lucide="store" class="w-5 h-5 text-colgate mr-2"></i> নতুন স্মাইল কর্ণার</h3>
+                    <button id="closeNewOutletModal" class="text-gray-400 hover:text-red-500 transition-colors bg-gray-100 p-1.5 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>
+                
+                <div class="overflow-y-auto flex-grow custom-scrollbar pr-2 space-y-4">
+                    <input type="hidden" id="newOutletDistCode">
+                    <input type="hidden" id="newOutletRouteCode">
+
+                    <div>
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">ডিস্ট্রিবিউটর নাম <span class="text-colgate">*</span></label>
+                        <select id="newOutletDistName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
+                            <option value="" disabled selected>ডিস্ট্রিবিউটর নির্বাচন করুন</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">রুট নাম <span class="text-colgate">*</span></label>
+                        <select id="newOutletRouteName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" disabled>
+                            <option value="" disabled selected>প্রথমে ডিস্ট্রিবিউটর নির্বাচন করুন</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">দোকানের নাম <span class="text-colgate">*</span></label>
+                        <input type="text" id="newOutletName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="দোকানের নাম">
+                    </div>
+
+                    <div>
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">মালিকের নাম <span class="text-colgate">*</span></label>
+                        <input type="text" id="newOutletOwner" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="মালিকের নাম লিখুন">
+                    </div>
+
+                    <div class="flex gap-3">
+                        <div class="w-1/2">
+                            <label class="block text-[12px] font-bold text-gray-700 mb-1">কন্টাক্ট নাম্বার <span class="text-colgate">*</span></label>
+                            <input type="tel" id="newOutletPhone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="১১ ডিজিট মোবাইল নং">
+                        </div>
+                        <div class="w-1/2">
+                            <label class="block text-[12px] font-bold text-gray-700 mb-1">স্ল্যাব (Slab) <span class="text-colgate">*</span></label>
+                            <select id="newOutletSlab" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
+                                <option value="" disabled selected>স্ল্যাব নির্বাচন করুন</option>
+                                <option value="Slab 1 (4k)">Slab 1 (4k)</option>
+                                <option value="Slab 2 (5.5k)">Slab 2 (5.5k)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3 items-center">
+                        <label class="block text-[12px] font-bold text-gray-700 w-1/3">আউটলেট টাইপ <span class="text-colgate">*</span></label>
+                        <div class="flex bg-gray-100 p-1 rounded-xl w-2/3 shadow-inner border border-gray-200">
+                            <label class="flex-1 text-center cursor-pointer">
+                                <input type="radio" name="new_outlet_type" value="DCC" class="peer hidden">
+                                <div class="py-2 text-[12px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">DCC</div>
+                            </label>
+                            <label class="flex-1 text-center cursor-pointer">
+                                <input type="radio" name="new_outlet_type" value="ROB" class="peer hidden">
+                                <div class="py-2 text-[12px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">ROB</div>
+                            </label>
+                            <label class="flex-1 text-center cursor-pointer">
+                                <input type="radio" name="new_outlet_type" value="SMT" class="peer hidden">
+                                <div class="py-2 text-[12px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">SMT</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">এন্ট্রি করছেন (আপনার নাম) <span class="text-colgate">*</span></label>
+                        <input type="text" id="newOutletEntryBy" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="আপনার নাম (SR / Merchandiser)">
+                    </div>
+                </div>
+                
+                <div class="pt-4 mt-2 border-t border-gray-100">
+                    <button id="submitNewOutletBtn" class="w-full bg-colgate text-white font-bold py-3.5 rounded-xl hover:bg-red-700 transition-all shadow-md flex justify-center items-center">
+                        <i data-lucide="save" class="w-4 h-4 mr-2"></i> এন্ট্রি সেভ করুন
+                    </button>
                 </div>
             </div>
         </div>
@@ -601,8 +782,9 @@
         lucide.createIcons();
 
         // Constants
-        const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; 
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkLhnjgv9VdgHoO1BscC5hKQJJk-0uEFsL4YSQo7GAgdGvK4eZt6OkNvbFEYaLv1Ih/exec';
+        const NEW_OUTLET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxvNoIajBiG8BQdSDpRorTzqk0AgK7vOr7o_INMJ03aJVJ-aBHN8BB3xKKqrXkNbTBm/exec';
+        const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; 
         const REPORT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYcd2eba30rLXPA3OHxVcHYKVpUK9RweS5WD7g-IFM46AUsI6zSu6YESkPxmbg9xyj4gs7UUgL13a/pub?gid=857310602&single=true&output=csv';
 
         // State Variables
@@ -730,7 +912,7 @@
                         distributor: getVal(0), region: getVal(1), townName: getVal(2),
                         code: getVal(3), name: getVal(4), slab: getVal(5),
                         routeCode: getVal(6), routeName: getVal(7), visitDay: getVal(8), 
-                        merchandiser: getVal(9), status: getVal(10)
+                        merchandiser: getVal(9), status: getVal(10), outletType: getVal(11) // PJP Column L
                     };
                 }).filter(i => i.townName && !["TOWN NAME", "DB NAME", "TOWN"].includes(i.townName.toUpperCase()));
 
@@ -743,7 +925,6 @@
                 isDataLoaded = true;
                 populateDropdowns();
                 
-                // If My Day view is active, render it
                 const myDayView = document.getElementById('myDayView');
                 if (myDayView && !myDayView.classList.contains('hidden')) {
                     renderMyDayPJP();
@@ -752,35 +933,101 @@
                 if (loader) loader.classList.add('hidden');
             } catch (error) {
                 console.error("Data loading error:", error);
-                alert("ডেটা লোড করতে সমস্যা হয়েছে। দয়া করে ইন্টারনেট কানেকশন চেক করুন।");
+                alert("ডেটা লোড করতে সমস্যা হয়েছে। দয়া করে ইন্টারনেট কানেকশন চেক করুন।");
                 if (loader) loader.classList.add('hidden');
             }
         }
 
         // ==========================================
-        // DROPDOWN POPULATION (FORM)
+        // FORM: EVENT LISTENERS & POPULATION
         // ==========================================
+        const formOutletTypeRadios = document.getElementsByName('outlet_type');
+        for (let r of formOutletTypeRadios) {
+            r.addEventListener('change', (e) => {
+                populateDropdowns(); 
+                
+                // Update SR Outlet Label based on type dynamically
+                const srOutletLabel = document.getElementById('srOutletLabel');
+                if (srOutletLabel) {
+                    if (e.target.value === 'SMT') {
+                        srOutletLabel.innerHTML = 'আউটলেট (সকল) <span class="text-colgate">*</span>';
+                    } else {
+                        srOutletLabel.innerHTML = 'আউটলেট (শুধুমাত্র স্ল্যাব) <span class="text-colgate">*</span>';
+                    }
+                }
+                
+                // Reset cascading dropdowns
+                const distSelect = document.getElementById('distSelect');
+                if(distSelect) {
+                    distSelect.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
+                    distSelect.disabled = true;
+                }
+                const formDbCode = document.getElementById('formDbCode');
+                if(formDbCode) formDbCode.value = '';
+                
+                const srRouteSelect = document.getElementById('srRouteSelect');
+                if (srRouteSelect) {
+                    srRouteSelect.innerHTML = '<option value="" disabled selected>প্রথমে ডিস্ট্রিবিউশন সিলেক্ট করুন</option>';
+                    srRouteSelect.disabled = true;
+                }
+                
+                const srOutletSelect = document.getElementById('srOutletSelect');
+                if (srOutletSelect) {
+                    srOutletSelect.innerHTML = '<option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>';
+                    srOutletSelect.disabled = true;
+                }
+                
+                document.getElementById('formShopCode').value = '';
+                document.getElementById('formSlab').value = '';
+            });
+        }
+
         function populateDropdowns() {
             if(!pjpData || pjpData.length === 0) return;
 
-            const areas = [...new Set(pjpData.map(i => i.region))].filter(Boolean).sort();
+            const formSelectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
             const areaSelect = document.getElementById('areaSelect');
+            
             if (areaSelect) {
-                areaSelect.innerHTML = '<option value="" disabled selected>এরিয়া সিলেক্ট করুন</option>' + 
-                                    areas.map(a => `<option value="${a}">${a}</option>`).join('');
+                if (formSelectedType) {
+                    const formPjp = pjpData.filter(i => i.outletType && i.outletType.toUpperCase() === formSelectedType.toUpperCase());
+                    const areas = [...new Set(formPjp.map(i => i.region))].filter(Boolean).sort();
+                    areaSelect.innerHTML = '<option value="" disabled selected>এরিয়া সিলেক্ট করুন</option>' + 
+                                        areas.map(a => `<option value="${a}">${a}</option>`).join('');
+                    areaSelect.disabled = areas.length === 0;
+                } else {
+                    areaSelect.innerHTML = '<option value="" disabled selected>প্রথমে টাইপ সিলেক্ট করুন</option>';
+                    areaSelect.disabled = true;
+                }
             }
 
-            const towns = [...new Set(pjpData.map(i => i.townName))].filter(Boolean).sort();
-            const myDayTownSelect = document.getElementById('myDayTownSelect');
-            if(myDayTownSelect) {
-                myDayTownSelect.innerHTML = '<option value="" disabled selected>টাউন (Town) সিলেক্ট করুন</option>' + 
-                                            towns.map(t => `<option value="${t}">${t}</option>`).join('');
+            const myDaySelectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
+            const myDayRegionSelect = document.getElementById('myDayRegionSelect');
+            
+            if (myDayRegionSelect) {
+                if (myDaySelectedType) {
+                    const myDayPjp = pjpData.filter(i => i.outletType && i.outletType.toUpperCase() === myDaySelectedType.toUpperCase());
+                    const regions = [...new Set(myDayPjp.map(i => i.region))].filter(Boolean).sort();
+                    myDayRegionSelect.innerHTML = '<option value="" disabled selected>Region (এরিয়া)</option>' + 
+                                                regions.map(r => `<option value="${r}">${r}</option>`).join('');
+                    myDayRegionSelect.disabled = regions.length === 0;
+                } else {
+                    myDayRegionSelect.innerHTML = '<option value="" disabled selected>প্রথমে টাইপ সিলেক্ট করুন</option>';
+                    myDayRegionSelect.disabled = true;
+                }
             }
         }
 
         document.getElementById('areaSelect')?.addEventListener('change', (e) => {
             const selectedArea = e.target.value;
-            const dists = [...new Set(pjpData.filter(i => i.region === selectedArea).map(i => i.townName))].filter(Boolean).sort();
+            const selectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
+            
+            let filtered = pjpData.filter(i => i.region === selectedArea);
+            if (selectedType) {
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+
+            const dists = [...new Set(filtered.map(i => i.townName))].filter(Boolean).sort();
             const distSelect = document.getElementById('distSelect');
             if(distSelect) {
                 distSelect.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউশন সিলেক্ট করুন</option>' + 
@@ -807,14 +1054,20 @@
         document.getElementById('distSelect')?.addEventListener('change', (e) => {
             const selectedArea = document.getElementById('areaSelect').value;
             const dbName = e.target.value;
+            const selectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
             
-            const match = pjpData.find(item => item.region === selectedArea && item.townName === dbName);
+            let filtered = pjpData.filter(i => i.region === selectedArea && i.townName === dbName);
+            if (selectedType) {
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+            
+            const match = filtered.find(item => item.region === selectedArea && item.townName === dbName);
             if (match && match.distributor) {
                 document.getElementById('formDbCode').value = match.distributor;
             }
 
             if (localStorage.getItem('colgate_app_role') === 'sr') {
-                const routes = [...new Set(pjpData.filter(i => i.region === selectedArea && i.townName === dbName).map(i => i.routeName))].filter(Boolean).sort();
+                const routes = [...new Set(filtered.map(i => i.routeName))].filter(Boolean).sort();
                 const srRouteSelect = document.getElementById('srRouteSelect');
                 if (srRouteSelect) {
                     srRouteSelect.innerHTML = '<option value="" disabled selected>রুট সিলেক্ট করুন</option>' + 
@@ -835,17 +1088,26 @@
             const selectedArea = document.getElementById('areaSelect').value;
             const dbName = document.getElementById('distSelect').value;
             const route = e.target.value;
+            const selectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
 
-            const outlets = pjpData.filter(i => i.region === selectedArea && 
-                                                i.townName === dbName && 
-                                                i.routeName === route && 
-                                                i.slab && 
-                                                !i.slab.toLowerCase().includes('regular'));
+            let outlets = pjpData.filter(i => i.region === selectedArea && 
+                                              i.townName === dbName && 
+                                              i.routeName === route);
+            
+            if (selectedType) {
+                outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+
+            // For SR: Show ONLY Slab outlets for DCC and ROB. For SMT, show ALL (Slab + Regular).
+            if (selectedType && selectedType.toUpperCase() !== 'SMT') {
+                outlets = outlets.filter(i => i.slab && !i.slab.toLowerCase().includes('regular'));
+            }
             
             const srOutletSelect = document.getElementById('srOutletSelect');
             if (srOutletSelect) {
+                // Strictly filtering by exact code, fallback logic removed per user request
                 srOutletSelect.innerHTML = '<option value="" disabled selected>আউটলেট সিলেক্ট করুন</option>' + 
-                                        outlets.map(o => `<option value="${o.code}">${o.name} (${o.code} - ${o.slab})</option>`).join('');
+                                        outlets.map(o => `<option value="${o.code}">${o.name} (${o.code} - ${o.slab || 'Regular'})</option>`).join('');
                 srOutletSelect.disabled = outlets.length === 0;
             }
             document.getElementById('formShopCode').value = '';
@@ -864,15 +1126,96 @@
         // ==========================================
         // MY DAY LOGIC
         // ==========================================
-        document.getElementById('myDayTownSelect')?.addEventListener('change', (e) => {
-            const town = e.target.value;
-            const days = [...new Set(pjpData.filter(i => i.townName === town).map(i => i.visitDay))].filter(Boolean).sort();
+        const myDayTypeRadios = document.getElementsByName('myday_outlet_type');
+        for (let r of myDayTypeRadios) {
+            r.addEventListener('change', () => {
+                populateDropdowns(); 
+                
+                document.getElementById('myDayTownSelect').innerHTML = '<option value="" disabled selected>Town (টাউন)</option>';
+                document.getElementById('myDayTownSelect').disabled = true;
+                
+                document.getElementById('myDayVisitDaySelect').innerHTML = '<option value="" disabled selected>Day (বার)</option>';
+                document.getElementById('myDayVisitDaySelect').disabled = true;
+                
+                document.getElementById('myDayRouteSelect').innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
+                document.getElementById('myDayRouteSelect').disabled = true;
+                
+                document.getElementById('myDayPjpContainer').classList.add('hidden');
+                document.getElementById('myDayPjpList').innerHTML = '';
+            });
+        }
+
+        document.getElementById('myDayRegionSelect')?.addEventListener('change', (e) => {
+            const region = e.target.value;
+            const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
+            
+            let filteredPjp = pjpData.filter(i => i.region === region);
+            if (selectedType && selectedType !== 'ALL') {
+                filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+
+            const towns = [...new Set(filteredPjp.map(i => i.townName))].filter(Boolean).sort();
+            const townSelect = document.getElementById('myDayTownSelect');
+            
+            if(townSelect) {
+                townSelect.innerHTML = '<option value="" disabled selected>Town (টাউন)</option>' + 
+                                    towns.map(t => `<option value="${t}">${t}</option>`).join('');
+                townSelect.disabled = towns.length === 0;
+                townSelect.classList.remove('bg-gray-100', 'text-gray-500');
+                townSelect.classList.add('bg-white', 'text-gray-700');
+            }
+            
             const daySelect = document.getElementById('myDayVisitDaySelect');
             if(daySelect) {
-                daySelect.innerHTML = '<option value="" disabled selected>বার (Visit Day) সিলেক্ট করুন</option>' + 
+                daySelect.innerHTML = '<option value="" disabled selected>Day (বার)</option>';
+                daySelect.disabled = true;
+                daySelect.classList.add('bg-gray-100', 'text-gray-500');
+                daySelect.classList.remove('bg-white', 'text-gray-700');
+            }
+            
+            const routeSelect = document.getElementById('myDayRouteSelect');
+            if(routeSelect) {
+                routeSelect.innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
+                routeSelect.disabled = true;
+                routeSelect.classList.add('bg-gray-100', 'text-gray-500');
+                routeSelect.classList.remove('bg-white', 'text-gray-700');
+            }
+            
+            const container = document.getElementById('myDayPjpContainer');
+            if (container) container.classList.add('hidden');
+            const list = document.getElementById('myDayPjpList');
+            if (list) list.innerHTML = '';
+        });
+
+        document.getElementById('myDayTownSelect')?.addEventListener('change', (e) => {
+            const region = document.getElementById('myDayRegionSelect').value;
+            const town = e.target.value;
+            const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
+            
+            let filteredPjp = pjpData.filter(i => i.region === region && i.townName === town);
+            if (selectedType && selectedType !== 'ALL') {
+                filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+
+            const days = [...new Set(filteredPjp.map(i => i.visitDay))].filter(Boolean).sort();
+            const daySelect = document.getElementById('myDayVisitDaySelect');
+            
+            if(daySelect) {
+                daySelect.innerHTML = '<option value="" disabled selected>Day (বার)</option>' + 
                                     days.map(d => `<option value="${d}">${d}</option>`).join('');
                 daySelect.disabled = days.length === 0;
+                daySelect.classList.remove('bg-gray-100', 'text-gray-500');
+                daySelect.classList.add('bg-white', 'text-gray-700');
             }
+            
+            const routeSelect = document.getElementById('myDayRouteSelect');
+            if(routeSelect) {
+                routeSelect.innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
+                routeSelect.disabled = true;
+                routeSelect.classList.add('bg-gray-100', 'text-gray-500');
+                routeSelect.classList.remove('bg-white', 'text-gray-700');
+            }
+            
             const container = document.getElementById('myDayPjpContainer');
             if (container) container.classList.add('hidden');
             const list = document.getElementById('myDayPjpList');
@@ -880,27 +1223,50 @@
         });
 
         document.getElementById('myDayVisitDaySelect')?.addEventListener('change', () => {
+            const region = document.getElementById('myDayRegionSelect').value;
             const town = document.getElementById('myDayTownSelect').value;
             const day = document.getElementById('myDayVisitDaySelect').value;
-            const routes = [...new Set(pjpData.filter(i => i.townName === town && i.visitDay === day).map(i => i.routeName))].filter(Boolean).sort();
+            const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
+            
+            let filteredPjp = pjpData.filter(i => i.region === region && i.townName === town && i.visitDay === day);
+            if (selectedType && selectedType !== 'ALL') {
+                filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+
+            const routes = [...new Set(filteredPjp.map(i => i.routeName))].filter(Boolean).sort();
             const routeSelect = document.getElementById('myDayRouteSelect');
+            
             if(routeSelect) {
-                routeSelect.innerHTML = '<option value="" disabled selected>Route Name</option>' + 
+                routeSelect.innerHTML = '<option value="" disabled selected>Route (রুট)</option>' + 
                                         routes.map(r => `<option value="${r}">${r}</option>`).join('');
                 routeSelect.disabled = routes.length === 0;
+                routeSelect.classList.remove('bg-gray-100', 'text-gray-500');
+                routeSelect.classList.add('bg-white', 'text-gray-700');
             }
+            
+            const container = document.getElementById('myDayPjpContainer');
+            if (container) container.classList.add('hidden');
+            const list = document.getElementById('myDayPjpList');
+            if (list) list.innerHTML = '';
         });
 
         document.getElementById('myDayRouteSelect')?.addEventListener('change', renderMyDayPJP);
 
         function renderMyDayPJP() {
+            const region = document.getElementById('myDayRegionSelect')?.value;
             const town = document.getElementById('myDayTownSelect')?.value;
             const day = document.getElementById('myDayVisitDaySelect')?.value;
             const route = document.getElementById('myDayRouteSelect')?.value;
-            if (!town || !day || !route) return;
+            if (!region || !town || !day || !route) return;
 
-            const outlets = pjpData.filter(i => i.townName === town && i.visitDay === day && i.routeName === route);
+            const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
+
+            let outlets = pjpData.filter(i => i.region === region && i.townName === town && i.visitDay === day && i.routeName === route);
             
+            if (selectedType && selectedType !== 'ALL') {
+                outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+
             const session = JSON.parse(localStorage.getItem('colgate_merch_session')) || {};
             const todayStr = new Date().toDateString();
             const localSubmitted = (session.date === todayStr && Array.isArray(session.submittedCodes)) ? session.submittedCodes : [];
@@ -912,38 +1278,44 @@
             if (routeLabel) routeLabel.textContent = route;
 
             let html = '', completedCount = 0, displayCount = 0, regularCount = 0;
-            outlets.forEach(out => {
-                const outCode = (out.code || "").toUpperCase().trim();
-                const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
-                const isCompleted = (reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode);
-                
-                if (isCompleted) completedCount++;
-                const statusStr = (out.slab || "").toLowerCase();
-                if (statusStr.includes('regular')) regularCount++; else displayCount++;
+            
+            if (outlets.length === 0) {
+                html = `<div class="text-center py-4 text-gray-500 text-[12px] font-bold">এই টাইপের কোনো আউটলেট পাওয়া যায়নি।</div>`;
+            } else {
+                outlets.forEach(out => {
+                    const outCode = (out.code || "").toUpperCase().trim();
+                    const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
+                    const isCompleted = (reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode);
+                    
+                    if (isCompleted) completedCount++;
+                    const statusStr = (out.slab || "").toLowerCase();
+                    if (statusStr.includes('regular')) regularCount++; else displayCount++;
 
-                const statusBadge = isCompleted ? 
-                    `<span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-green-300 shadow-sm"><i data-lucide="check-circle-2" class="h-3 w-3 mr-1"></i> Uploaded</span>` :
-                    `<div class="bg-colgate text-white px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-red-700 shadow-sm"><i data-lucide="camera" class="h-3 w-3 mr-1"></i> Upload</div>`;
+                    const statusBadge = isCompleted ? 
+                        `<span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-green-300 shadow-sm"><i data-lucide="check-circle-2" class="h-3 w-3 mr-1"></i> Uploaded</span>` :
+                        `<div class="bg-colgate text-white px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-red-700 shadow-sm"><i data-lucide="camera" class="h-3 w-3 mr-1"></i> Upload</div>`;
 
-                const escapeStr = (str) => String(str || "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
-                const safeTown = escapeStr(out.townName);
-                const safeSlab = escapeStr(out.slab || "Regular");
-                const safeCode = escapeStr(outCode);
-                const safeName = escapeStr(out.name);
+                    const escapeStr = (str) => String(str || "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
+                    const safeTown = escapeStr(out.townName);
+                    const safeSlab = escapeStr(out.slab || "Regular");
+                    const safeCode = escapeStr(outCode);
+                    const safeName = escapeStr(out.name);
+                    const safeOutletType = escapeStr(out.outletType || "");
 
-                html += `
-                    <div onclick="window.openUploadForm('', '${safeTown}', '${safeTown}', '${safeSlab}', '${safeCode}')" 
-                         class="flex items-center justify-between p-3 rounded-lg border ${isCompleted ? 'border-green-400 bg-green-50/60 shadow-sm' : 'border-red-200 bg-white shadow-sm'} transition-all cursor-pointer hover:shadow-md mb-2">
-                        <div class="pointer-events-none flex-grow">
-                            <div class="font-bold text-[13px] text-gray-800">${safeName}</div>
-                            <div class="text-[11px] text-gray-500 mt-1 flex items-center">
-                                <i data-lucide="hash" class="h-3 w-3 mr-0.5 opacity-70"></i>${safeCode} 
-                                <span class="mx-1">•</span> <i data-lucide="layers" class="h-3 w-3 mr-0.5 opacity-70"></i>${safeSlab}
+                    html += `
+                        <div onclick="window.openUploadForm('', '${safeTown}', '${safeTown}', '${safeSlab}', '${safeCode}', '${safeOutletType}')" 
+                             class="flex items-center justify-between p-3 rounded-lg border ${isCompleted ? 'border-green-400 bg-green-50/60 shadow-sm' : 'border-red-200 bg-white shadow-sm'} transition-all cursor-pointer hover:shadow-md mb-2">
+                            <div class="pointer-events-none flex-grow">
+                                <div class="font-bold text-[13px] text-gray-800">${safeName}</div>
+                                <div class="text-[11px] text-gray-500 mt-1 flex items-center">
+                                    <i data-lucide="hash" class="h-3 w-3 mr-0.5 opacity-70"></i>${safeCode} 
+                                    <span class="mx-1">•</span> <i data-lucide="layers" class="h-3 w-3 mr-0.5 opacity-70"></i>${safeSlab}
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex-shrink-0 pointer-events-none">${statusBadge}</div>
-                    </div>`;
-            });
+                            <div class="flex-shrink-0 pointer-events-none">${statusBadge}</div>
+                        </div>`;
+                });
+            }
 
             const pjpList = document.getElementById('myDayPjpList');
             if (pjpList) pjpList.innerHTML = html;
@@ -966,7 +1338,7 @@
             lucide.createIcons();
         }
 
-        window.openUploadForm = (month, town, dh, slab, code) => {
+        window.openUploadForm = (month, town, dh, slab, code, outletType) => {
             const tabForm = document.getElementById('tabForm');
             if (tabForm) tabForm.click();
             
@@ -974,11 +1346,20 @@
             const formMonth = document.getElementById('formMonth');
             if (formMonth) formMonth.value = currentMonthName;
 
+            const radios = document.getElementsByName('outlet_type');
+            for (let r of radios) {
+                if (outletType && r.value.toUpperCase() === outletType.toUpperCase()) {
+                    r.checked = true;
+                    r.dispatchEvent(new Event('change')); 
+                } else {
+                    r.checked = false;
+                }
+            }
+
             let detectedArea = "";
             const cleanStr = str => String(str || "").toLowerCase().replace(/[\s\.\-\_\,\/\\]/g, "");
             const cleanDh = cleanStr(dh);
 
-            // Auto Detect Area from PJP Data
             if(dh) {
                 const match = pjpData.find(item => cleanStr(item.townName) === cleanDh || cleanStr(item.distributor) === cleanDh);
                 if(match && match.region) {
@@ -1026,12 +1407,20 @@
                 }
 
                 const sc = document.getElementById('formShopCode');
-                if (sc) sc.value = code;
+                if (sc) sc.value = code || '';
+
+                const formRadios = document.getElementsByName('outlet_type');
+                for (let r of formRadios) {
+                    if (outletType && r.value.toUpperCase() === outletType.toUpperCase()) {
+                        r.checked = true;
+                    } else {
+                        r.checked = false;
+                    }
+                }
 
                 const camTrigger = document.getElementById('cameraTriggerContainer');
                 if (camTrigger) camTrigger.scrollIntoView({ behavior: 'smooth' });
                 
-                // Fire immediately to preserve mobile user gesture context
                 const camBtn = document.getElementById('openCameraBtn');
                 if (camBtn) camBtn.click();
             }
@@ -1059,7 +1448,7 @@
                     if(row.length > 4 && row[4]) { // Ensure outlet code exists
                         detailedReportData.push({
                             month: row[0],
-                            zone: row[1],
+                            zone: row[1], // This corresponds to Region
                             dbCode: row[2],
                             dhName: row[3],
                             code: row[4].trim().toUpperCase(),
@@ -1090,28 +1479,113 @@
             }
         }
 
+        const reportTypeRadios_el = document.getElementsByName('report_outlet_type');
+        for (let r of reportTypeRadios_el) {
+            r.addEventListener('change', () => {
+                updateReportDropdowns();
+                
+                document.getElementById('reportDbNameSelect').innerHTML = '<option value="">DB Name নির্বাচন করুন</option>';
+                document.getElementById('reportDbNameSelect').disabled = true;
+                document.getElementById('reportDbNameSelect').classList.add('bg-gray-100', 'text-gray-500');
+                document.getElementById('reportDbNameSelect').classList.remove('bg-white', 'text-gray-700');
+
+                document.getElementById('reportRouteSelect').innerHTML = '<option value="">রুট নির্বাচন করুন</option>';
+                document.getElementById('reportRouteSelect').disabled = true;
+                document.getElementById('reportRouteSelect').classList.add('bg-gray-100', 'text-gray-500');
+                document.getElementById('reportRouteSelect').classList.remove('bg-white', 'text-gray-700');
+                
+                document.getElementById('reportCountDisplay').classList.add('hidden');
+                document.getElementById('reportList').innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-10 opacity-70">
+                        <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
+                        <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে Region এবং DB Name নির্বাচন করুন</p>
+                    </div>`;
+                lucide.createIcons();
+            });
+        }
+
         function updateReportDropdowns() {
-            const dbNames = [...new Set(detailedReportData.map(d => d.dhName))].filter(Boolean).sort();
-            const dbSelect = document.getElementById('reportDbNameSelect');
-            dbSelect.innerHTML = '<option value="">DB Name নির্বাচন করুন</option>' + dbNames.map(name => `<option value="${name}">${name}</option>`).join('');
+            const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
+            const regionSelect = document.getElementById('reportRegionSelect');
             
+            let filteredReport = detailedReportData;
+            
+            if (selectedType && selectedType !== 'ALL') {
+                filteredReport = detailedReportData.filter(d => {
+                    const match = pjpData.find(p => p.code.toUpperCase() === d.code);
+                    return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
+                });
+            }
+            
+            const regions = [...new Set(filteredReport.map(d => d.zone))].filter(Boolean).sort();
+            regionSelect.innerHTML = '<option value="">Region নির্বাচন করুন</option>' + regions.map(name => `<option value="${name}">${name}</option>`).join('');
+            regionSelect.disabled = regions.length === 0;
+            regionSelect.classList.remove('bg-gray-100', 'text-gray-500');
+            regionSelect.classList.add('bg-white', 'text-gray-700');
+        }
+
+        document.getElementById('reportRegionSelect')?.addEventListener('change', (e) => {
+            const region = e.target.value;
+            const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
+            const dbSelect = document.getElementById('reportDbNameSelect');
+            
+            let filteredReport = detailedReportData.filter(d => d.zone === region);
+            
+            if (selectedType && selectedType !== 'ALL') {
+                filteredReport = filteredReport.filter(d => {
+                    const match = pjpData.find(p => p.code.toUpperCase() === d.code);
+                    return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
+                });
+            }
+
+            const dbNames = [...new Set(filteredReport.map(d => d.dhName))].filter(Boolean).sort();
+            dbSelect.innerHTML = '<option value="">DB নির্বাচন করুন</option>' + dbNames.map(name => `<option value="${name}">${name}</option>`).join('');
+            dbSelect.disabled = dbNames.length === 0;
+            dbSelect.classList.remove('bg-gray-100', 'text-gray-500');
+            dbSelect.classList.add('bg-white', 'text-gray-700');
+
             const routeSelect = document.getElementById('reportRouteSelect');
             routeSelect.innerHTML = '<option value="">রুট নির্বাচন করুন</option>';
             routeSelect.disabled = true;
-        }
+            routeSelect.classList.add('bg-gray-100', 'text-gray-500');
+            routeSelect.classList.remove('bg-white', 'text-gray-700');
+
+            document.getElementById('reportCountDisplay').classList.add('hidden');
+            document.getElementById('reportList').innerHTML = `
+                <div class="flex flex-col items-center justify-center py-10 opacity-70">
+                    <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
+                    <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে DB নির্বাচন করুন</p>
+                </div>`;
+            lucide.createIcons();
+        });
 
         document.getElementById('reportDbNameSelect')?.addEventListener('change', (e) => {
             const dbName = e.target.value;
+            const region = document.getElementById('reportRegionSelect').value;
             const routeSelect = document.getElementById('reportRouteSelect');
+            
             if(!dbName) {
                 routeSelect.innerHTML = '<option value="">রুট নির্বাচন করুন</option>';
                 routeSelect.disabled = true;
                 return;
             }
 
-            const routes = [...new Set(detailedReportData.filter(d => d.dhName === dbName).map(d => d.route))].filter(Boolean).sort();
+            const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
+            let filteredReport = detailedReportData.filter(d => d.dhName === dbName && d.zone === region);
+            
+            if (selectedType && selectedType !== 'ALL') {
+                filteredReport = filteredReport.filter(d => {
+                    const match = pjpData.find(p => p.code.toUpperCase() === d.code);
+                    return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
+                });
+            }
+
+            const routes = [...new Set(filteredReport.map(d => d.route))].filter(Boolean).sort();
             routeSelect.innerHTML = '<option value="">সকল রুট</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
             routeSelect.disabled = routes.length === 0;
+            routeSelect.classList.remove('bg-gray-100', 'text-gray-500');
+            routeSelect.classList.add('bg-white', 'text-gray-700');
+            
             renderDetailedReport();
         });
 
@@ -1121,23 +1595,36 @@
             const list = document.getElementById('reportList');
             const countDisplay = document.getElementById('reportCountDisplay');
             const countNumber = document.getElementById('reportCountNumber');
+            
+            const region = document.getElementById('reportRegionSelect').value;
             const dbName = document.getElementById('reportDbNameSelect').value;
             const route = document.getElementById('reportRouteSelect').value;
 
-            if (!dbName) {
+            if (!dbName || !region) {
                 countDisplay.classList.add('hidden');
                 list.innerHTML = `
                     <div class="flex flex-col items-center justify-center py-10 opacity-70">
                         <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
-                        <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে DB Name নির্বাচন করুন</p>
+                        <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে Region এবং DB Name নির্বাচন করুন</p>
                     </div>`;
                 lucide.createIcons();
                 return;
             }
             
-            let filtered = detailedReportData.filter(d => d.dhName === dbName);
+            let filtered = detailedReportData.filter(d => d.dhName === dbName && d.zone === region);
             if (route) {
                 filtered = filtered.filter(d => d.route === route);
+            }
+
+            // --- REPORT OUTLET TYPE FILTER ---
+            const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
+
+            if (selectedType && selectedType !== 'ALL') {
+                filtered = filtered.filter(d => {
+                    // Find corresponding outlet in pjpData to get its outletType
+                    const match = pjpData.find(p => p.code.toUpperCase() === d.code);
+                    return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
+                });
             }
 
             if (filtered.length === 0) {
@@ -1373,6 +1860,7 @@
                     ctx.drawImage(img, 0, 0, width, height);
                     
                     // Watermark is NOT applied for manual gallery uploads
+                    // applyWatermark(ctx, c.width, c.height); 
                     
                     capturedImageData = c.toDataURL('image/jpeg', 0.85);
                     document.getElementById('capturedImagePreview').src = capturedImageData;
@@ -1562,10 +2050,17 @@
             capturedImageData = null; 
             isLocationAcquired = false; 
             finalLocationName = "Location Unknown";
+
+            // Reset Output Type Radios
+            const radios1 = document.getElementsByName('outlet_type');
+            for (let r of radios1) r.checked = false;
+            
+            const radios2 = document.getElementsByName('new_outlet_type');
+            for (let r of radios2) r.checked = false;
         };
 
         // ==========================================
-        // ADMIN UNLOCK LOGIC (SIDEBAR ACCORDION)
+        // ADMIN UNLOCK & SIDEBAR LOGIC
         // ==========================================
         const adminMenuBtn = document.getElementById('adminMenuBtn');
         const adminSidebarOverlay = document.getElementById('adminSidebarOverlay');
@@ -1575,8 +2070,6 @@
         const adminPinInput = document.getElementById('adminPinInput');
         const adminErrorMsg = document.getElementById('adminErrorMsg');
         const manualUploadBtn = document.getElementById('manualUploadBtn');
-        
-        // Accordion Elements
         const toggleGalleryUnlock = document.getElementById('toggleGalleryUnlock');
         const galleryUnlockContent = document.getElementById('galleryUnlockContent');
         const galleryUnlockChevron = document.getElementById('galleryUnlockChevron');
@@ -1586,10 +2079,11 @@
         adminMenuBtn?.addEventListener('click', () => {
             adminPinInput.value = "";
             adminErrorMsg.classList.add('hidden');
+            galleryUnlockContent.classList.add('hidden');
+            galleryUnlockChevron.classList.remove('rotate-180');
             
-            // Show Overlay and Sidebar
             adminSidebarOverlay.classList.remove('hidden');
-            lucide.createIcons(); // Refresh icons
+            lucide.createIcons();
             
             setTimeout(() => {
                 adminSidebarOverlay.classList.remove('opacity-0');
@@ -1613,20 +2107,16 @@
         closeAdminSidebar?.addEventListener('click', hideAdminSidebar);
         adminSidebarOverlay?.addEventListener('click', hideAdminSidebar);
 
-        // Accordion Toggle
         toggleGalleryUnlock?.addEventListener('click', () => {
             galleryUnlockContent.classList.toggle('hidden');
             galleryUnlockChevron.classList.toggle('rotate-180');
         });
 
-        // Unlock Action
         unlockFeaturesBtn?.addEventListener('click', () => {
             if (adminPinInput.value === ADMIN_PIN) {
                 adminErrorMsg.classList.add('hidden');
-                manualUploadBtn.classList.remove('hidden'); // Reveal simple gallery button
+                manualUploadBtn.classList.remove('hidden');
                 hideAdminSidebar();
-                
-                // Show a brief success alert
                 setTimeout(() => alert("গ্যালারি আপলোড আনলক করা হয়েছে!"), 350);
             } else {
                 adminErrorMsg.classList.remove('hidden');
@@ -1634,6 +2124,151 @@
                 adminPinInput.focus();
             }
         });
+
+        // ==========================================
+        // NEW OUTLET LOGIC
+        // ==========================================
+        const btnOpenNewOutlet = document.getElementById('btnOpenNewOutlet');
+        const newOutletModal = document.getElementById('newOutletModal');
+        const newOutletContent = document.getElementById('newOutletContent');
+        const closeNewOutletModal = document.getElementById('closeNewOutletModal');
+        const submitNewOutletBtn = document.getElementById('submitNewOutletBtn');
+        
+        const newOutletDistName = document.getElementById('newOutletDistName');
+        const newOutletDistCode = document.getElementById('newOutletDistCode');
+        const newOutletRouteName = document.getElementById('newOutletRouteName');
+        const newOutletRouteCode = document.getElementById('newOutletRouteCode');
+
+        btnOpenNewOutlet?.addEventListener('click', () => {
+            hideAdminSidebar();
+            
+            const dbs = [...new Set(pjpData.map(i => i.townName))].filter(Boolean).sort();
+            newOutletDistName.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউটর নির্বাচন করুন</option>' + 
+                                          dbs.map(db => `<option value="${db}">${db}</option>`).join('');
+            
+            newOutletRouteName.innerHTML = '<option value="" disabled selected>প্রথমে ডিস্ট্রিবিউটর নির্বাচন করুন</option>';
+            newOutletRouteName.disabled = true;
+
+            newOutletModal.classList.remove('hidden');
+            newOutletModal.classList.add('flex');
+            lucide.createIcons();
+            setTimeout(() => {
+                newOutletModal.classList.remove('opacity-0');
+                newOutletModal.classList.add('opacity-100');
+                newOutletContent.classList.remove('scale-95');
+                newOutletContent.classList.add('scale-100');
+            }, 10);
+        });
+
+        newOutletDistName?.addEventListener('change', (e) => {
+            const dbName = e.target.value;
+            const match = pjpData.find(i => i.townName === dbName);
+            if (match) newOutletDistCode.value = match.distributor;
+
+            const routes = [...new Set(pjpData.filter(i => i.townName === dbName).map(i => i.routeName))].filter(Boolean).sort();
+            newOutletRouteName.innerHTML = '<option value="" disabled selected>রুট নির্বাচন করুন</option>' + 
+                                           routes.map(r => `<option value="${r}">${r}</option>`).join('');
+            newOutletRouteName.disabled = routes.length === 0;
+            newOutletRouteCode.value = '';
+        });
+
+        newOutletRouteName?.addEventListener('change', (e) => {
+            const route = e.target.value;
+            const dbName = newOutletDistName.value;
+            const match = pjpData.find(i => i.townName === dbName && i.routeName === route);
+            if (match) newOutletRouteCode.value = match.routeCode || '';
+        });
+
+        function hideNewOutletModal() {
+            newOutletModal.classList.remove('opacity-100');
+            newOutletModal.classList.add('opacity-0');
+            newOutletContent.classList.remove('scale-100');
+            newOutletContent.classList.add('scale-95');
+            setTimeout(() => {
+                newOutletModal.classList.add('hidden');
+                newOutletModal.classList.remove('flex');
+            }, 300);
+        }
+
+        closeNewOutletModal?.addEventListener('click', hideNewOutletModal);
+        newOutletModal?.addEventListener('click', (e) => {
+            if (e.target === newOutletModal) hideNewOutletModal();
+        });
+
+        submitNewOutletBtn?.addEventListener('click', async () => {
+            const distName = newOutletDistName.value;
+            const distCode = newOutletDistCode.value;
+            const routeName = newOutletRouteName.value;
+            const routeCode = newOutletRouteCode.value;
+            const name = document.getElementById('newOutletName').value;
+            const owner = document.getElementById('newOutletOwner').value;
+            const phone = document.getElementById('newOutletPhone').value;
+            const slab = document.getElementById('newOutletSlab').value;
+            const entryBy = document.getElementById('newOutletEntryBy').value;
+            
+            const outletTypeNode = document.querySelector('input[name="new_outlet_type"]:checked');
+            const outletType = outletTypeNode ? outletTypeNode.value : '';
+
+            if(!distName || !routeName || !name || !owner || !phone || !slab || !entryBy || !outletType) {
+                alert("দয়া করে * চিহ্নিত সকল তথ্য পূরণ করুন!");
+                return;
+            }
+
+            if(phone.length !== 11) {
+                alert("মোবাইল নাম্বার অবশ্যই ঠিক ১১ ডিজিটের হতে হবে!");
+                return;
+            }
+            
+            const originalText = submitNewOutletBtn.innerHTML;
+            submitNewOutletBtn.innerHTML = '<div class="loader !w-4 !h-4 !border-t-white mr-2"></div> সেভ হচ্ছে...';
+            submitNewOutletBtn.disabled = true;
+
+            const payload = {
+                action: 'newOutlet',
+                distCode: distCode,
+                distName: distName,
+                routeCode: routeCode,
+                routeName: routeName,
+                outletName: name,
+                contactNumber: phone,
+                slab: slab,
+                outletType: outletType,
+                createdName: entryBy
+            };
+
+            try {
+                await fetch(NEW_OUTLET_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                alert("নতুন স্মাইল কর্ণার সফলভাবে এন্ট্রি হয়েছে!");
+                
+                newOutletDistName.value = '';
+                newOutletRouteName.value = '';
+                newOutletDistCode.value = '';
+                newOutletRouteCode.value = '';
+                document.getElementById('newOutletName').value = '';
+                document.getElementById('newOutletOwner').value = '';
+                document.getElementById('newOutletPhone').value = '';
+                document.getElementById('newOutletSlab').value = '';
+                document.getElementById('newOutletEntryBy').value = '';
+                
+                const radios = document.getElementsByName('new_outlet_type');
+                for(let r of radios) r.checked = false;
+                
+                hideNewOutletModal();
+            } catch(e) {
+                alert("এন্ট্রি সেভ করতে সমস্যা হয়েছে। ইন্টারনেট সংযোগ চেক করুন।");
+            } finally {
+                submitNewOutletBtn.innerHTML = originalText;
+                submitNewOutletBtn.disabled = false;
+            }
+        });
+
     </script>
 </body>
 </html>
