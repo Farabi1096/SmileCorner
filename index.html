@@ -133,11 +133,13 @@
         </div>
 
         <div class="w-full max-w-[280px] space-y-4 relative z-10">
+            <!-- Round corner updated to match app interior buttons -->
             <button type="button" id="btnRoleMerch" class="w-full relative flex items-center justify-center py-3.5 px-4 bg-white border-[1.5px] border-gray-200 rounded-xl hover:border-colgate hover:bg-red-50 transition-all duration-200 shadow-sm group">
                 <i data-lucide="user" class="h-[18px] w-[18px] absolute left-4 text-gray-400 group-hover:text-colgate transition-colors"></i>
                 <span class="font-semibold text-[14px] text-gray-800 group-hover:text-colgate transition-colors">Merchandiser</span>
             </button>
 
+            <!-- Round corner updated to match app interior buttons -->
             <button type="button" id="btnRoleSR" class="w-full relative flex items-center justify-center py-3.5 px-4 bg-white border-[1.5px] border-gray-200 rounded-xl hover:border-colgate hover:bg-red-50 transition-all duration-200 shadow-sm group">
                 <i data-lucide="briefcase" class="h-[18px] w-[18px] absolute left-4 text-gray-400 group-hover:text-colgate transition-colors"></i>
                 <span class="font-semibold text-[14px] text-gray-800 group-hover:text-colgate transition-colors">Sales Team (TM / SR)</span>
@@ -158,6 +160,7 @@
                 <i data-lucide="log-out" class="w-4 h-4"></i>
             </button>
             
+            <!-- 3-Dot Admin Menu Button -->
             <button id="adminMenuBtn" class="absolute right-4 top-4 sm:top-6 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors flex items-center justify-center backdrop-blur-sm">
                 <i data-lucide="more-vertical" class="w-4 h-4"></i>
             </button>
@@ -202,7 +205,7 @@
                                 দোকানের তথ্য
                             </h3>
                             
-                            <!-- OUTLET TYPE TOGGLE -->
+                            <!-- OUTLET TYPE TOGGLE (Acts as Filter) -->
                             <div class="flex bg-gray-100 p-1 rounded-xl w-[170px] sm:w-[210px] shrink-0 shadow-inner border border-gray-200 mr-1">
                                 <label class="flex-1 text-center cursor-pointer m-0">
                                     <input type="radio" name="outlet_type" value="DCC" class="peer hidden" required>
@@ -248,6 +251,19 @@
                                 </div>
                             </div>
 
+                            <!-- NEW TERRITORY FIELD FOR SR -->
+                            <div id="srTerritoryGroup" class="input-group relative hidden">
+                                <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">টেরিটোরি <span class="text-colgate">*</span></label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                        <i data-lucide="map" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
+                                    </div>
+                                    <select name="territory_name" id="territorySelect" class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium disabled:opacity-50" disabled>
+                                        <option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="input-group relative hidden">
                                 <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">ডিস্ট্রিবিউশন কোড <span class="text-colgate">*</span></label>
                                 <div class="relative">
@@ -267,7 +283,7 @@
                                         <i data-lucide="truck" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
                                     </div>
                                     <select name="distribution_name" id="distSelect" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium disabled:opacity-50" disabled>
-                                        <option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>
+                                        <option value="" disabled selected>প্রথমে এরিয়া/টেরিটোরি সিলেক্ট করুন</option>
                                     </select>
                                 </div>
                             </div>
@@ -278,7 +294,7 @@
                                     <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">রুট নাম <span class="text-colgate">*</span></label>
                                     <div class="relative">
                                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                            <i data-lucide="map" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
+                                            <i data-lucide="route" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
                                         </div>
                                         <select name="sr_route" id="srRouteSelect" class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium disabled:opacity-50" disabled>
                                             <option value="" disabled selected>প্রথমে ডিস্ট্রিবিউটর সিলেক্ট করুন</option>
@@ -307,14 +323,7 @@
                                             <i data-lucide="layers" class="h-[18px] w-[18px] text-gray-400 icon-left"></i>
                                         </div>
                                         <select name="slab" id="formSlab" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium">
-                                            <option value="" disabled selected>স্ল্যাব সিলেক্ট করুন</option>
-                                            <option value="Slab 1">Slab 1</option>
-                                            <option value="Slab 2">Slab 2</option>
-                                            <option value="Slab 3">Slab 3</option>
-                                            <option value="Slab 4">Slab 4</option>
-                                            <option value="Slab 5">Slab 5</option>
-                                            <option value="Slab 6">Slab 6</option>
-                                            <option value="Regular">Regular (No Slab)</option>
+                                            <option value="" disabled selected>লোড হচ্ছে...</option>
                                         </select>
                                     </div>
                                 </div>
@@ -585,7 +594,7 @@
                         </div>
                     </div>
                     
-                    <!-- DB Name & Route Filters with Region Filter Kept -->
+                    <!-- DB Name & Route Filters with Region Filter -->
                     <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm mb-4">
                         <div class="grid grid-cols-3 gap-2">
                             <select id="reportRegionSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
@@ -686,6 +695,7 @@
                 </div>
                 
                 <div class="overflow-y-auto flex-grow custom-scrollbar pr-2 space-y-4">
+                    <!-- Hidden Identifiers -->
                     <input type="hidden" id="newOutletDistCode">
                     <input type="hidden" id="newOutletRouteCode">
 
@@ -721,28 +731,8 @@
                         <div class="w-1/2">
                             <label class="block text-[12px] font-bold text-gray-700 mb-1">স্ল্যাব (Slab) <span class="text-colgate">*</span></label>
                             <select id="newOutletSlab" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
-                                <option value="" disabled selected>স্ল্যাব নির্বাচন করুন</option>
-                                <option value="Slab 1 (4k)">Slab 1 (4k)</option>
-                                <option value="Slab 2 (5.5k)">Slab 2 (5.5k)</option>
+                                <option value="" disabled selected>লোড হচ্ছে...</option>
                             </select>
-                        </div>
-                    </div>
-
-                    <div class="flex gap-3 items-center">
-                        <label class="block text-[12px] font-bold text-gray-700 w-1/3">আউটলেট টাইপ <span class="text-colgate">*</span></label>
-                        <div class="flex bg-gray-100 p-1 rounded-xl w-2/3 shadow-inner border border-gray-200">
-                            <label class="flex-1 text-center cursor-pointer">
-                                <input type="radio" name="new_outlet_type" value="DCC" class="peer hidden">
-                                <div class="py-2 text-[12px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">DCC</div>
-                            </label>
-                            <label class="flex-1 text-center cursor-pointer">
-                                <input type="radio" name="new_outlet_type" value="ROB" class="peer hidden">
-                                <div class="py-2 text-[12px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">ROB</div>
-                            </label>
-                            <label class="flex-1 text-center cursor-pointer">
-                                <input type="radio" name="new_outlet_type" value="SMT" class="peer hidden">
-                                <div class="py-2 text-[12px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">SMT</div>
-                            </label>
                         </div>
                     </div>
 
@@ -826,8 +816,10 @@
             if (role === 'merchandiser') {
                 document.getElementById('headerSubtitle').textContent = "Merchandiser Panel";
                 if (tabsContainer) tabsContainer.classList.remove('hidden');
+                document.getElementById('srTerritoryGroup').classList.add('hidden');
                 document.getElementById('srFieldsGroup').classList.add('hidden');
                 document.getElementById('merchFieldsGroup').classList.remove('hidden');
+                document.getElementById('territorySelect').removeAttribute('required');
                 document.getElementById('srRouteSelect').removeAttribute('required');
                 document.getElementById('srOutletSelect').removeAttribute('required');
                 document.getElementById('formSlab').setAttribute('required', 'true');
@@ -837,8 +829,10 @@
                 document.getElementById('headerSubtitle').textContent = "Sales Team (TM / SR) Panel";
                 if (tabsContainer) tabsContainer.classList.add('hidden');
                 document.getElementById('tabForm').click();
+                document.getElementById('srTerritoryGroup').classList.remove('hidden');
                 document.getElementById('srFieldsGroup').classList.remove('hidden');
                 document.getElementById('merchFieldsGroup').classList.add('hidden');
+                document.getElementById('territorySelect').setAttribute('required', 'true');
                 document.getElementById('srRouteSelect').setAttribute('required', 'true');
                 document.getElementById('srOutletSelect').setAttribute('required', 'true');
                 document.getElementById('formSlab').removeAttribute('required');
@@ -909,10 +903,11 @@
                 pjpData = pjpRows.map(row => {
                     const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
                     return {
-                        distributor: getVal(0), region: getVal(1), townName: getVal(2),
-                        code: getVal(3), name: getVal(4), slab: getVal(5),
-                        routeCode: getVal(6), routeName: getVal(7), visitDay: getVal(8), 
-                        merchandiser: getVal(9), status: getVal(10), outletType: getVal(11) // PJP Column L
+                        region: getVal(0), zone: getVal(1), territory: getVal(2),
+                        distributor: getVal(3), townName: getVal(4), code: getVal(5),
+                        name: getVal(6), slab: getVal(7), routeCode: getVal(8),
+                        routeName: getVal(9), visitDay: getVal(10), merchandiser: getVal(11), 
+                        status: getVal(12), outletType: getVal(13) // Unit as Outlet Type
                     };
                 }).filter(i => i.townName && !["TOWN NAME", "DB NAME", "TOWN"].includes(i.townName.toUpperCase()));
 
@@ -946,7 +941,6 @@
             r.addEventListener('change', (e) => {
                 populateDropdowns(); 
                 
-                // Update SR Outlet Label based on type dynamically
                 const srOutletLabel = document.getElementById('srOutletLabel');
                 if (srOutletLabel) {
                     if (e.target.value === 'SMT') {
@@ -957,9 +951,14 @@
                 }
                 
                 // Reset cascading dropdowns
+                const territorySelect = document.getElementById('territorySelect');
+                if(territorySelect) {
+                    territorySelect.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
+                    territorySelect.disabled = true;
+                }
                 const distSelect = document.getElementById('distSelect');
                 if(distSelect) {
-                    distSelect.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
+                    distSelect.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া/টেরিটোরি সিলেক্ট করুন</option>';
                     distSelect.disabled = true;
                 }
                 const formDbCode = document.getElementById('formDbCode');
@@ -985,6 +984,7 @@
         function populateDropdowns() {
             if(!pjpData || pjpData.length === 0) return;
 
+            // --- FILTER FORM AREAS BY OUTLET TYPE ---
             const formSelectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
             const areaSelect = document.getElementById('areaSelect');
             
@@ -1001,19 +1001,45 @@
                 }
             }
 
+            // My Day Tabs Initialization
             const myDaySelectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
             const myDayRegionSelect = document.getElementById('myDayRegionSelect');
             
             if (myDayRegionSelect) {
-                if (myDaySelectedType) {
+                if (myDaySelectedType && myDaySelectedType !== 'ALL') {
                     const myDayPjp = pjpData.filter(i => i.outletType && i.outletType.toUpperCase() === myDaySelectedType.toUpperCase());
                     const regions = [...new Set(myDayPjp.map(i => i.region))].filter(Boolean).sort();
                     myDayRegionSelect.innerHTML = '<option value="" disabled selected>Region (এরিয়া)</option>' + 
                                                 regions.map(r => `<option value="${r}">${r}</option>`).join('');
                     myDayRegionSelect.disabled = regions.length === 0;
                 } else {
-                    myDayRegionSelect.innerHTML = '<option value="" disabled selected>প্রথমে টাইপ সিলেক্ট করুন</option>';
-                    myDayRegionSelect.disabled = true;
+                    const regions = [...new Set(pjpData.map(i => i.region))].filter(Boolean).sort();
+                    myDayRegionSelect.innerHTML = '<option value="" disabled selected>Region (এরিয়া)</option>' + 
+                                                regions.map(r => `<option value="${r}">${r}</option>`).join('');
+                    myDayRegionSelect.disabled = regions.length === 0;
+                }
+            }
+
+            // --- POPULATE SLABS DYNAMICALLY FROM SHEET ---
+            const uniqueSlabs = [...new Set(pjpData.map(i => i.slab))].filter(Boolean).sort();
+            
+            const formSlabSelect = document.getElementById('formSlab');
+            if (formSlabSelect) {
+                const currentSlabVal = formSlabSelect.value;
+                formSlabSelect.innerHTML = '<option value="" disabled selected>স্ল্যাব সিলেক্ট করুন</option>' + 
+                                        uniqueSlabs.map(s => `<option value="${s}">${s}</option>`).join('');
+                if (currentSlabVal && uniqueSlabs.includes(currentSlabVal)) {
+                    formSlabSelect.value = currentSlabVal;
+                }
+            }
+            
+            const newOutletSlabSelect = document.getElementById('newOutletSlab');
+            if (newOutletSlabSelect) {
+                const currentNewSlabVal = newOutletSlabSelect.value;
+                newOutletSlabSelect.innerHTML = '<option value="" disabled selected>স্ল্যাব নির্বাচন করুন</option>' + 
+                                            uniqueSlabs.map(s => `<option value="${s}">${s}</option>`).join('');
+                if (currentNewSlabVal && uniqueSlabs.includes(currentNewSlabVal)) {
+                    newOutletSlabSelect.value = currentNewSlabVal;
                 }
             }
         }
@@ -1021,8 +1047,58 @@
         document.getElementById('areaSelect')?.addEventListener('change', (e) => {
             const selectedArea = e.target.value;
             const selectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
+            const role = localStorage.getItem('colgate_app_role');
             
             let filtered = pjpData.filter(i => i.region === selectedArea);
+            if (selectedType) {
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+
+            if (role === 'sr') {
+                const territories = [...new Set(filtered.map(i => i.territory))].filter(Boolean).sort();
+                const territorySelect = document.getElementById('territorySelect');
+                if(territorySelect) {
+                    territorySelect.innerHTML = '<option value="" disabled selected>টেরিটোরি সিলেক্ট করুন</option>' + 
+                                        territories.map(t => `<option value="${t}">${t}</option>`).join('');
+                    territorySelect.disabled = territories.length === 0;
+                }
+                const distSelect = document.getElementById('distSelect');
+                if(distSelect) {
+                    distSelect.innerHTML = '<option value="" disabled selected>প্রথমে টেরিটোরি সিলেক্ট করুন</option>';
+                    distSelect.disabled = true;
+                }
+            } else {
+                const dists = [...new Set(filtered.map(i => i.townName))].filter(Boolean).sort();
+                const distSelect = document.getElementById('distSelect');
+                if(distSelect) {
+                    distSelect.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউশন সিলেক্ট করুন</option>' + 
+                                        dists.map(d => `<option value="${d}">${d}</option>`).join('');
+                    distSelect.disabled = dists.length === 0;
+                }
+            }
+            
+            const formDbCode = document.getElementById('formDbCode');
+            if (formDbCode) formDbCode.value = '';
+            
+            const srRouteSelect = document.getElementById('srRouteSelect');
+            if (srRouteSelect) {
+                srRouteSelect.innerHTML = '<option value="" disabled selected>প্রথমে ডিস্ট্রিবিউশন সিলেক্ট করুন</option>';
+                srRouteSelect.disabled = true;
+            }
+            
+            const srOutletSelect = document.getElementById('srOutletSelect');
+            if (srOutletSelect) {
+                srOutletSelect.innerHTML = '<option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>';
+                srOutletSelect.disabled = true;
+            }
+        });
+
+        document.getElementById('territorySelect')?.addEventListener('change', (e) => {
+            const selectedArea = document.getElementById('areaSelect').value;
+            const selectedTerritory = e.target.value;
+            const selectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
+            
+            let filtered = pjpData.filter(i => i.region === selectedArea && i.territory === selectedTerritory);
             if (selectedType) {
                 filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
@@ -1053,20 +1129,25 @@
 
         document.getElementById('distSelect')?.addEventListener('change', (e) => {
             const selectedArea = document.getElementById('areaSelect').value;
+            const selectedTerritory = document.getElementById('territorySelect')?.value;
             const dbName = e.target.value;
             const selectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
+            const role = localStorage.getItem('colgate_app_role');
             
             let filtered = pjpData.filter(i => i.region === selectedArea && i.townName === dbName);
+            if (role === 'sr' && selectedTerritory) {
+                filtered = filtered.filter(i => i.territory === selectedTerritory);
+            }
             if (selectedType) {
                 filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
             
-            const match = filtered.find(item => item.region === selectedArea && item.townName === dbName);
+            const match = filtered.find(item => item.townName === dbName);
             if (match && match.distributor) {
                 document.getElementById('formDbCode').value = match.distributor;
             }
 
-            if (localStorage.getItem('colgate_app_role') === 'sr') {
+            if (role === 'sr') {
                 const routes = [...new Set(filtered.map(i => i.routeName))].filter(Boolean).sort();
                 const srRouteSelect = document.getElementById('srRouteSelect');
                 if (srRouteSelect) {
@@ -1086,11 +1167,13 @@
 
         document.getElementById('srRouteSelect')?.addEventListener('change', (e) => {
             const selectedArea = document.getElementById('areaSelect').value;
+            const selectedTerritory = document.getElementById('territorySelect').value;
             const dbName = document.getElementById('distSelect').value;
             const route = e.target.value;
             const selectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
 
             let outlets = pjpData.filter(i => i.region === selectedArea && 
+                                              i.territory === selectedTerritory &&
                                               i.townName === dbName && 
                                               i.routeName === route);
             
@@ -1105,7 +1188,7 @@
             
             const srOutletSelect = document.getElementById('srOutletSelect');
             if (srOutletSelect) {
-                // Strictly filtering by exact code, fallback logic removed per user request
+                // Exact code filtering logic without fallbacks
                 srOutletSelect.innerHTML = '<option value="" disabled selected>আউটলেট সিলেক্ট করুন</option>' + 
                                         outlets.map(o => `<option value="${o.code}">${o.name} (${o.code} - ${o.slab || 'Regular'})</option>`).join('');
                 srOutletSelect.disabled = outlets.length === 0;
@@ -1118,7 +1201,7 @@
             const selectedCode = e.target.value;
             const outlet = pjpData.find(i => i.code === selectedCode);
             if(outlet) {
-                document.getElementById('formShopCode').value = outlet.code;
+                document.getElementById('formShopCode').value = outlet.code || '';
                 document.getElementById('formSlab').value = outlet.slab;
             }
         });
@@ -1357,6 +1440,7 @@
             }
 
             let detectedArea = "";
+            let detectedTerritory = "";
             const cleanStr = str => String(str || "").toLowerCase().replace(/[\s\.\-\_\,\/\\]/g, "");
             const cleanDh = cleanStr(dh);
 
@@ -1364,6 +1448,7 @@
                 const match = pjpData.find(item => cleanStr(item.townName) === cleanDh || cleanStr(item.distributor) === cleanDh);
                 if(match && match.region) {
                     detectedArea = match.region;
+                    detectedTerritory = match.territory;
                 }
             }
             
@@ -1372,8 +1457,10 @@
             }
 
             const as = document.getElementById('areaSelect');
+            const ts = document.getElementById('territorySelect');
             const ds = document.getElementById('distSelect');
             const dbCodeInput = document.getElementById('formDbCode');
+            const role = localStorage.getItem('colgate_app_role');
 
             if (as) {
                 if(!Array.from(as.options).some(opt => opt.value === detectedArea) && detectedArea) {
@@ -1381,6 +1468,14 @@
                 }
                 as.value = detectedArea;
                 as.dispatchEvent(new Event('change'));
+
+                if (role === 'sr' && detectedTerritory && ts) {
+                    if(!Array.from(ts.options).some(opt => opt.value === detectedTerritory)) {
+                        ts.add(new Option(detectedTerritory, detectedTerritory));
+                    }
+                    ts.value = detectedTerritory;
+                    ts.dispatchEvent(new Event('change'));
+                }
 
                 if (dh) {
                     const pjpMatch = pjpData.find(item => cleanStr(item.townName) === cleanDh || cleanStr(item.distributor) === cleanDh);
@@ -1398,11 +1493,12 @@
 
                 const fs = document.getElementById('formSlab');
                 if (fs) {
-                    let finalSlab = "Regular";
-                    if(slab && slab.toLowerCase().includes("slab 1")) finalSlab = "Slab 1"; 
-                    else if(slab && slab.toLowerCase().includes("slab 2")) finalSlab = "Slab 2";
-                    if (Array.from(fs.options).some(opt => opt.value === finalSlab)) {
-                        fs.value = finalSlab;
+                    const looseMatch = Array.from(fs.options).find(opt => opt.value.toLowerCase() === (slab || "").toLowerCase());
+                    if (looseMatch) {
+                        fs.value = looseMatch.value;
+                    } else if (slab) {
+                        fs.add(new Option(slab, slab));
+                        fs.value = slab;
                     }
                 }
 
@@ -1805,7 +1901,8 @@
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             
             applyWatermark(ctx, c.width, c.height);
-            capturedImageData = c.toDataURL('image/jpeg', 0.85);
+            // Fast Upload fix: compressed to 0.6
+            capturedImageData = c.toDataURL('image/jpeg', 0.6); 
             document.getElementById('capturedImagePreview').src = capturedImageData;
             document.getElementById('previewContainer').classList.remove('hidden');
             document.getElementById('cameraContainer').classList.add('hidden');
@@ -1837,9 +1934,9 @@
                     const c = document.getElementById('processCanvas');
                     const ctx = c.getContext('2d');
                     
-                    // Fixed max width/height to avoid memory issues with huge gallery photos
-                    const MAX_WIDTH = 1280;
-                    const MAX_HEIGHT = 1280;
+                    // Fixed max width/height to ensure fast uploads
+                    const MAX_WIDTH = 960;
+                    const MAX_HEIGHT = 960;
                     let width = img.width;
                     let height = img.height;
 
@@ -1860,9 +1957,9 @@
                     ctx.drawImage(img, 0, 0, width, height);
                     
                     // Watermark is NOT applied for manual gallery uploads
-                    // applyWatermark(ctx, c.width, c.height); 
                     
-                    capturedImageData = c.toDataURL('image/jpeg', 0.85);
+                    // Fast Upload fix: compressed to 0.6
+                    capturedImageData = c.toDataURL('image/jpeg', 0.6);
                     document.getElementById('capturedImagePreview').src = capturedImageData;
                     document.getElementById('previewContainer').classList.remove('hidden');
                     document.getElementById('cameraTriggerContainer').classList.add('hidden');
@@ -1944,9 +2041,14 @@
             const btn = document.getElementById('submitBtn'), loader = document.getElementById('btnLoader'), text = document.getElementById('btnText');
             btn.disabled = true; loader.classList.remove('hidden'); text.textContent = "জমা হচ্ছে...";
             
+            // Dynamic loading text
+            const loadingTimer1 = setTimeout(() => { if(btn.disabled) text.textContent = "ছবি আপলোড হচ্ছে..."; }, 3000);
+            const loadingTimer2 = setTimeout(() => { if(btn.disabled) text.textContent = "ডেটাবেসে সেভ হচ্ছে..."; }, 8000);
+
             const formDbCodeEl = document.getElementById('formDbCode');
             const distSelectEl = document.getElementById('distSelect');
             const areaSelectEl = document.getElementById('areaSelect');
+            const territorySelectEl = document.getElementById('territorySelect');
 
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
@@ -1954,6 +2056,7 @@
             data.db_code = formDbCodeEl && formDbCodeEl.value ? formDbCodeEl.value : "Not Found";
             data.distribution_name = distSelectEl && distSelectEl.value ? distSelectEl.value : "Not Found";
             data.area_name = areaSelectEl && areaSelectEl.value ? areaSelectEl.value : "Not Found";
+            data.territory = territorySelectEl && territorySelectEl.value ? territorySelectEl.value : "Not Found";
             
             data.role = localStorage.getItem('colgate_app_role') || 'merchandiser';
 
@@ -1970,9 +2073,15 @@
             try {
                 await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data), mode: 'no-cors' });
                 
+                clearTimeout(loadingTimer1);
+                clearTimeout(loadingTimer2);
+
                 const todayStr = new Date().toDateString();
-                let s = JSON.parse(localStorage.getItem('colgate_merch_session')) || { date: todayStr, startTime: Date.now(), submittedCodes: [], count: 0 };
+                let s = {};
+                try { s = JSON.parse(localStorage.getItem('colgate_merch_session')) || {}; } catch(err) {}
+                
                 if (s.date !== todayStr) s = { date: todayStr, startTime: Date.now(), submittedCodes: [], count: 0 };
+                if (!Array.isArray(s.submittedCodes)) s.submittedCodes = [];
                 
                 s.count = (s.count || 0) + 1; 
                 s.endTime = Date.now(); 
@@ -2025,14 +2134,20 @@
             const manualFileInput = document.getElementById('manualFileInput');
             if(manualFileInput) manualFileInput.value = '';
             
+            const territorySelectEl = document.getElementById('territorySelect');
+            if(territorySelectEl) {
+                territorySelectEl.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
+                territorySelectEl.disabled = true;
+            }
+
             const distSelectEl = document.getElementById('distSelect');
             if(distSelectEl) {
-                distSelectEl.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
+                distSelectEl.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া/টেরিটোরি সিলেক্ট করুন</option>';
                 distSelectEl.disabled = true;
             }
             const formDbCodeEl = document.getElementById('formDbCode');
             if(formDbCodeEl) {
-                formDbCodeEl.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
+                formDbCodeEl.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া/টেরিটোরি সিলেক্ট করুন</option>';
                 formDbCodeEl.disabled = true;
             }
 
@@ -2054,9 +2169,6 @@
             // Reset Output Type Radios
             const radios1 = document.getElementsByName('outlet_type');
             for (let r of radios1) r.checked = false;
-            
-            const radios2 = document.getElementsByName('new_outlet_type');
-            for (let r of radios2) r.checked = false;
         };
 
         // ==========================================
@@ -2205,11 +2317,8 @@
             const phone = document.getElementById('newOutletPhone').value;
             const slab = document.getElementById('newOutletSlab').value;
             const entryBy = document.getElementById('newOutletEntryBy').value;
-            
-            const outletTypeNode = document.querySelector('input[name="new_outlet_type"]:checked');
-            const outletType = outletTypeNode ? outletTypeNode.value : '';
 
-            if(!distName || !routeName || !name || !owner || !phone || !slab || !entryBy || !outletType) {
+            if(!distName || !routeName || !name || !owner || !phone || !slab || !entryBy) {
                 alert("দয়া করে * চিহ্নিত সকল তথ্য পূরণ করুন!");
                 return;
             }
@@ -2232,7 +2341,6 @@
                 outletName: name,
                 contactNumber: phone,
                 slab: slab,
-                outletType: outletType,
                 createdName: entryBy
             };
 
@@ -2256,9 +2364,6 @@
                 document.getElementById('newOutletPhone').value = '';
                 document.getElementById('newOutletSlab').value = '';
                 document.getElementById('newOutletEntryBy').value = '';
-                
-                const radios = document.getElementsByName('new_outlet_type');
-                for(let r of radios) r.checked = false;
                 
                 hideNewOutletModal();
             } catch(e) {
