@@ -141,18 +141,31 @@
                 </svg>
             </div>
 
-            <div class="bg-red-50 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-red-100 shadow-sm relative z-10">
-                <i data-lucide="smile" class="h-11 w-11 text-colgate"></i>
+            <!-- Custom Logo Image -->
+            <div class="h-24 w-24 rounded-full flex items-center justify-center mx-auto mb-4 relative z-10 overflow-hidden bg-red-50 border border-red-100 shadow-sm">
+                <img src="https://i.postimg.cc/85V7jkK5/Smile-Image.png" alt="Smile Logo" class="h-full w-full object-cover">
             </div>
             <h1 class="text-2xl font-bold text-gray-900 tracking-tight relative z-10">Smile Corner</h1>
-            <p class="text-gray-500 text-[13px] mt-1 relative z-10">Select your access level</p>
+            <p class="text-gray-500 text-[13px] mt-1 relative z-10">Make More Smiles</p>
         </div>
 
         <div class="w-full max-w-[280px] space-y-4 relative z-10">
-            <button type="button" id="btnRoleMerch" class="w-full relative flex items-center justify-center py-3.5 px-4 bg-white border-[1.5px] border-gray-200 rounded-xl hover:border-colgate hover:bg-red-50 transition-all duration-200 shadow-sm group">
-                <i data-lucide="user" class="h-[18px] w-[18px] absolute left-4 text-gray-400 group-hover:text-colgate transition-colors"></i>
-                <span class="font-semibold text-[14px] text-gray-800 group-hover:text-colgate transition-colors">Merchandiser</span>
-            </button>
+            <!-- Merchandiser Dynamic Dropdown Button -->
+            <div class="relative w-full">
+                <button type="button" id="btnRoleMerch" class="w-full relative flex items-center justify-center py-3.5 px-4 bg-white border-[1.5px] border-gray-200 rounded-xl hover:border-colgate hover:bg-red-50 transition-all duration-200 shadow-sm group">
+                    <i data-lucide="user" class="h-[18px] w-[18px] absolute left-4 text-gray-400 group-hover:text-colgate transition-colors"></i>
+                    <span class="font-semibold text-[14px] text-gray-800 group-hover:text-colgate transition-colors">Merchandiser</span>
+                    <div id="merchLoginLoader" class="loader !border-[2.5px] !border-gray-200 !border-t-colgate !w-4 !h-4 absolute right-4 hidden"></div>
+                </button>
+                
+                <!-- Hidden Dropdown Container -->
+                <div id="merchDropdownContainer" class="hidden absolute top-full left-0 w-full mt-2 bg-white border border-gray-200 rounded-xl shadow-xl z-50 p-3 transform transition-all duration-300">
+                    <label class="block text-[11px] font-bold text-gray-500 mb-2 px-1">আপনার নাম নির্বাচন করুন:</label>
+                    <select id="loginMerchSelect" class="w-full rounded-lg border border-gray-200 bg-gray-50 text-[13px] py-2.5 px-3 font-semibold text-gray-800 outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-colors cursor-pointer">
+                        <option value="" disabled selected>নাম খুঁজুন...</option>
+                    </select>
+                </div>
+            </div>
 
             <button type="button" id="btnRoleSR" class="w-full relative flex items-center justify-center py-3.5 px-4 bg-white border-[1.5px] border-gray-200 rounded-xl hover:border-colgate hover:bg-red-50 transition-all duration-200 shadow-sm group">
                 <i data-lucide="briefcase" class="h-[18px] w-[18px] absolute left-4 text-gray-400 group-hover:text-colgate transition-colors"></i>
@@ -179,10 +192,7 @@
                 <i data-lucide="more-vertical" class="w-4 h-4"></i>
             </button>
 
-            <div class="flex items-center justify-center gap-2 mb-1.5">
-                <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm">
-                    <i data-lucide="smile" class="h-[18px] w-[18px] sm:h-5 sm:w-5 text-colgate"></i>
-                </div>
+            <div class="flex items-center justify-center mb-1.5">
                 <h2 class="text-lg sm:text-xl font-bold text-white tracking-wide">কোলগেট স্মাইল কর্ণার</h2>
             </div>
             <p id="headerSubtitle" class="text-white/90 text-[11px] sm:text-[12px] leading-relaxed px-3 py-0.5 bg-red-800/30 rounded-full inline-block font-medium">
@@ -207,7 +217,7 @@
             </div>
 
             <!-- ================= VIEW 1: FORM ================= -->
-            <div id="formView" class="animate-fade-in">
+            <div id="formView" class="animate-fade-in flex flex-col h-full relative">
                 <form id="customForm" class="space-y-6">
                     <!-- Section 1 -->
                     <div class="bg-gray-50 border border-gray-100 p-4 sm:p-5 rounded-2xl shadow-sm">
@@ -245,8 +255,6 @@
                                     </div>
                                     <select name="display_month" id="formMonth" required class="pl-10 block w-full rounded-xl border border-gray-200 bg-white text-gray-800 text-[14px] py-3 transition-all outline-none font-medium">
                                         <option value="" disabled selected>মাস</option>
-                                        <option value="August">August</option>
-                                        <option value="September">September</option>
                                     </select>
                                 </div>
                             </div>
@@ -421,7 +429,7 @@
 
                                 <div class="bg-white border border-gray-200 rounded-2xl p-3 shadow-sm">
                                     <h4 class="text-[13px] font-bold text-gray-800 mb-3 text-center flex items-center justify-center">
-                                        <i data-lucide="info" class="h-4 w-4 mr-1.5 text-blue-500"></i> সাবমিট করার আগে মিলিয়ে নিন
+                                        <i data-lucide="info" class="h-4 w-4 mr-1.5 text-blue-500"></i> সাবমিট করার আগে মিলিয়ে নিন
                                     </h4>
                                     
                                     <div class="flex gap-2">
@@ -446,7 +454,7 @@
                                             
                                             <div class="flex-1 flex flex-col relative aspect-video">
                                                 <div class="bg-red-100 text-red-700 text-[10px] font-bold text-center py-1 rounded-t-lg border border-red-300 border-b-0 flex items-center justify-center absolute top-0 inset-x-0 z-10">
-                                                    <i data-lucide="x-circle" class="h-3 w-3 mr-1"></i> ভুল (কাটা পড়া)
+                                                    <i data-lucide="x-circle" class="h-3 w-3 mr-1"></i> ভুল (কাটা পড়া)
                                                 </div>
                                                 <div class="flex-grow border border-red-300 rounded-lg overflow-hidden bg-black h-full w-full relative">
                                                     <img src="https://i.postimg.cc/4KfN97yx/image.jpg" alt="Incorrect 2" class="w-full h-full object-contain object-center absolute inset-0 pt-7 pb-1 px-1">
@@ -460,6 +468,7 @@
                         </div>
                     </div>
 
+                    <!-- Submit Button -->
                     <div class="pt-2 pb-2">
                         <button type="submit" id="submitBtn" class="w-full flex justify-center items-center py-3.5 px-4 rounded-xl shadow-md text-[15px] font-bold text-white bg-colgate hover:bg-red-700 transition-all">
                             <i data-lucide="send" class="h-[18px] w-[18px] mr-2" id="btnIcon"></i>
@@ -469,7 +478,7 @@
                     </div>
                 </form>
 
-                <div id="successMessage" class="hidden text-center py-8 animate-fade-in">
+                <div id="successMessage" class="hidden text-center py-8 animate-fade-in mt-10">
                     <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-50 mb-4 border border-green-100">
                         <i data-lucide="check-circle-2" class="h-8 w-8 text-green-500"></i>
                     </div>
@@ -509,54 +518,18 @@
                         </div>
                     </div>
 
-                    <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm">
-                        <div class="grid grid-cols-2 gap-2">
-                            <select id="myDayRegionSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Region (এরিয়া)</option></select>
-                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Town (টাউন)</option></select>
-                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Day (বার)</option></select>
-                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Route (রুট)</option></select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Performance Cards -->
-                <div class="bg-gradient-to-br from-red-50 to-white border border-red-100 p-2.5 rounded-xl shadow-sm mb-2.5 relative">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-gray-800 font-bold text-[12px] flex items-center"><i data-lucide="activity" class="h-3.5 w-3.5 mr-1 text-colgate"></i> আজকের পারফরম্যান্স</h3>
-                        <p id="currentDateDisplay" class="text-colgate text-[10px] font-semibold"></p>
-                    </div>
-                    <div class="grid grid-cols-3 gap-2 text-center">
-                        <div class="bg-white p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
-                            <i data-lucide="play-circle" class="h-4 w-4 text-green-500 mb-0.5"></i>
-                            <span id="statStartTime" class="text-[12px] font-bold text-gray-800">--:--</span>
-                            <span class="text-gray-400 text-[9px] font-medium">শুরু</span>
-                        </div>
-                        <div class="bg-white p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
-                            <i data-lucide="stop-circle" class="h-4 w-4 text-orange-500 mb-0.5"></i>
-                            <span id="statEndTime" class="text-[12px] font-bold text-gray-800">--:--</span>
-                            <span class="text-gray-400 text-[9px] font-medium">শেষ</span>
-                        </div>
-                        <div class="bg-white p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
-                            <i data-lucide="hourglass" class="h-4 w-4 text-purple-500 mb-0.5"></i>
-                            <span id="statTotalTime" class="text-[12px] font-bold text-gray-800">0ঘ 0মি</span>
-                            <span class="text-gray-400 text-[9px] font-medium">মোট সময়</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="myDayImageStats" class="bg-white border border-gray-200 p-2.5 rounded-xl shadow-sm mb-2.5">
-                    <div class="grid grid-cols-3 gap-2">
-                        <div class="bg-gray-50 p-1.5 text-center flex flex-col rounded-lg">
-                            <span class="text-[9px] text-gray-500 font-bold uppercase mb-0.5">Total Outlet</span>
-                            <span id="pjpTotalCount" class="text-[14px] font-extrabold text-gray-800">0</span>
-                        </div>
-                        <div class="bg-green-50 p-1.5 text-center flex flex-col rounded-lg">
-                            <span class="text-[9px] text-green-600 font-bold uppercase mb-0.5">Uploaded</span>
-                            <span id="pjpUploadedCount" class="text-[14px] font-extrabold text-green-700">0</span>
-                        </div>
-                        <div class="bg-red-50 p-1.5 text-center flex flex-col rounded-lg">
-                            <span class="text-[9px] text-red-500 font-bold uppercase mb-0.5">Remaining</span>
-                            <span id="pjpRemainingCount" class="text-[14px] font-extrabold text-red-600">0</span>
+                    <!-- Cleaned Filters for My Day (Town, Day, Route) -->
+                    <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm mb-3">
+                        <div class="grid grid-cols-3 gap-2">
+                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
+                                <option value="" disabled selected>Town</option>
+                            </select>
+                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
+                                <option value="" disabled selected>Day</option>
+                            </select>
+                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
+                                <option value="" disabled selected>Route</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -606,39 +579,100 @@
                         </div>
                     </div>
                     
-                    <!-- DB Name & Route Filters with Region Filter -->
-                    <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm mb-4">
-                        <div class="grid grid-cols-3 gap-2">
-                            <select id="reportRegionSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
-                                <option value="">প্রথমে টাইপ সিলেক্ট করুন</option>
-                            </select>
-                            <select id="reportDbNameSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
-                                <option value="">DB নির্বাচন করুন</option>
-                            </select>
-                            <select id="reportRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
-                                <option value="">রুট নির্বাচন করুন</option>
-                            </select>
+                    <div class="flex bg-gray-100 p-1 rounded-xl mb-4 shadow-inner border border-gray-200">
+                        <button type="button" id="btnReportSummary" class="flex-1 py-2 text-[12px] font-bold rounded-lg bg-white text-colgate shadow-sm transition-all">One Pager</button>
+                        <button type="button" id="btnReportDetailed" class="flex-1 py-2 text-[12px] font-bold rounded-lg text-gray-500 hover:text-gray-700 transition-all">Purchase Update</button>
+                    </div>
+
+                    <!-- ONE PAGER SUMMARY CONTAINER -->
+                    <div id="onePagerContainer" class="animate-fade-in pb-1">
+                        <!-- Filters for One Pager (Town, Day, Cluster) -->
+                        <div class="bg-gray-50 border border-gray-100 p-2.5 rounded-xl shadow-sm mb-3">
+                            <div class="grid grid-cols-3 gap-2">
+                                <select id="onePagerTown" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors">
+                                    <option value="">Town (টাউন)</option>
+                                </select>
+                                <select id="onePagerDay" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
+                                    <option value="">Day (বার)</option>
+                                </select>
+                                <select id="onePagerCluster" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
+                                    <option value="">Cluster</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Screenshot Area -->
+                        <div id="snapshotArea" class="bg-white border border-gray-200 rounded-2xl overflow-hidden relative z-10 shadow-sm">
+                            <!-- Red Header -->
+                            <div class="bg-gradient-to-r from-red-600 to-red-500 p-4 relative">
+                                <h3 id="snapshotHeaderMerch" class="text-white text-[15px] font-bold">Merchandiser Name</h3>
+                                <p id="snapshotHeaderDetails" class="text-red-100 text-[11px] mt-1 opacity-90 truncate">All Data</p>
+                            </div>
+
+                            <!-- Stats Content -->
+                            <div id="onePagerStatsContent" class="bg-white">
+                                <!-- Default message -->
+                                <div class="flex flex-col items-center justify-center py-10 opacity-70">
+                                    <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
+                                    <p class="text-[12px] text-gray-500 mt-2">রিপোর্ট দেখতে ফিল্টার সিলেক্ট করুন</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Share Button Wrapper (Balanced Gap) -->
+                        <div class="mt-6 mb-4">
+                            <button type="button" onclick="shareSnapshot(this)" class="w-full flex justify-center items-center py-3.5 px-4 rounded-xl shadow-sm text-[15px] font-bold text-white bg-[#25D366] hover:bg-[#128C7E] transition-all transform hover:-translate-y-1">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                                রিপোর্ট শেয়ার করুন
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Loader -->
-                    <div id="reportLoader" class="flex flex-col items-center justify-center py-10 hidden">
-                        <div class="loader mb-3"></div>
-                        <p class="text-[11px] text-gray-500 font-medium">রিপোর্ট লোড হচ্ছে...</p>
-                    </div>
+                    <!-- DETAILED REPORT CONTAINER (PURCHASE UPDATE) -->
+                    <div id="detailedReportContainer" class="hidden animate-fade-in">
+                        
+                        <!-- Search Bar -->
+                        <div class="mb-3 relative">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <i data-lucide="search" class="h-4 w-4 text-gray-400"></i>
+                            </div>
+                            <input type="text" id="reportSearchInput" class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] bg-white text-gray-800 placeholder-gray-400 outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all shadow-sm" placeholder="দোকানের নাম বা কোড লিখে খুঁজুন...">
+                        </div>
 
-                    <!-- Outlet Count Display -->
-                    <div id="reportCountDisplay" class="hidden mb-2 px-1 flex justify-between items-center">
-                        <span class="text-[11px] font-bold text-gray-600">মোট আউটলেট:</span>
-                        <span id="reportCountNumber" class="text-[12px] font-extrabold text-colgate bg-red-50 px-2 py-0.5 rounded border border-red-100">0</span>
-                    </div>
+                        <!-- DB Name & Route Filters with Region Filter -->
+                        <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm mb-4">
+                            <div class="grid grid-cols-3 gap-2">
+                                <select id="reportRegionSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
+                                    <option value="">প্রথমে টাইপ সিলেক্ট করুন</option>
+                                </select>
+                                <select id="reportDbNameSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
+                                    <option value="">DB নির্বাচন করুন</option>
+                                </select>
+                                <select id="reportRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
+                                    <option value="">রুট নির্বাচন করুন</option>
+                                </select>
+                            </div>
+                        </div>
 
-                    <!-- Report List -->
-                    <div id="reportList" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1 custom-scrollbar">
-                        <!-- Default Message before type selection -->
-                        <div class="flex flex-col items-center justify-center py-10 opacity-70">
-                            <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
-                            <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে টাইপ এবং DB নির্বাচন করুন</p>
+                        <!-- Loader -->
+                        <div id="reportLoader" class="flex flex-col items-center justify-center py-10 hidden">
+                            <div class="loader mb-3"></div>
+                            <p class="text-[11px] text-gray-500 font-medium">রিপোর্ট লোড হচ্ছে...</p>
+                        </div>
+
+                        <!-- Outlet Count Display -->
+                        <div id="reportCountDisplay" class="hidden mb-2 px-1 flex justify-between items-center">
+                            <span class="text-[11px] font-bold text-gray-600">মোট আউটলেট:</span>
+                            <span id="reportCountNumber" class="text-[12px] font-extrabold text-colgate bg-red-50 px-2 py-0.5 rounded border border-red-100">0</span>
+                        </div>
+
+                        <!-- Report List -->
+                        <div id="reportList" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1 custom-scrollbar pb-10">
+                            <!-- Default Message before type selection -->
+                            <div class="flex flex-col items-center justify-center py-10 opacity-70">
+                                <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
+                                <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে টাইপ এবং DB নির্বাচন করুন</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -762,6 +796,7 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         // Security logic
         document.addEventListener('contextmenu', event => event.preventDefault());
@@ -777,7 +812,7 @@
 
         lucide.createIcons();
 
-        // Custom Modal Logic to replace window.alert and window.confirm
+        // Custom Modal Logic
         window.showAlert = (msg) => {
             document.getElementById('customAlertMsg').textContent = msg;
             const modal = document.getElementById('customAlert');
@@ -811,7 +846,6 @@
             }, 300);
         };
 
-        // Replace native alerts for convenience in codebase
         window.alert = window.showAlert;
 
         // Constants
@@ -831,6 +865,23 @@
         let currentFacingMode = 'environment';
         let detailedReportData = [];
         let isDetailedReportLoaded = false;
+
+        // ==========================================
+        // GLOBAL FILTER HELPERS (MERCHANDISER)
+        // ==========================================
+        function getFilteredPJP() {
+            const role = localStorage.getItem('colgate_app_role');
+            const merchName = localStorage.getItem('colgate_app_merch_name');
+            if (role === 'merchandiser' && merchName) {
+                return pjpData.filter(i => i.merchandiser === merchName);
+            }
+            return pjpData;
+        }
+
+        function getValidDetailedReportData() {
+             const activeCodes = new Set(getFilteredPJP().map(p => p.code.toUpperCase()));
+             return detailedReportData.filter(d => activeCodes.has(d.code));
+        }
 
         // ==========================================
         // ROLE MANAGEMENT
@@ -857,7 +908,8 @@
             mainApp.classList.add('flex');
 
             if (role === 'merchandiser') {
-                document.getElementById('headerSubtitle').textContent = "Merchandiser Panel";
+                const merchName = localStorage.getItem('colgate_app_merch_name');
+                document.getElementById('headerSubtitle').textContent = merchName ? `Merchandiser: ${merchName}` : "Merchandiser Panel";
                 if (tabsContainer) tabsContainer.classList.remove('hidden');
                 document.getElementById('srFieldsGroup').classList.add('hidden');
                 document.getElementById('srTerritoryGroup').classList.add('hidden');
@@ -882,16 +934,47 @@
                 document.getElementById('formShopCode').removeAttribute('required');
             }
 
-            if (!isDataLoaded) loadAllData();
+            if (!isDataLoaded) {
+                loadAllData();
+            } else {
+                populateDropdowns(); 
+                initOnePagerFilters();
+            }
         }
 
-        document.getElementById('btnRoleMerch')?.addEventListener('click', () => {
-            localStorage.setItem('colgate_app_role', 'merchandiser');
-            checkRole();
+        document.getElementById('btnRoleMerch')?.addEventListener('click', async () => {
+            const container = document.getElementById('merchDropdownContainer');
+            const loader = document.getElementById('merchLoginLoader');
+            
+            if (container.classList.contains('hidden')) {
+                if (pjpData.length === 0) {
+                    loader.classList.remove('hidden');
+                    await loadAllData(); 
+                    loader.classList.add('hidden');
+                }
+                const select = document.getElementById('loginMerchSelect');
+                const merchs = [...new Set(pjpData.map(i => i.merchandiser))].filter(Boolean).sort();
+                select.innerHTML = '<option value="" disabled selected>নাম খুঁজুন...</option>' + 
+                                   merchs.map(m => `<option value="${m}">${m}</option>`).join('');
+                
+                container.classList.remove('hidden');
+            } else {
+                container.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('loginMerchSelect')?.addEventListener('change', (e) => {
+            if(e.target.value) {
+                localStorage.setItem('colgate_app_role', 'merchandiser');
+                localStorage.setItem('colgate_app_merch_name', e.target.value);
+                document.getElementById('merchDropdownContainer').classList.add('hidden');
+                checkRole();
+            }
         });
 
         document.getElementById('btnRoleSR')?.addEventListener('click', () => {
             localStorage.setItem('colgate_app_role', 'sr');
+            localStorage.removeItem('colgate_app_merch_name'); 
             checkRole();
         });
 
@@ -899,10 +982,31 @@
             window.showConfirm("আপনি কি নিশ্চিত যে আপনি লগআউট করতে চান?", (confirmed) => {
                 if (confirmed) {
                     localStorage.removeItem('colgate_app_role');
+                    localStorage.removeItem('colgate_app_merch_name');
                     checkRole();
                 }
             });
         };
+
+        // Month Selection Logic
+        function populateMonthDropdown() {
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const currentDate = new Date();
+            const currentMonthIdx = currentDate.getMonth();
+            const prevMonthIdx = currentMonthIdx === 0 ? 11 : currentMonthIdx - 1;
+
+            const currentMonthName = monthNames[currentMonthIdx];
+            const prevMonthName = monthNames[prevMonthIdx];
+
+            const formMonth = document.getElementById('formMonth');
+            if (formMonth) {
+                formMonth.innerHTML = `
+                    <option value="" disabled>মাস</option>
+                    <option value="${currentMonthName}" selected>${currentMonthName}</option>
+                    <option value="${prevMonthName}">${prevMonthName}</option>
+                `;
+            }
+        }
 
         // ==========================================
         // DATA LOADING & PARSING
@@ -961,7 +1065,8 @@
                         visitDay: getVal(10),     // K
                         merchandiser: getVal(11), // L
                         status: getVal(12),       // M (Outlet Status - Regular/Display)
-                        outletType: getVal(13)    // N (Unit - DCC/ROB/SMT)
+                        outletType: getVal(13),   // N (Unit - DCC/ROB/SMT)
+                        clusterName: getVal(14) || getVal(9)
                     };
                 }).filter(i => i.townName && !["TOWN NAME", "DB NAME", "TOWN"].includes(i.townName.toUpperCase()));
 
@@ -974,6 +1079,7 @@
                 isDataLoaded = true;
                 
                 populateDropdowns();
+                initOnePagerFilters();
                 
                 const myDayView = document.getElementById('myDayView');
                 if (myDayView && !myDayView.classList.contains('hidden')) {
@@ -1007,10 +1113,9 @@
                     }
                 }
                 
-                // Reset cascading dropdowns
                 const territorySelect = document.getElementById('territorySelect');
                 if(territorySelect) {
-                    territorySelect.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
+                    territorySelect.innerHTML = '<option value="" disabled selected>প্রথমে এরিয়া সিলেক্ট করুন</option>';
                     territorySelect.disabled = true;
                 }
 
@@ -1043,6 +1148,7 @@
 
         function populateDropdowns() {
             if(!pjpData || pjpData.length === 0) return;
+            const currentPJP = getFilteredPJP();
 
             // Filter Form Areas
             const formSelectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
@@ -1050,7 +1156,7 @@
             
             if (areaSelect) {
                 if (formSelectedType) {
-                    const formPjp = pjpData.filter(i => i.outletType && i.outletType.toUpperCase() === formSelectedType.toUpperCase());
+                    const formPjp = currentPJP.filter(i => i.outletType && i.outletType.toUpperCase() === formSelectedType.toUpperCase());
                     const areas = [...new Set(formPjp.map(i => i.region))].filter(Boolean).sort();
                     areaSelect.innerHTML = '<option value="" disabled selected>এরিয়া সিলেক্ট করুন</option>' + 
                                         areas.map(a => `<option value="${a}">${a}</option>`).join('');
@@ -1061,28 +1167,32 @@
                 }
             }
 
-            // My Day Region Init
+            // My Day Town Init
             const myDaySelectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
-            const myDayRegionSelect = document.getElementById('myDayRegionSelect');
+            const myDayTownSelect = document.getElementById('myDayTownSelect');
             
-            if (myDayRegionSelect) {
+            if (myDayTownSelect) {
                 if (myDaySelectedType) {
-                    let myDayPjp = pjpData;
+                    let myDayPjp = currentPJP;
                     if(myDaySelectedType !== 'ALL') {
-                        myDayPjp = pjpData.filter(i => i.outletType && i.outletType.toUpperCase() === myDaySelectedType.toUpperCase());
+                        myDayPjp = currentPJP.filter(i => i.outletType && i.outletType.toUpperCase() === myDaySelectedType.toUpperCase());
                     }
-                    const regions = [...new Set(myDayPjp.map(i => i.region))].filter(Boolean).sort();
-                    myDayRegionSelect.innerHTML = '<option value="" disabled selected>Region (এরিয়া)</option>' + 
-                                                regions.map(r => `<option value="${r}">${r}</option>`).join('');
-                    myDayRegionSelect.disabled = regions.length === 0;
+                    const towns = [...new Set(myDayPjp.map(i => i.townName))].filter(Boolean).sort();
+                    myDayTownSelect.innerHTML = '<option value="" disabled selected>Town (টাউন)</option>' + 
+                                                towns.map(t => `<option value="${t}">${t}</option>`).join('');
+                    myDayTownSelect.disabled = towns.length === 0;
+                    myDayTownSelect.classList.toggle('bg-gray-100', towns.length === 0);
+                    myDayTownSelect.classList.toggle('bg-white', towns.length > 0);
+                    myDayTownSelect.classList.toggle('text-gray-500', towns.length === 0);
+                    myDayTownSelect.classList.toggle('text-gray-700', towns.length > 0);
                 } else {
-                    myDayRegionSelect.innerHTML = '<option value="" disabled selected>প্রথমে টাইপ সিলেক্ট করুন</option>';
-                    myDayRegionSelect.disabled = true;
+                    myDayTownSelect.innerHTML = '<option value="" disabled selected>প্রথমে টাইপ সিলেক্ট করুন</option>';
+                    myDayTownSelect.disabled = true;
                 }
             }
 
-            // Populate Slabs Dynamically for both SR and Merch fields
-            const uniqueSlabs = [...new Set(pjpData.map(i => i.slab))].filter(Boolean).sort();
+            // Populate Slabs Dynamically
+            const uniqueSlabs = [...new Set(currentPJP.map(i => i.slab))].filter(Boolean).sort();
             
             const formSlabSelect = document.getElementById('formSlab');
             if (formSlabSelect) {
@@ -1110,13 +1220,12 @@
             const selectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
             const role = localStorage.getItem('colgate_app_role');
             
-            let filtered = pjpData.filter(i => i.region === selectedArea);
+            let filtered = getFilteredPJP().filter(i => i.region === selectedArea);
             if (selectedType) {
                 filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
 
             if (role === 'sr') {
-                // Populate Territory for SR
                 const territories = [...new Set(filtered.map(i => i.territory))].filter(Boolean).sort();
                 const territorySelect = document.getElementById('territorySelect');
                 if(territorySelect) {
@@ -1130,7 +1239,6 @@
                     distSelect.disabled = true;
                 }
             } else {
-                // Populate DB directly for Merchandiser
                 const dists = [...new Set(filtered.map(i => i.townName))].filter(Boolean).sort();
                 const distSelect = document.getElementById('distSelect');
                 if(distSelect) {
@@ -1156,13 +1264,12 @@
             }
         });
 
-        // New Event Listener for Territory (SR Only)
         document.getElementById('territorySelect')?.addEventListener('change', (e) => {
             const selectedArea = document.getElementById('areaSelect').value;
             const selectedTerritory = e.target.value;
             const selectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
             
-            let filtered = pjpData.filter(i => i.region === selectedArea && i.territory === selectedTerritory);
+            let filtered = getFilteredPJP().filter(i => i.region === selectedArea && i.territory === selectedTerritory);
             if (selectedType) {
                 filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
@@ -1198,7 +1305,7 @@
             const selectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
             const role = localStorage.getItem('colgate_app_role');
             
-            let filtered = pjpData.filter(i => i.region === selectedArea && i.townName === dbName);
+            let filtered = getFilteredPJP().filter(i => i.region === selectedArea && i.townName === dbName);
             if (role === 'sr' && selectedTerritory) {
                 filtered = filtered.filter(i => i.territory === selectedTerritory);
             }
@@ -1236,7 +1343,7 @@
             const route = e.target.value;
             const selectedType = document.querySelector('input[name="outlet_type"]:checked')?.value;
 
-            let outlets = pjpData.filter(i => i.region === selectedArea && i.townName === dbName && i.routeName === route);
+            let outlets = getFilteredPJP().filter(i => i.region === selectedArea && i.townName === dbName && i.routeName === route);
             if (selectedTerritory) {
                 outlets = outlets.filter(i => i.territory === selectedTerritory);
             }
@@ -1245,9 +1352,7 @@
                 outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
 
-            // For SR: Show ONLY Slab outlets for DCC and ROB. For SMT, show ALL (Slab + Regular).
             if (selectedType && selectedType.toUpperCase() !== 'SMT') {
-                // Here we use M column (status) or slab to filter. Usually regular outlets don't have slab or have "regular" in status.
                 outlets = outlets.filter(i => i.status && !i.status.toLowerCase().includes('regular'));
             }
             
@@ -1263,7 +1368,7 @@
 
         document.getElementById('srOutletSelect')?.addEventListener('change', (e) => {
             const selectedCode = e.target.value;
-            const outlet = pjpData.find(i => i.code === selectedCode);
+            const outlet = getFilteredPJP().find(i => i.code === selectedCode);
             if(outlet) {
                 document.getElementById('formShopCode').value = outlet.code || '';
                 document.getElementById('formSlab').value = outlet.slab;
@@ -1278,68 +1383,26 @@
             r.addEventListener('change', () => {
                 populateDropdowns(); 
                 
-                document.getElementById('myDayTownSelect').innerHTML = '<option value="" disabled selected>Town (টাউন)</option>';
-                document.getElementById('myDayTownSelect').disabled = true;
-                
                 document.getElementById('myDayVisitDaySelect').innerHTML = '<option value="" disabled selected>Day (বার)</option>';
                 document.getElementById('myDayVisitDaySelect').disabled = true;
+                document.getElementById('myDayVisitDaySelect').classList.add('bg-gray-100', 'text-gray-500');
+                document.getElementById('myDayVisitDaySelect').classList.remove('bg-white', 'text-gray-700');
                 
                 document.getElementById('myDayRouteSelect').innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
                 document.getElementById('myDayRouteSelect').disabled = true;
+                document.getElementById('myDayRouteSelect').classList.add('bg-gray-100', 'text-gray-500');
+                document.getElementById('myDayRouteSelect').classList.remove('bg-white', 'text-gray-700');
                 
                 document.getElementById('myDayPjpContainer').classList.add('hidden');
                 document.getElementById('myDayPjpList').innerHTML = '';
             });
         }
 
-        document.getElementById('myDayRegionSelect')?.addEventListener('change', (e) => {
-            const region = e.target.value;
-            const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
-            
-            let filteredPjp = pjpData.filter(i => i.region === region);
-            if (selectedType && selectedType !== 'ALL') {
-                filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
-            }
-
-            const towns = [...new Set(filteredPjp.map(i => i.townName))].filter(Boolean).sort();
-            const townSelect = document.getElementById('myDayTownSelect');
-            
-            if(townSelect) {
-                townSelect.innerHTML = '<option value="" disabled selected>Town (টাউন)</option>' + 
-                                    towns.map(t => `<option value="${t}">${t}</option>`).join('');
-                townSelect.disabled = towns.length === 0;
-                townSelect.classList.remove('bg-gray-100', 'text-gray-500');
-                townSelect.classList.add('bg-white', 'text-gray-700');
-            }
-            
-            const daySelect = document.getElementById('myDayVisitDaySelect');
-            if(daySelect) {
-                daySelect.innerHTML = '<option value="" disabled selected>Day (বার)</option>';
-                daySelect.disabled = true;
-                daySelect.classList.add('bg-gray-100', 'text-gray-500');
-                daySelect.classList.remove('bg-white', 'text-gray-700');
-            }
-            
-            const routeSelect = document.getElementById('myDayRouteSelect');
-            if(routeSelect) {
-                routeSelect.innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
-                routeSelect.disabled = true;
-                routeSelect.classList.add('bg-gray-100', 'text-gray-500');
-                routeSelect.classList.remove('bg-white', 'text-gray-700');
-            }
-            
-            const container = document.getElementById('myDayPjpContainer');
-            if (container) container.classList.add('hidden');
-            const list = document.getElementById('myDayPjpList');
-            if (list) list.innerHTML = '';
-        });
-
         document.getElementById('myDayTownSelect')?.addEventListener('change', (e) => {
-            const region = document.getElementById('myDayRegionSelect').value;
             const town = e.target.value;
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
             
-            let filteredPjp = pjpData.filter(i => i.region === region && i.townName === town);
+            let filteredPjp = getFilteredPJP().filter(i => i.townName === town);
             if (selectedType && selectedType !== 'ALL') {
                 filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
@@ -1370,12 +1433,11 @@
         });
 
         document.getElementById('myDayVisitDaySelect')?.addEventListener('change', () => {
-            const region = document.getElementById('myDayRegionSelect').value;
             const town = document.getElementById('myDayTownSelect').value;
             const day = document.getElementById('myDayVisitDaySelect').value;
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
             
-            let filteredPjp = pjpData.filter(i => i.region === region && i.townName === town && i.visitDay === day);
+            let filteredPjp = getFilteredPJP().filter(i => i.townName === town && i.visitDay === day);
             if (selectedType && selectedType !== 'ALL') {
                 filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
@@ -1400,15 +1462,14 @@
         document.getElementById('myDayRouteSelect')?.addEventListener('change', renderMyDayPJP);
 
         function renderMyDayPJP() {
-            const region = document.getElementById('myDayRegionSelect')?.value;
             const town = document.getElementById('myDayTownSelect')?.value;
             const day = document.getElementById('myDayVisitDaySelect')?.value;
             const route = document.getElementById('myDayRouteSelect')?.value;
-            if (!region || !town || !day || !route) return;
+            if (!town || !day || !route) return;
 
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
 
-            let outlets = pjpData.filter(i => i.region === region && i.townName === town && i.visitDay === day && i.routeName === route);
+            let outlets = getFilteredPJP().filter(i => i.townName === town && i.visitDay === day && i.routeName === route);
             
             if (selectedType && selectedType !== 'ALL') {
                 outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
@@ -1427,7 +1488,7 @@
             let html = '', completedCount = 0, displayCount = 0, regularCount = 0;
             
             if (outlets.length === 0) {
-                html = `<div class="text-center py-4 text-gray-500 text-[12px] font-bold">এই টাইপের কোনো আউটলেট পাওয়া যায়নি।</div>`;
+                html = `<div class="text-center py-4 text-gray-500 text-[12px] font-bold">এই টাইপের কোনো আউটলেট পাওয়া যায়নি।</div>`;
             } else {
                 outlets.forEach(out => {
                     const outCode = (out.code || "").toUpperCase().trim();
@@ -1436,7 +1497,6 @@
                     
                     if (isCompleted) completedCount++;
                     
-                    // Fixed: Regular/Display Logic based on M Column (Status)
                     const statusStr = (out.status || "").toLowerCase();
                     if (statusStr.includes('regular')) regularCount++; else displayCount++;
 
@@ -1471,15 +1531,6 @@
             const pjpList = document.getElementById('myDayPjpList');
             if (pjpList) pjpList.innerHTML = html;
             
-            const totalCountEl = document.getElementById('pjpTotalCount');
-            if (totalCountEl) totalCountEl.textContent = outlets.length;
-            
-            const uploadedCountEl = document.getElementById('pjpUploadedCount');
-            if (uploadedCountEl) uploadedCountEl.textContent = completedCount;
-            
-            const remainingCountEl = document.getElementById('pjpRemainingCount');
-            if (remainingCountEl) remainingCountEl.textContent = outlets.length - completedCount;
-            
             const displayCountEl = document.getElementById('myDayDisplayCount');
             if (displayCountEl) displayCountEl.textContent = displayCount;
             
@@ -1494,9 +1545,7 @@
             if (tabForm) tabForm.click();
             const role = localStorage.getItem('colgate_app_role');
             
-            const currentMonthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][new Date().getMonth()];
-            const formMonth = document.getElementById('formMonth');
-            if (formMonth) formMonth.value = currentMonthName;
+            populateMonthDropdown();
 
             const radios = document.getElementsByName('outlet_type');
             for (let r of radios) {
@@ -1513,7 +1562,7 @@
             const cleanDh = cleanStr(dh);
 
             if(dh) {
-                const match = pjpData.find(item => cleanStr(item.townName) === cleanDh || cleanStr(item.distCode) === cleanDh);
+                const match = getFilteredPJP().find(item => cleanStr(item.townName) === cleanDh || cleanStr(item.distCode) === cleanDh);
                 if(match && match.region) {
                     detectedArea = match.region;
                     detectedTerritory = match.territory;
@@ -1532,7 +1581,6 @@
                 as.value = detectedArea;
                 as.dispatchEvent(new Event('change'));
 
-                // Auto select Territory for SR
                 if (role === 'sr' && detectedTerritory) {
                     if (ts && !Array.from(ts.options).some(opt => opt.value === detectedTerritory)) {
                         ts.add(new Option(detectedTerritory, detectedTerritory));
@@ -1544,7 +1592,7 @@
                 }
 
                 if (dh) {
-                    const pjpMatch = pjpData.find(item => cleanStr(item.townName) === cleanDh || cleanStr(item.distCode) === cleanDh);
+                    const pjpMatch = getFilteredPJP().find(item => cleanStr(item.townName) === cleanDh || cleanStr(item.distCode) === cleanDh);
                     if (pjpMatch) {
                         if (ds && !Array.from(ds.options).some(opt => opt.value === pjpMatch.townName)) ds.add(new Option(pjpMatch.townName, pjpMatch.townName));
                         if (dbCodeInput && !Array.from(dbCodeInput.options).some(opt => opt.value === pjpMatch.distCode)) dbCodeInput.add(new Option(pjpMatch.distCode, pjpMatch.distCode));
@@ -1579,6 +1627,243 @@
         // ==========================================
         // REPORT LOGIC
         // ==========================================
+        function initOnePagerFilters() {
+            let filtered = getFilteredPJP();
+            
+            const townSel = document.getElementById('onePagerTown');
+            if (townSel) {
+                const towns = [...new Set(filtered.map(i => i.townName))].filter(Boolean).sort();
+                townSel.innerHTML = '<option value="">Town (টাউন)</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
+                townSel.disabled = towns.length === 0;
+                
+                if (towns.length > 0) {
+                    townSel.value = towns[0]; 
+                    townSel.dispatchEvent(new Event('change'));
+                } else {
+                    renderOnePagerReport();
+                }
+            }
+        }
+
+        document.getElementById('onePagerTown')?.addEventListener('change', (e) => {
+            const town = e.target.value;
+            let filtered = getFilteredPJP().filter(i => i.townName === town);
+            
+            const daySel = document.getElementById('onePagerDay');
+            const days = [...new Set(filtered.map(i => i.visitDay))].filter(Boolean).sort();
+            
+            if (daySel) {
+                daySel.innerHTML = '<option value="">All Days</option>' + days.map(d => `<option value="${d}">${d}</option>`).join('');
+                daySel.disabled = days.length === 0;
+                daySel.classList.toggle('bg-gray-100', days.length === 0);
+                daySel.classList.toggle('bg-white', days.length > 0);
+                daySel.classList.toggle('text-gray-500', days.length === 0);
+                daySel.classList.toggle('text-gray-700', days.length > 0);
+            }
+            
+            const clusterSel = document.getElementById('onePagerCluster');
+            const clusters = [...new Set(filtered.map(i => i.clusterName))].filter(Boolean).sort();
+            if (clusterSel) {
+                clusterSel.innerHTML = '<option value="">All Clusters</option>' + clusters.map(c => `<option value="${c}">${c}</option>`).join('');
+                clusterSel.disabled = clusters.length === 0;
+                clusterSel.classList.toggle('bg-gray-100', clusters.length === 0);
+                clusterSel.classList.toggle('bg-white', clusters.length > 0);
+                clusterSel.classList.toggle('text-gray-500', clusters.length === 0);
+                clusterSel.classList.toggle('text-gray-700', clusters.length > 0);
+            }
+
+            renderOnePagerReport();
+        });
+
+        document.getElementById('onePagerDay')?.addEventListener('change', (e) => {
+            const town = document.getElementById('onePagerTown').value;
+            const day = e.target.value;
+            
+            let filtered = getFilteredPJP().filter(i => i.townName === town);
+            if (day) filtered = filtered.filter(i => i.visitDay === day);
+            
+            const clusterSel = document.getElementById('onePagerCluster');
+            if (clusterSel) {
+                const clusters = [...new Set(filtered.map(i => i.clusterName))].filter(Boolean).sort();
+                clusterSel.innerHTML = '<option value="">All Clusters</option>' + clusters.map(c => `<option value="${c}">${c}</option>`).join('');
+                clusterSel.disabled = clusters.length === 0;
+                clusterSel.classList.toggle('bg-gray-100', clusters.length === 0);
+                clusterSel.classList.toggle('bg-white', clusters.length > 0);
+                clusterSel.classList.toggle('text-gray-500', clusters.length === 0);
+                clusterSel.classList.toggle('text-gray-700', clusters.length > 0);
+            }
+            
+            renderOnePagerReport();
+        });
+
+        document.getElementById('onePagerCluster')?.addEventListener('change', renderOnePagerReport);
+
+        function renderOnePagerReport() {
+            const content = document.getElementById('onePagerStatsContent');
+            const headerMerch = document.getElementById('snapshotHeaderMerch');
+            const headerDetails = document.getElementById('snapshotHeaderDetails');
+            
+            if(!isDetailedReportLoaded || detailedReportData.length === 0) {
+                content.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-10 opacity-70">
+                        <i data-lucide="database" class="h-10 w-10 text-gray-400 mb-2"></i>
+                        <p class="text-[12px] text-gray-500 mt-2">কোনো ডেটা পাওয়া যায়নি</p>
+                    </div>`;
+                lucide.createIcons();
+                return;
+            }
+
+            const savedMerch = localStorage.getItem('colgate_app_merch_name');
+            const town = document.getElementById('onePagerTown')?.value;
+            const dayVal = document.getElementById('onePagerDay')?.value;
+            const cluster = document.getElementById('onePagerCluster')?.value;
+            const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
+
+            if (headerMerch) {
+                headerMerch.textContent = savedMerch || 'Sales Team';
+            }
+            
+            const detailsStr = [];
+            if (dayVal) detailsStr.push(`Day: ${dayVal}`);
+            if (town) detailsStr.push(`Town: ${town}`);
+            if (cluster) detailsStr.push(`Cluster: ${cluster}`);
+            if (headerDetails) headerDetails.textContent = detailsStr.length > 0 ? detailsStr.join(' | ') : 'All Data';
+
+            let targetOutlets = getFilteredPJP();
+            if (town) targetOutlets = targetOutlets.filter(p => p.townName === town);
+            if (dayVal) targetOutlets = targetOutlets.filter(p => p.visitDay === dayVal);
+            if (cluster) targetOutlets = targetOutlets.filter(p => p.clusterName === cluster);
+            
+            if (selectedType && selectedType !== 'ALL') {
+                targetOutlets = targetOutlets.filter(p => p.outletType && p.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+
+            if (targetOutlets.length === 0) {
+                 content.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-10 opacity-70">
+                        <i data-lucide="calendar-x" class="h-10 w-10 text-gray-400 mb-2"></i>
+                        <p class="text-[12px] text-gray-500 mt-2">এই ফিল্টারে কোনো আউটলেট নেই</p>
+                    </div>`;
+                 lucide.createIcons();
+                 return;
+            }
+
+            let totalCount = targetOutlets.length;
+            let totalVisited = 0;
+            let displayCount = 0;
+            let displayVisited = 0;
+            let regularCount = 0;
+            let regularVisited = 0;
+
+            targetOutlets.forEach(out => {
+                const outCode = (out.code || "").toUpperCase().trim();
+                const rep = detailedReportData.find(d => d.code === outCode);
+                
+                let isVisited = (rep && rep.imgUpload && rep.imgUpload.toUpperCase().trim() === 'Y') ? 1 : 0;
+                totalVisited += isVisited;
+
+                const isRegular = out.status && out.status.toLowerCase().includes('regular');
+                if (isRegular) {
+                    regularCount++;
+                    regularVisited += isVisited;
+                } else {
+                    displayCount++;
+                    displayVisited += isVisited;
+                }
+            });
+
+            const calcPct = (v, t) => t > 0 ? Math.round((v/t)*100) : 0;
+            const totalPct = calcPct(totalVisited, totalCount);
+            const displayPct = calcPct(displayVisited, displayCount);
+            const regularPct = calcPct(regularVisited, regularCount);
+
+            const s = JSON.parse(localStorage.getItem('colgate_merch_session'));
+            const today = new Date().toDateString();
+            const fmt = (ms) => new Date(ms).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+            
+            let startTime = '--:--';
+            let endTime = '--:--';
+            let totalTime = '0ঘ 0মি';
+            let dateStr = new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
+
+            if (s && s.date === today) {
+                startTime = fmt(s.startTime);
+                endTime = fmt(s.endTime);
+                const d = Math.floor((s.endTime - s.startTime) / 60000); 
+                totalTime = `${Math.floor(d/60)}ঘ ${d%60}মি`;
+            }
+
+            content.innerHTML = `
+                <div class="px-4 pt-5 pb-4 bg-white">
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-gray-800 font-bold text-[12px] flex items-center"><i data-lucide="activity" class="h-3.5 w-3.5 mr-1 text-colgate"></i> আজকের পারফরম্যান্স</h3>
+                            <p class="text-colgate text-[10px] font-semibold">${dateStr}</p>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="bg-gray-50 p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
+                                <i data-lucide="play-circle" class="h-4 w-4 text-green-500 mb-0.5"></i>
+                                <span class="text-[12px] font-bold text-gray-800">${startTime}</span>
+                                <span class="text-gray-400 text-[9px] font-medium">শুরু</span>
+                            </div>
+                            <div class="bg-gray-50 p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
+                                <i data-lucide="stop-circle" class="h-4 w-4 text-orange-500 mb-0.5"></i>
+                                <span class="text-[12px] font-bold text-gray-800">${endTime}</span>
+                                <span class="text-gray-400 text-[9px] font-medium">শেষ</span>
+                            </div>
+                            <div class="bg-gray-50 p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
+                                <i data-lucide="hourglass" class="h-4 w-4 text-purple-500 mb-0.5"></i>
+                                <span class="text-[12px] font-bold text-gray-800">${totalTime}</span>
+                                <span class="text-gray-400 text-[9px] font-medium">মোট সময়</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="bg-gray-50 rounded-xl p-3 flex items-center justify-between relative overflow-hidden border border-gray-100">
+                            <div class="w-[28%] border-r border-gray-200 pr-2 flex flex-col justify-center">
+                                <span class="text-[12px] font-bold text-gray-800 leading-tight">Total<br>Outlet</span>
+                            </div>
+                            <div class="w-[72%] flex justify-between text-center pl-2 pr-1">
+                                <div class="flex flex-col flex-1"><span class="text-[9px] text-gray-400 font-bold uppercase mb-1">Count</span><span class="text-[13px] font-extrabold text-gray-800">${totalCount}</span></div>
+                                <div class="flex flex-col flex-1"><span class="text-[9px] text-gray-400 font-bold uppercase mb-1">Visited</span><span class="text-[13px] font-extrabold text-gray-800">${totalVisited}</span></div>
+                                <div class="flex flex-col flex-1"><span class="text-[9px] text-gray-400 font-bold uppercase mb-1">Visit %</span><span class="text-[13px] font-extrabold text-gray-800">${totalPct}%</span></div>
+                                <div class="flex flex-col flex-1"><span class="text-[9px] text-gray-400 font-bold uppercase mb-1">Remain</span><span class="text-[13px] font-extrabold text-gray-800">${totalCount - totalVisited}</span></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-xl p-3 flex items-center justify-between relative overflow-hidden border border-gray-100">
+                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-l-xl"></div>
+                            <div class="w-[28%] border-r border-gray-200 pr-2 pl-3 flex flex-col justify-center">
+                                <span class="text-[12px] font-bold text-gray-800 leading-tight">Display<br>Outlet</span>
+                            </div>
+                            <div class="w-[72%] flex justify-between text-center pl-2 pr-1">
+                                <div class="flex flex-col flex-1"><span class="text-[9px] text-gray-400 font-bold uppercase mb-1">Count</span><span class="text-[13px] font-extrabold text-gray-800">${displayCount}</span></div>
+                                <div class="flex flex-col flex-1"><span class="text-[9px] text-gray-400 font-bold uppercase mb-1">Visited</span><span class="text-[13px] font-extrabold text-gray-800">${displayVisited}</span></div>
+                                <div class="flex flex-col flex-1"><span class="text-[9px] text-gray-400 font-bold uppercase mb-1">Visit %</span><span class="text-[13px] font-extrabold text-gray-800">${displayPct}%</span></div>
+                                <div class="flex flex-col flex-1"><span class="text-[9px] text-gray-400 font-bold uppercase mb-1">Remain</span><span class="text-[13px] font-extrabold text-gray-800">${displayCount - displayVisited}</span></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-xl p-3 flex items-center justify-between relative overflow-hidden border border-gray-100">
+                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-orange-400 rounded-l-xl"></div>
+                            <div class="w-[28%] border-r border-gray-200 pr-2 pl-3 flex flex-col justify-center">
+                                <span class="text-[12px] font-bold text-gray-800 leading-tight">Regular<br>Outlet</span>
+                            </div>
+                            <div class="w-[72%] flex justify-between text-center pl-2 pr-1">
+                                <div class="flex flex-col flex-1"><span class="text-[9px] text-gray-400 font-bold uppercase mb-1">Count</span><span class="text-[13px] font-extrabold text-gray-800">${regularCount}</span></div>
+                                <div class="flex flex-col flex-1"><span class="text-[9px] text-gray-400 font-bold uppercase mb-1">Visited</span><span class="text-[13px] font-extrabold text-gray-800">${regularVisited}</span></div>
+                                <div class="flex flex-col flex-1"><span class="text-[9px] text-gray-400 font-bold uppercase mb-1">Visit %</span><span class="text-[13px] font-extrabold text-gray-800">${regularPct}%</span></div>
+                                <div class="flex flex-col flex-1"><span class="text-[9px] text-gray-400 font-bold uppercase mb-1">Remain</span><span class="text-[13px] font-extrabold text-gray-800">${regularCount - regularVisited}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            lucide.createIcons();
+        }
+
         async function fetchDetailedReport() {
             if (isDetailedReportLoaded) return;
             const loader = document.getElementById('reportLoader');
@@ -1597,7 +1882,7 @@
                     if(row.length > 4 && row[4]) {
                         detailedReportData.push({
                             month: row[0],
-                            zone: row[1], // This corresponds to Region
+                            zone: row[1], 
                             dbCode: row[2],
                             dhName: row[3],
                             code: row[4].trim().toUpperCase(),
@@ -1657,11 +1942,12 @@
             const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
             const regionSelect = document.getElementById('reportRegionSelect');
             
-            let filteredReport = detailedReportData;
+            let filteredReport = getValidDetailedReportData();
             
             if (selectedType && selectedType !== 'ALL') {
-                filteredReport = detailedReportData.filter(d => {
-                    const match = pjpData.find(p => p.code.toUpperCase() === d.code);
+                const activeData = getFilteredPJP();
+                filteredReport = filteredReport.filter(d => {
+                    const match = activeData.find(p => p.code.toUpperCase() === d.code);
                     return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
                 });
             }
@@ -1678,11 +1964,12 @@
             const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
             const dbSelect = document.getElementById('reportDbNameSelect');
             
-            let filteredReport = detailedReportData.filter(d => d.zone === region);
+            let filteredReport = getValidDetailedReportData().filter(d => d.zone === region);
             
             if (selectedType && selectedType !== 'ALL') {
+                const activeData = getFilteredPJP();
                 filteredReport = filteredReport.filter(d => {
-                    const match = pjpData.find(p => p.code.toUpperCase() === d.code);
+                    const match = activeData.find(p => p.code.toUpperCase() === d.code);
                     return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
                 });
             }
@@ -1720,11 +2007,12 @@
             }
 
             const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
-            let filteredReport = detailedReportData.filter(d => d.dhName === dbName && d.zone === region);
+            let filteredReport = getValidDetailedReportData().filter(d => d.dhName === dbName && d.zone === region);
             
             if (selectedType && selectedType !== 'ALL') {
+                const activeData = getFilteredPJP();
                 filteredReport = filteredReport.filter(d => {
-                    const match = pjpData.find(p => p.code.toUpperCase() === d.code);
+                    const match = activeData.find(p => p.code.toUpperCase() === d.code);
                     return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
                 });
             }
@@ -1744,6 +2032,7 @@
             const list = document.getElementById('reportList');
             const countDisplay = document.getElementById('reportCountDisplay');
             const countNumber = document.getElementById('reportCountNumber');
+            const searchQuery = document.getElementById('reportSearchInput')?.value.toLowerCase().trim() || "";
             
             const region = document.getElementById('reportRegionSelect').value;
             const dbName = document.getElementById('reportDbNameSelect').value;
@@ -1760,20 +2049,25 @@
                 return;
             }
             
-            let filtered = detailedReportData.filter(d => d.dhName === dbName && d.zone === region);
+            let filtered = getValidDetailedReportData().filter(d => d.dhName === dbName && d.zone === region);
             if (route) {
                 filtered = filtered.filter(d => d.route === route);
             }
 
-            // --- REPORT OUTLET TYPE FILTER ---
             const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
-
             if (selectedType && selectedType !== 'ALL') {
+                const activeData = getFilteredPJP();
                 filtered = filtered.filter(d => {
-                    // Find corresponding outlet in pjpData to get its outletType
-                    const match = pjpData.find(p => p.code.toUpperCase() === d.code);
+                    const match = activeData.find(p => p.code.toUpperCase() === d.code);
                     return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
                 });
+            }
+
+            if(searchQuery) {
+                filtered = filtered.filter(d => 
+                    (d.name && d.name.toLowerCase().includes(searchQuery)) || 
+                    (d.code && d.code.toLowerCase().includes(searchQuery))
+                );
             }
 
             if (filtered.length === 0) {
@@ -1781,7 +2075,7 @@
                 list.innerHTML = `
                     <div class="flex flex-col items-center justify-center py-10 opacity-70">
                         <i data-lucide="search-x" class="h-10 w-10 text-gray-400 mb-2"></i>
-                        <p class="text-[12px] text-gray-500 mt-2">কোনো তথ্য পাওয়া যায়নি</p>
+                        <p class="text-[12px] text-gray-500 mt-2">কোনো তথ্য পাওয়া যায়নি</p>
                     </div>`;
                 lucide.createIcons();
                 return;
@@ -1846,7 +2140,6 @@
             lucide.createIcons();
         }
 
-        // Tabs Bindings
         const tabBtns = ['tabForm', 'tabMyDay', 'tabReport'];
         const viewIds = ['formView', 'myDayView', 'reportView'];
 
@@ -1862,6 +2155,8 @@
                         }
                     });
                     btn.classList.add('bg-white', 'shadow-sm', 'text-colgate');
+                    btn.classList.remove('text-gray-500');
+                    
                     viewIds.forEach(v => {
                         const viewEl = document.getElementById(v);
                         if (viewEl) viewEl.classList.add('hidden');
@@ -1945,7 +2240,6 @@
             const v = document.getElementById('cameraFeed'), c = document.getElementById('processCanvas'), ctx = c.getContext('2d');
             if (!v) return;
             
-            // Image Compression during capture (Max 1080px width to save data)
             const MAX_CAM_W = 1080;
             let drawWidth = v.videoWidth;
             let drawHeight = v.videoHeight;
@@ -1966,7 +2260,6 @@
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             
             applyWatermark(ctx, c.width, c.height);
-            // Compress to 60% quality JPEG
             capturedImageData = c.toDataURL('image/jpeg', 0.6);
             document.getElementById('capturedImagePreview').src = capturedImageData;
             document.getElementById('previewContainer').classList.remove('hidden');
@@ -1980,9 +2273,6 @@
             document.getElementById('cameraTriggerContainer').classList.remove('hidden'); 
         });
 
-        // ==========================================
-        // GALLERY UPLOAD LOGIC
-        // ==========================================
         document.getElementById('manualUploadBtn')?.addEventListener('click', () => {
             initLocationFetch();
             document.getElementById('manualFileInput').click();
@@ -1999,7 +2289,6 @@
                     const c = document.getElementById('processCanvas');
                     const ctx = c.getContext('2d');
                     
-                    // Fixed max width/height to avoid memory issues and speed up upload
                     const MAX_WIDTH = 1080;
                     const MAX_HEIGHT = 1080;
                     let width = img.width;
@@ -2021,9 +2310,6 @@
                     c.height = height;
                     ctx.drawImage(img, 0, 0, width, height);
                     
-                    // Watermark is NOT applied for manual gallery uploads
-                    
-                    // Compression
                     capturedImageData = c.toDataURL('image/jpeg', 0.6);
                     document.getElementById('capturedImagePreview').src = capturedImageData;
                     document.getElementById('previewContainer').classList.remove('hidden');
@@ -2107,7 +2393,6 @@
             btn.disabled = true; loader.classList.remove('hidden'); 
             text.textContent = "আপলোড শুরু হচ্ছে...";
             
-            // Smart Loading Texts to keep user engaged
             let loadTimer1 = setTimeout(() => { if(btn.disabled) text.textContent = "ছবি আপলোড হচ্ছে..."; }, 3000);
             let loadTimer2 = setTimeout(() => { if(btn.disabled) text.textContent = "ডেটাবেসে সেভ হচ্ছে..."; }, 8000);
             
@@ -2187,6 +2472,7 @@
         window.resetForm = () => { 
             const form = document.getElementById('customForm');
             if (form) form.reset();
+            populateMonthDropdown();
             form.classList.remove('hidden'); 
             document.getElementById('successMessage').classList.add('hidden'); 
             document.getElementById('previewContainer').classList.add('hidden'); 
@@ -2226,10 +2512,12 @@
             isLocationAcquired = false; 
             finalLocationName = "Location Unknown";
 
-            // Reset Output Type Radios
             const radios1 = document.getElementsByName('outlet_type');
             for (let r of radios1) r.checked = false;
         };
+
+        // Initialize Month Dropdown on Load
+        document.addEventListener('DOMContentLoaded', populateMonthDropdown);
 
         // ==========================================
         // ADMIN UNLOCK & SIDEBAR LOGIC
@@ -2289,7 +2577,7 @@
                 adminErrorMsg.classList.add('hidden');
                 manualUploadBtn.classList.remove('hidden');
                 hideAdminSidebar();
-                setTimeout(() => window.showAlert("গ্যালারি আপলোড আনলক করা হয়েছে!"), 350);
+                setTimeout(() => window.showAlert("গ্যালারি আপলোড আনলক করা হয়েছে!"), 350);
             } else {
                 adminErrorMsg.classList.remove('hidden');
                 adminPinInput.value = "";
@@ -2314,7 +2602,8 @@
         btnOpenNewOutlet?.addEventListener('click', () => {
             hideAdminSidebar();
             
-            const dbs = [...new Set(pjpData.map(i => i.townName))].filter(Boolean).sort();
+            const activeData = getFilteredPJP();
+            const dbs = [...new Set(activeData.map(i => i.townName))].filter(Boolean).sort();
             newOutletDistName.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউটর নির্বাচন করুন</option>' + 
                                           dbs.map(db => `<option value="${db}">${db}</option>`).join('');
             
@@ -2334,10 +2623,11 @@
 
         newOutletDistName?.addEventListener('change', (e) => {
             const dbName = e.target.value;
-            const match = pjpData.find(i => i.townName === dbName);
+            const currentPJP = getFilteredPJP();
+            const match = currentPJP.find(i => i.townName === dbName);
             if (match) newOutletDistCode.value = match.distCode;
 
-            const routes = [...new Set(pjpData.filter(i => i.townName === dbName).map(i => i.routeName))].filter(Boolean).sort();
+            const routes = [...new Set(currentPJP.filter(i => i.townName === dbName).map(i => i.routeName))].filter(Boolean).sort();
             newOutletRouteName.innerHTML = '<option value="" disabled selected>রুট নির্বাচন করুন</option>' + 
                                            routes.map(r => `<option value="${r}">${r}</option>`).join('');
             newOutletRouteName.disabled = routes.length === 0;
@@ -2347,7 +2637,7 @@
         newOutletRouteName?.addEventListener('change', (e) => {
             const route = e.target.value;
             const dbName = newOutletDistName.value;
-            const match = pjpData.find(i => i.townName === dbName && i.routeName === route);
+            const match = getFilteredPJP().find(i => i.townName === dbName && i.routeName === route);
             if (match) newOutletRouteCode.value = match.routeCode || '';
         });
 
