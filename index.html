@@ -175,7 +175,7 @@
             <p class="text-[13px] text-gray-500 mb-4">অ্যাডমিন প্যানেলে প্রবেশ করতে পিন কোড দিন:</p>
             <input type="password" id="frontAdminPinInput" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-center text-xl tracking-[0.5em] font-bold outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all mb-3" placeholder="••••">
             <button id="btnVerifyAdminPin" class="w-full bg-colgate text-white font-bold py-3 rounded-xl hover:bg-red-700 transition-all shadow-md">লগইন করুন</button>
-            <p id="frontAdminErrorMsg" class="text-red-500 text-[11px] font-bold mt-3 hidden"><i data-lucide="alert-circle" class="inline w-3 h-3 mr-1"></i> ভুল পিন কোড দেওয়া হয়েছে!</p>
+            <p id="frontAdminErrorMsg" class="text-red-500 text-[11px] font-bold mt-3 hidden"><i data-lucide="alert-circle" class="inline w-3 h-3 mr-1"></i> ভুল পিন কোড দেওয়া হয়েছে!</p>
         </div>
     </div>
 
@@ -191,7 +191,7 @@
             
             <div id="merchModalLoader" class="hidden flex-col items-center justify-center py-6">
                 <div class="loader mb-3"></div>
-                <span class="text-[12px] text-gray-500">নাম লোড হচ্ছে...</span>
+                <span class="text-[12px] text-gray-500 mt-2">নাম লোড হচ্ছে...</span>
             </div>
             
             <select id="modalMerchSelect" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all mb-3 font-medium text-gray-700">
@@ -324,6 +324,7 @@
                                 </div>
                             </div>
 
+                            <!-- SR SPECIFIC FIELDS (Hidden for Merchandiser) -->
                             <div id="srFieldsGroup" class="space-y-4 hidden">
                                 <div class="input-group relative">
                                     <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">রুট নাম <span class="text-colgate">*</span></label>
@@ -349,6 +350,7 @@
                                 </div>
                             </div>
 
+                            <!-- MERCHANDISER SPECIFIC FIELDS (Hidden for SR) -->
                             <div id="merchFieldsGroup" class="space-y-4">
                                 <div class="input-group relative">
                                     <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">স্ল্যাব <span class="text-colgate">*</span></label>
@@ -386,6 +388,7 @@
                         </div>
 
                         <div class="input-group relative">
+                            <!-- Manual Upload Input (Hidden) -->
                             <input type="file" id="manualFileInput" accept="image/*" class="hidden">
                             
                             <div id="cameraTriggerContainer" class="flex flex-col items-center">
@@ -399,6 +402,7 @@
                                     </div>
                                 </button>
                                 
+                                <!-- Minimalist Gallery Button (Unlocked via Sidebar) -->
                                 <button type="button" id="manualUploadBtn" class="hidden mt-3 text-[13px] font-medium text-gray-500 hover:text-colgate transition-colors flex items-center justify-center">
                                     <i data-lucide="cloud-upload" class="h-4 w-4 mr-1.5"></i> গ্যালারি থেকে আপলোড
                                 </button>
@@ -430,6 +434,7 @@
                                 <button type="button" id="closeCameraBtn" class="mt-4 text-[13px] font-semibold text-gray-500 w-full text-center hover:text-red-500 transition-colors">ক্যামেরা বন্ধ করুন</button>
                             </div>
 
+                            <!-- PREVIEW CONTAINER WITH GUIDELINE LAYOUT -->
                             <div id="previewContainer" class="hidden mt-4 relative animate-fade-in">
                                 <div class="relative rounded-2xl overflow-hidden border-2 border-colgate shadow-md w-full bg-black mb-4">
                                     <img id="capturedImagePreview" class="w-full h-auto block" alt="Preview">
@@ -663,7 +668,7 @@
                         <div class="mt-6 mb-2">
                             <button type="button" onclick="shareSnapshot(this)" class="w-full flex justify-center items-center py-3.5 px-4 rounded-xl shadow-md text-[15px] font-bold text-white bg-[#25D366] hover:bg-[#128C7E] transition-all transform hover:-translate-y-1">
                                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                                রিপোর্ট শেয়ার করুন
+                                রিপোর্ট শেয়ার করুন
                             </button>
                         </div>
                     </div>
@@ -716,174 +721,120 @@
             </div>
         </div>
 
+        <!-- Admin Sidebar Overlay -->
+        <div id="adminSidebarOverlay" class="fixed inset-0 bg-black/50 z-[200] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm"></div>
+
+        <!-- Admin Sidebar Panel -->
+        <div id="adminSidebar" class="fixed top-0 right-0 h-full w-[85%] sm:w-80 bg-gray-50 z-[210] transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
+            <div class="bg-colgate text-white p-5 flex justify-between items-center shadow-md">
+                <h3 class="text-lg font-bold flex items-center tracking-wide"><i data-lucide="settings" class="w-5 h-5 mr-2"></i> অ্যাডমিন প্যানেল</h3>
+                <button id="closeAdminSidebar" class="text-white hover:text-red-200 transition-colors bg-white/20 p-1.5 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            
+            <div class="p-5 overflow-y-auto flex-grow space-y-4">
+                
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button id="toggleGalleryUnlock" class="w-full flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center">
+                            <i data-lucide="image" class="w-4 h-4 text-colgate mr-2"></i>
+                            <span class="text-sm font-bold text-gray-800">গ্যালারি আপলোড আনলক</span>
+                        </div>
+                        <i data-lucide="chevron-down" id="galleryUnlockChevron" class="w-4 h-4 text-gray-400 transition-transform duration-300"></i>
+                    </button>
+                    
+                    <div id="galleryUnlockContent" class="hidden px-5 pb-5 border-t border-gray-100 mt-2 pt-4 bg-gray-50/50">
+                        <p class="text-[12px] text-gray-500 mb-3 leading-relaxed">গ্যালারি অপশন চালু করতে পিন কোড দিন।</p>
+                        <input type="password" id="adminPinInput" class="w-full bg-white border border-gray-200 rounded-xl p-2.5 text-center text-xl tracking-[0.4em] font-bold outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all mb-3" placeholder="••••">
+                        <button id="unlockFeaturesBtn" class="w-full bg-colgate text-white font-bold py-2.5 rounded-xl hover:bg-red-700 transition-all shadow-md text-[13px]">আনলক করুন</button>
+                        <p id="adminErrorMsg" class="text-red-500 text-[11px] text-center mt-2.5 hidden font-bold"><i data-lucide="alert-circle" class="inline w-3 h-3 mr-1"></i> ভুল পিন কোড!</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button id="btnOpenNewOutlet" class="w-full flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center">
+                            <i data-lucide="store" class="w-4 h-4 text-colgate mr-2"></i>
+                            <span class="text-sm font-bold text-gray-800">নতুন স্মাইল কর্ণার</span>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                    </button>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border-2 border-gray-200 border-dashed opacity-60 flex flex-col items-center justify-center text-center py-6">
+                    <div class="bg-gray-100 p-2.5 rounded-full mb-2">
+                        <i data-lucide="plus" class="w-5 h-5 text-gray-400"></i>
+                    </div>
+                    <h4 class="text-[12px] font-bold text-gray-500 mb-1">More Features Soon</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Outlet Entry Modal -->
+        <div id="newOutletModal" class="fixed inset-0 bg-black/60 z-[300] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
+            <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="newOutletContent">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+                    <h3 class="text-lg font-bold text-gray-800 flex items-center"><i data-lucide="store" class="w-5 h-5 text-colgate mr-2"></i> নতুন স্মাইল কর্ণার</h3>
+                    <button id="closeNewOutletModal" class="text-gray-400 hover:text-red-500 transition-colors bg-gray-100 p-1.5 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>
+                
+                <div class="overflow-y-auto flex-grow custom-scrollbar pr-2 space-y-4">
+                    <input type="hidden" id="newOutletDistCode">
+                    <input type="hidden" id="newOutletRouteCode">
+
+                    <div>
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">ডিস্ট্রিবিউটর নাম <span class="text-colgate">*</span></label>
+                        <select id="newOutletDistName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
+                            <option value="" disabled selected>ডিস্ট্রিবিউটর নির্বাচন করুন</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">রুট নাম <span class="text-colgate">*</span></label>
+                        <select id="newOutletRouteName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" disabled>
+                            <option value="" disabled selected>প্রথমে ডিস্ট্রিবিউটর নির্বাচন করুন</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">দোকানের নাম <span class="text-colgate">*</span></label>
+                        <input type="text" id="newOutletName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="দোকানের নাম">
+                    </div>
+
+                    <div>
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">মালিকের নাম <span class="text-colgate">*</span></label>
+                        <input type="text" id="newOutletOwner" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="মালিকের নাম লিখুন">
+                    </div>
+
+                    <div class="flex gap-3">
+                        <div class="w-1/2">
+                            <label class="block text-[12px] font-bold text-gray-700 mb-1">কন্টাক্ট নাম্বার <span class="text-colgate">*</span></label>
+                            <input type="tel" id="newOutletPhone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="১১ ডিজিট মোবাইল নং">
+                        </div>
+                        <div class="w-1/2">
+                            <label class="block text-[12px] font-bold text-gray-700 mb-1">স্ল্যাব (Slab) <span class="text-colgate">*</span></label>
+                            <select id="newOutletSlab" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
+                                <option value="" disabled selected>লোড হচ্ছে...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">এন্ট্রি করছেন (আপনার নাম) <span class="text-colgate">*</span></label>
+                        <input type="text" id="newOutletEntryBy" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="আপনার নাম (SR / Merchandiser)">
+                    </div>
+                </div>
+                
+                <div class="pt-4 mt-2 border-t border-gray-100">
+                    <button id="submitNewOutletBtn" class="w-full bg-colgate text-white font-bold py-3.5 rounded-xl hover:bg-red-700 transition-all shadow-md flex justify-center items-center">
+                        <i data-lucide="save" class="w-4 h-4 mr-2"></i> এন্ট্রি সেভ করুন
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Footer -->
         <div class="pb-6 pt-2 flex flex-col items-center bg-white sm:rounded-b-2xl">
             <p class="text-[11px] text-center text-gray-400 font-medium tracking-wide">কোলগেট স্মাইল কর্ণার প্রোগ্রাম &copy; ২০২৫</p>
-        </div>
-    </div>
-
-    <!-- ================= ADMIN DASHBOARD CONTAINER ================= -->
-    <div id="adminDashboardContainer" class="hidden bg-gray-50 w-full max-w-md sm:rounded-2xl sm:shadow-2xl min-h-screen sm:min-h-0 flex-col relative mx-auto overflow-hidden z-[150] animate-fade-in">
-        
-        <div class="bg-gray-900 px-5 py-5 text-center sm:rounded-t-2xl sticky top-0 z-50 shadow-md flex items-center justify-between">
-            <button onclick="logoutAdmin()" class="bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors flex items-center justify-center backdrop-blur-sm">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i>
-            </button>
-            <h2 class="text-lg font-bold text-white tracking-wide flex items-center"><i data-lucide="shield" class="w-4 h-4 mr-2 text-red-500"></i> অ্যাডমিন ড্যাশবোর্ড</h2>
-            <div class="w-8"></div>
-        </div>
-
-        <div class="p-5 overflow-y-auto flex-grow space-y-4 custom-scrollbar">
-            
-            <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-center mb-3 pb-2 border-b border-gray-100">
-                    <h3 class="text-[13px] font-bold text-gray-800 flex items-center"><i data-lucide="activity" class="w-4 h-4 text-green-500 mr-1.5"></i> রিয়েল-টাইম স্ট্যাটাস</h3>
-                    <span id="adminDataDate" class="text-[10px] text-gray-400 font-medium">Loading...</span>
-                </div>
-                
-                <div id="adminStatsLoader" class="flex flex-col items-center justify-center py-6"><div class="loader mb-2"></div><p class="text-[10px] text-gray-400">ডেটা সিঙ্ক হচ্ছে...</p></div>
-
-                <div id="adminStatsContent" class="hidden grid grid-cols-2 gap-2">
-                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex flex-col items-center justify-center text-center">
-                        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wide mb-1">মোট আউটলেট</span>
-                        <span id="adminStatTotal" class="text-xl font-extrabold text-gray-800">0</span>
-                    </div>
-                    <div class="bg-green-50 p-3 rounded-xl border border-green-100 flex flex-col items-center justify-center text-center">
-                        <span class="text-[10px] font-bold text-green-600 uppercase tracking-wide mb-1">মোট আপলোড</span>
-                        <span id="adminStatUploaded" class="text-xl font-extrabold text-green-700">0</span>
-                    </div>
-                    <div class="bg-blue-50 p-3 rounded-xl border border-blue-100 flex flex-col items-center justify-center text-center">
-                        <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wide mb-1">ডিসপ্লে আউটলেট</span>
-                        <span id="adminStatDisplay" class="text-xl font-extrabold text-blue-700">0</span>
-                    </div>
-                    <div class="bg-orange-50 p-3 rounded-xl border border-orange-100 flex flex-col items-center justify-center text-center">
-                        <span class="text-[10px] font-bold text-orange-600 uppercase tracking-wide mb-1">রেগুলার আউটলেট</span>
-                        <span id="adminStatRegular" class="text-xl font-extrabold text-orange-700">0</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-                <button id="btnAdminForceSync" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-blue-50 hover:border-blue-200 transition-all group">
-                    <div class="bg-blue-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="refresh-cw" class="w-5 h-5 text-blue-600"></i>
-                    </div>
-                    <span class="text-[12px] font-bold text-gray-800">ডেটা রিফ্রেশ</span>
-                    <span class="text-[9px] text-gray-400 mt-0.5">ম্যানুয়াল সিঙ্ক</span>
-                </button>
-
-                <button id="btnAdminNewOutlet" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-colgate/10 hover:border-colgate/30 transition-all group">
-                    <div class="bg-red-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="store" class="w-5 h-5 text-colgate"></i>
-                    </div>
-                    <span class="text-[12px] font-bold text-gray-800">নতুন আউটলেট</span>
-                    <span class="text-[9px] text-gray-400 mt-0.5">স্মাইল কর্ণার এন্ট্রি</span>
-                </button>
-                
-                <button id="btnAdminNotice" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-purple-50 hover:border-purple-200 transition-all group">
-                    <div class="bg-purple-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="bell-ring" class="w-5 h-5 text-purple-600"></i>
-                    </div>
-                    <span class="text-[12px] font-bold text-gray-800">নোটিশ বোর্ড</span>
-                    <span class="text-[9px] text-gray-400 mt-0.5">টিম মেসেজ</span>
-                </button>
-
-                <button id="btnAdminGallery" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center transition-all group">
-                    <div id="galleryIconBg" class="bg-gray-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="image" id="galleryIcon" class="w-5 h-5 text-gray-500"></i>
-                    </div>
-                    <span class="text-[12px] font-bold text-gray-800">গ্যালারি এক্সেস</span>
-                    <span id="galleryStatusText" class="text-[9px] font-bold text-red-500 mt-0.5">Locked</span>
-                </button>
-            </div>
-
-            <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-center justify-between">
-                <div>
-                    <h4 class="text-[13px] font-bold text-gray-800 flex items-center"><i data-lucide="lock" class="w-4 h-4 text-orange-500 mr-1.5"></i> মেইনটেন্যান্স মোড</h4>
-                    <p class="text-[10px] text-gray-400 mt-0.5">অ্যাপ সাময়িক বন্ধ রাখতে</p>
-                </div>
-                <label class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" id="maintenanceToggle" class="sr-only peer">
-                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
-                </label>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notice Input Modal for Admin -->
-    <div id="noticeInputModal" class="fixed inset-0 bg-black/60 z-[500] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
-        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform">
-            <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center"><i data-lucide="bell" class="w-5 h-5 text-blue-500 mr-2"></i> গ্লোবাল নোটিশ</h3>
-            <p class="text-[12px] text-gray-500 mb-4">এখানে লেখা নোটিশটি টিমের সবাই লগইন করার সময় দেখতে পাবে।</p>
-            <textarea id="noticeTextInput" rows="4" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[13px] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all mb-4 resize-none" placeholder="আপনার মেসেজ লিখুন..."></textarea>
-            <div class="flex gap-3">
-                <button onclick="clearNotice()" class="flex-1 bg-gray-100 text-gray-700 font-bold py-2.5 rounded-xl hover:bg-gray-200 transition-all text-[13px]">নোটিশ মুছুন</button>
-                <button onclick="saveNotice()" class="flex-1 bg-blue-600 text-white font-bold py-2.5 rounded-xl hover:bg-blue-700 transition-all shadow-md text-[13px]">সেভ করুন</button>
-            </div>
-            <button onclick="closeNoticeModal()" class="w-full mt-3 text-[12px] text-gray-400 font-medium hover:text-gray-600">বাতিল করুন</button>
-        </div>
-    </div>
-
-    <!-- New Outlet Entry Modal -->
-    <div id="newOutletModal" class="fixed inset-0 bg-black/60 z-[300] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="newOutletContent">
-            <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
-                <h3 class="text-lg font-bold text-gray-800 flex items-center"><i data-lucide="store" class="w-5 h-5 text-colgate mr-2"></i> নতুন স্মাইল কর্ণার</h3>
-                <button id="closeNewOutletModal" class="text-gray-400 hover:text-red-500 transition-colors bg-gray-100 p-1.5 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
-            </div>
-            
-            <div class="overflow-y-auto flex-grow custom-scrollbar pr-2 space-y-4">
-                <input type="hidden" id="newOutletDistCode">
-                <input type="hidden" id="newOutletRouteCode">
-
-                <div>
-                    <label class="block text-[12px] font-bold text-gray-700 mb-1">ডিস্ট্রিবিউটর নাম <span class="text-colgate">*</span></label>
-                    <select id="newOutletDistName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
-                        <option value="" disabled selected>ডিস্ট্রিবিউটর নির্বাচন করুন</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-[12px] font-bold text-gray-700 mb-1">রুট নাম <span class="text-colgate">*</span></label>
-                    <select id="newOutletRouteName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" disabled>
-                        <option value="" disabled selected>প্রথমে ডিস্ট্রিবিউটর নির্বাচন করুন</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-[12px] font-bold text-gray-700 mb-1">দোকানের নাম <span class="text-colgate">*</span></label>
-                    <input type="text" id="newOutletName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="দোকানের নাম">
-                </div>
-
-                <div>
-                    <label class="block text-[12px] font-bold text-gray-700 mb-1">মালিকের নাম <span class="text-colgate">*</span></label>
-                    <input type="text" id="newOutletOwner" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="মালিকের নাম লিখুন">
-                </div>
-
-                <div class="flex gap-3">
-                    <div class="w-1/2">
-                        <label class="block text-[12px] font-bold text-gray-700 mb-1">কন্টাক্ট নাম্বার <span class="text-colgate">*</span></label>
-                        <input type="tel" id="newOutletPhone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="১১ ডিজিট মোবাইল নং">
-                    </div>
-                    <div class="w-1/2">
-                        <label class="block text-[12px] font-bold text-gray-700 mb-1">স্ল্যাব (Slab) <span class="text-colgate">*</span></label>
-                        <select id="newOutletSlab" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
-                            <option value="" disabled selected>লোড হচ্ছে...</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-[12px] font-bold text-gray-700 mb-1">এন্ট্রি করছেন (আপনার নাম) <span class="text-colgate">*</span></label>
-                    <input type="text" id="newOutletEntryBy" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="আপনার নাম (SR / Merchandiser)">
-                </div>
-            </div>
-            
-            <div class="pt-4 mt-2 border-t border-gray-100">
-                <button id="submitNewOutletBtn" class="w-full bg-colgate text-white font-bold py-3.5 rounded-xl hover:bg-red-700 transition-all shadow-md flex justify-center items-center">
-                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> এন্ট্রি সেভ করুন
-                </button>
-            </div>
         </div>
     </div>
 
@@ -937,6 +888,7 @@
             }, 300);
         };
 
+        // Replace native alerts for convenience in codebase
         window.alert = window.showAlert;
 
         // Constants
@@ -1066,25 +1018,27 @@
         // ==========================================
         window.addEventListener('DOMContentLoaded', () => { checkRole(); });
 
+        function populateMonthDropdown() {
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const d = new Date();
+            const currentMonth = monthNames[d.getMonth()];
+            const prevMonth = monthNames[d.getMonth() === 0 ? 11 : d.getMonth() - 1];
+
+            const formMonth = document.getElementById('formMonth');
+            if (formMonth) {
+                formMonth.innerHTML = `
+                    <option value="${currentMonth}" selected>${currentMonth}</option>
+                    <option value="${prevMonth}">${prevMonth}</option>
+                `;
+            }
+        }
+
         function checkRole() {
-            const maintenance = localStorage.getItem('app_maintenance');
-            if (maintenance === 'true' && localStorage.getItem('colgate_app_role') !== 'admin') {
-                document.body.innerHTML = `<div class="flex flex-col items-center justify-center h-screen bg-white text-center p-6"><i data-lucide="settings" class="w-16 h-16 text-orange-500 mb-4 animate-spin"></i><h2 class="text-xl font-bold text-gray-800 mb-2">System Maintenance</h2><p class="text-gray-500 text-[13px]">অ্যাপটিতে বর্তমানে আপডেটের কাজ চলছে। দয়া করে কিছুক্ষণ পর আবার চেষ্টা করুন।</p></div>`;
-                lucide.createIcons();
-                return;
-            }
-
-            const notice = localStorage.getItem('global_notice');
-            const noticeSeen = sessionStorage.getItem('notice_seen');
-            if (notice && !noticeSeen) {
-                window.showAlert("নোটিশ:\n" + notice);
-                sessionStorage.setItem('notice_seen', 'true');
-            }
-
+            populateMonthDropdown();
+            
             const role = localStorage.getItem('colgate_app_role');
             const roleSelection = document.getElementById('roleSelectionContainer');
             const mainApp = document.getElementById('mainAppContainer');
-            const adminDash = document.getElementById('adminDashboardContainer');
             const tabsContainer = document.getElementById('tabsContainer');
 
             if (!role) {
@@ -1092,33 +1046,13 @@
                 roleSelection.classList.add('flex');
                 mainApp.classList.add('hidden');
                 mainApp.classList.remove('flex');
-                if (adminDash) {
-                    adminDash.classList.add('hidden');
-                    adminDash.classList.remove('flex');
-                }
                 return;
             }
 
             roleSelection.classList.add('hidden');
             roleSelection.classList.remove('flex');
-
-            if (role === 'admin') {
-                mainApp.classList.add('hidden');
-                mainApp.classList.remove('flex');
-                if (adminDash) {
-                    adminDash.classList.remove('hidden');
-                    adminDash.classList.add('flex');
-                    loadAdminDashboard();
-                }
-                return;
-            } else {
-                if (adminDash) {
-                    adminDash.classList.add('hidden');
-                    adminDash.classList.remove('flex');
-                }
-                mainApp.classList.remove('hidden');
-                mainApp.classList.add('flex');
-            }
+            mainApp.classList.remove('hidden');
+            mainApp.classList.add('flex');
 
             if (role === 'merchandiser') {
                 const merchName = localStorage.getItem('colgate_app_merch_name');
@@ -1152,6 +1086,7 @@
             } else {
                 populateDropdowns(); 
                 initOnePagerFilters();
+                
                 if (document.getElementById('myDayView') && !document.getElementById('myDayView').classList.contains('hidden')) {
                     renderMyDayPJP();
                 }
@@ -1218,21 +1153,6 @@
                 }
             });
         };
-
-        function populateMonthDropdown() {
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            const d = new Date();
-            const currentMonth = monthNames[d.getMonth()];
-            const prevMonth = monthNames[d.getMonth() === 0 ? 11 : d.getMonth() - 1];
-
-            const formMonth = document.getElementById('formMonth');
-            if (formMonth) {
-                formMonth.innerHTML = `
-                    <option value="${currentMonth}" selected>${currentMonth}</option>
-                    <option value="${prevMonth}">${prevMonth}</option>
-                `;
-            }
-        }
 
         // ==========================================
         // DATA LOADING & PARSING
@@ -1319,17 +1239,12 @@
 
                 isDataLoaded = true;
                 
-                const role = localStorage.getItem('colgate_app_role');
-                if (role === 'admin') {
-                    updateAdminStats();
-                } else {
-                    populateDropdowns();
-                    initOnePagerFilters();
-                    
-                    const myDayView = document.getElementById('myDayView');
-                    if (myDayView && !myDayView.classList.contains('hidden')) {
-                        renderMyDayPJP();
-                    }
+                populateDropdowns();
+                initOnePagerFilters();
+                
+                const myDayView = document.getElementById('myDayView');
+                if (myDayView && !myDayView.classList.contains('hidden')) {
+                    renderMyDayPJP();
                 }
                 
                 window.updateTimeUI();
@@ -1414,7 +1329,7 @@
                 }
             }
 
-            // My Day Town Init (No Region Filter)
+            // My Day Region Init
             const myDaySelectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
             const myDayTownSelect = document.getElementById('myDayTownSelect');
             
@@ -1972,7 +1887,7 @@
                 content.innerHTML = `
                     <div class="flex flex-col items-center justify-center py-10 opacity-70">
                         <i data-lucide="database" class="h-10 w-10 text-gray-400 mb-2"></i>
-                        <p class="text-[12px] text-gray-500 mt-2">কোনো ডেটা পাওয়া যায়নি</p>
+                        <p class="text-[12px] text-gray-500 mt-2">কোনো ডেটা পাওয়া যায়নি</p>
                     </div>`;
                 lucide.createIcons();
                 return;
@@ -2061,20 +1976,20 @@
                             <p class="text-colgate text-[12px] font-bold">${dateStr}</p>
                         </div>
                         <div class="grid grid-cols-3 gap-3 text-center">
-                            <div class="bg-gray-50 p-3 rounded-2xl border border-gray-100 flex flex-col items-center">
-                                <i data-lucide="play-circle" class="h-6 w-6 text-green-500 mb-1.5"></i>
-                                <span class="text-[15px] font-black text-gray-800 tracking-tight">${startTimeStr}</span>
-                                <span class="text-gray-400 text-[11px] font-bold mt-1">শুরু</span>
+                            <div class="bg-gray-50 py-2.5 px-2 rounded-2xl border border-gray-100 flex flex-col items-center justify-center">
+                                <i data-lucide="play-circle" class="h-5 w-5 text-green-500 mb-1.5"></i>
+                                <span class="text-[14px] font-black text-gray-800 tracking-tight">${startTimeStr}</span>
+                                <span class="text-gray-400 text-[10px] font-bold mt-1">শুরু</span>
                             </div>
-                            <div class="bg-gray-50 p-3 rounded-2xl border border-gray-100 flex flex-col items-center">
-                                <i data-lucide="stop-circle" class="h-6 w-6 text-orange-500 mb-1.5"></i>
-                                <span class="text-[15px] font-black text-gray-800 tracking-tight">${endTimeStr}</span>
-                                <span class="text-gray-400 text-[11px] font-bold mt-1">শেষ</span>
+                            <div class="bg-gray-50 py-2.5 px-2 rounded-2xl border border-gray-100 flex flex-col items-center justify-center">
+                                <i data-lucide="stop-circle" class="h-5 w-5 text-orange-500 mb-1.5"></i>
+                                <span class="text-[14px] font-black text-gray-800 tracking-tight">${endTimeStr}</span>
+                                <span class="text-gray-400 text-[10px] font-bold mt-1">শেষ</span>
                             </div>
-                            <div class="bg-gray-50 p-3 rounded-2xl border border-gray-100 flex flex-col items-center">
-                                <i data-lucide="hourglass" class="h-6 w-6 text-purple-500 mb-1.5"></i>
-                                <span class="text-[15px] font-black text-gray-800 tracking-tight">${totalTimeStr}</span>
-                                <span class="text-gray-400 text-[11px] font-bold mt-1">মোট সময়</span>
+                            <div class="bg-gray-50 py-2.5 px-2 rounded-2xl border border-gray-100 flex flex-col items-center justify-center">
+                                <i data-lucide="hourglass" class="h-5 w-5 text-purple-500 mb-1.5"></i>
+                                <span class="text-[14px] font-black text-gray-800 tracking-tight">${totalTimeStr}</span>
+                                <span class="text-gray-400 text-[10px] font-bold mt-1">মোট সময়</span>
                             </div>
                         </div>
                     </div>
@@ -2157,10 +2072,7 @@
                             eligible: row[13],
                             imgUpload: row[14],
                             imgUploadCount: row[15],
-                            payout: row[16],
-                            startTime: row[17] ? row[17].trim() : '',
-                            endTime: row[18] ? row[18].trim() : '',
-                            totalTime: row[19] ? row[19].trim() : ''
+                            payout: row[16]
                         });
                     }
                 }
@@ -2312,7 +2224,7 @@
                 list.innerHTML = `
                     <div class="flex flex-col items-center justify-center py-10 opacity-70">
                         <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
-                        <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে Region এবং DB নির্বাচন করুন</p>
+                        <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে Region এবং DB Name নির্বাচন করুন</p>
                     </div>`;
                 lucide.createIcons();
                 return;
@@ -2323,10 +2235,13 @@
                 filtered = filtered.filter(d => d.route === route);
             }
 
+            // --- REPORT OUTLET TYPE FILTER ---
             const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
+
             if (selectedType && selectedType !== 'ALL') {
                 const activeData = getFilteredPJP();
                 filtered = filtered.filter(d => {
+                    // Find corresponding outlet in pjpData to get its outletType
                     const match = activeData.find(p => p.code.toUpperCase() === d.code);
                     return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
                 });
@@ -2779,7 +2694,7 @@
                 }, 'image/png');
             } catch (err) {
                 console.error(err);
-                window.showAlert("স্ক্রিনশট তৈরিতে সমস্যা হয়েছে।");
+                window.showAlert("স্ক্রিনশট তৈরিতে সমস্যা হয়েছে।");
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }
