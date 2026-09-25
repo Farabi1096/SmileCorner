@@ -2889,13 +2889,11 @@
                 btn.disabled = false; loader.classList.add('hidden'); text.textContent = "জমা দিন (Submit)";
             };
 
-            if (!isLocationAcquired || globalLatitude.includes("Not Found") || globalLatitude.includes("Denied")) {
-                window.showConfirm("GPS লোকেশন এখনো পাওয়া যায়নি। আপনি কি লোকেশন ছাড়াই ফর্মটি জমা দিতে চান?", async (confirmed) => {
-                    if (confirmed) {
-                        await getGPSLocation(); 
-                        executeSubmit();
-                    }
-                });
+            if (globalLatitude === "Not Found" || (!isLocationAcquired && !globalLatitude.includes("Denied") && !globalLatitude.includes("No GPS"))) {
+                window.showAlert("GPS লোকেশন সংগ্রহ করা হচ্ছে, অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করে আবার Submit করুন।\n\n(Fetching location, please wait a few seconds...)");
+            } else if (!isLocationAcquired || globalLatitude.includes("Denied") || globalLatitude.includes("No GPS")) {
+                window.showAlert("আউটলেটের লোকেশন ছাড়া ছবি আপলোড করা যাবে না। অনুগ্রহ করে আপনার ফোনের GPS/Location চালু করুন এবং আবার চেষ্টা করুন।\n\n(Location is mandatory. Please turn on GPS and try again.)");
+                getGPSLocation(); // Try to fetch it again quietly in the background
             } else {
                 executeSubmit();
             }
