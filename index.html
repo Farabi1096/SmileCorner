@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>কোলগেট স্মাইল কর্ণার - লাইভ অ্যাপ</title>
+    <title>কোলগেট স্মাইল কর্ণার - কমপ্লিট অ্যাপ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <style>
         body {
             font-family: 'Noto Sans Bengali', 'Inter', sans-serif;
             background: linear-gradient(180deg, #ffe6e6 0%, #f9fafb 25%);
             background-attachment: fixed;
+            margin: 0;
+            padding: 0;
         }
         
         .loader {
@@ -58,6 +61,9 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        #adminMap { z-index: 1; width: 100%; height: 100%; }
+        .leaflet-control-container .leaflet-routing-container { display: none; }
     </style>
 </head>
 <body class="flex items-start sm:items-center justify-center min-h-screen p-0 sm:p-4" oncontextmenu="return false;">
@@ -87,46 +93,31 @@
 
     <!-- ================= ROLE SELECTION SCREEN ================= -->
     <div id="roleSelectionContainer" class="flex flex-col h-screen w-full items-center justify-center p-6 text-center bg-white z-[100] fixed inset-0">
-        
         <div class="mb-8 relative w-full max-w-[280px] mx-auto flex flex-col items-center">
-            <!-- Red Pencil Art 1: Vertical Tube -->
             <div class="absolute -top-2 -left-10 sm:-left-16 text-red-400 animate-sparkle opacity-60 z-0" style="transform: rotate(-12deg);">
                 <svg viewBox="0 0 40 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-20">
-                    <path d="M12 5 L28 5 L28 15 L12 15 Z" />
-                    <line x1="12" y1="10" x2="28" y2="10" />
-                    <path d="M12 15 L28 15 L32 90 L8 90 Z" />
-                    <rect x="5" y="90" width="30" height="6" />
-                    <line x1="10" y1="90" x2="10" y2="96" />
-                    <line x1="15" y1="90" x2="15" y2="96" />
-                    <line x1="20" y1="90" x2="20" y2="96" />
-                    <line x1="25" y1="90" x2="25" y2="96" />
-                    <line x1="30" y1="90" x2="30" y2="96" />
-                    <rect x="15" y="30" width="10" height="45" rx="2" />
+                    <path d="M12 5 L28 5 L28 15 L12 15 Z" /><line x1="12" y1="10" x2="28" y2="10" />
+                    <path d="M12 15 L28 15 L32 90 L8 90 Z" /><rect x="5" y="90" width="30" height="6" />
+                    <line x1="10" y1="90" x2="10" y2="96" /><line x1="15" y1="90" x2="15" y2="96" />
+                    <line x1="20" y1="90" x2="20" y2="96" /><line x1="25" y1="90" x2="25" y2="96" />
+                    <line x1="30" y1="90" x2="30" y2="96" /><rect x="15" y="30" width="10" height="45" rx="2" />
                 </svg>
             </div>
-            <!-- Red Pencil Art 2: Squeezing Tube -->
             <div class="absolute top-12 -right-12 sm:-right-20 text-red-400 animate-sparkle sparkle-delay-1 opacity-60 z-0" style="transform: rotate(-30deg);">
                 <svg viewBox="0 0 100 50" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-20 h-10">
-                    <rect x="85" y="10" width="6" height="30" />
-                    <line x1="88" y1="10" x2="88" y2="40" />
-                    <path d="M85 10 L35 15 L35 35 L85 40 Z" />
-                    <path d="M75 16 L45 19 L45 31 L75 34 Z" />
-                    <rect x="25" y="18" width="10" height="14" />
-                    <line x1="30" y1="18" x2="30" y2="32" />
+                    <rect x="85" y="10" width="6" height="30" /><line x1="88" y1="10" x2="88" y2="40" />
+                    <path d="M85 10 L35 15 L35 35 L85 40 Z" /><path d="M75 16 L45 19 L45 31 L75 34 Z" />
+                    <rect x="25" y="18" width="10" height="14" /><line x1="30" y1="18" x2="30" y2="32" />
                     <path d="M25 25 C 10 15, 15 40, 2 30" stroke-width="3" />
                 </svg>
             </div>
-            <!-- Red Pencil Art 3: Tooth -->
             <div class="absolute -top-10 right-0 sm:-top-12 sm:right-4 text-red-400 animate-sparkle sparkle-delay-2 opacity-60 z-0" style="transform: rotate(15deg);">
                 <svg viewBox="0 0 50 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-12">
                     <path d="M10 25 Q 10 15 25 15 Q 40 15 40 25 C 40 40 35 55 30 55 C 25 55 25 45 25 45 C 25 45 25 55 20 55 C 15 55 10 40 10 25 Z" />
-                    <path d="M15 15 Q 25 5 35 15" />
-                    <line x1="18" y1="12" x2="22" y2="8" />
-                    <line x1="24" y1="13" x2="28" y2="9" />
-                    <line x1="30" y1="14" x2="34" y2="10" />
+                    <path d="M15 15 Q 25 5 35 15" /><line x1="18" y1="12" x2="22" y2="8" />
+                    <line x1="24" y1="13" x2="28" y2="9" /><line x1="30" y1="14" x2="34" y2="10" />
                 </svg>
             </div>
-            <!-- Red Pencil Art 4: Toothbrush -->
             <div class="absolute top-24 -left-6 sm:top-28 sm:-left-16 text-red-400 animate-sparkle opacity-60 z-0" style="transform: rotate(10deg);">
                 <svg viewBox="0 0 120 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-24 h-8">
                     <rect x="30" y="25" width="85" height="6" rx="3" />
@@ -141,11 +132,11 @@
                 </svg>
             </div>
 
-            <div class="bg-red-50 h-24 w-24 rounded-full flex items-center justify-center mx-auto mb-4 border border-red-100 shadow-sm relative z-10">
-                <i data-lucide="smile" class="h-12 w-12 text-colgate"></i>
+            <!-- Custom Branded Image here -->
+            <div class="h-24 w-24 mx-auto mb-4 relative z-10 flex items-center justify-center">
+                <img src="https://i.postimg.cc/85V7jkK5/Smile-Image.png" alt="Colgate Smile" class="w-full h-full object-contain drop-shadow-sm">
             </div>
             <h1 class="text-2xl font-bold text-gray-900 tracking-tight relative z-10">Smile Corner</h1>
-            <p class="text-gray-500 text-[13px] mt-1 relative z-10 font-medium tracking-wide">Make More Smiles</p>
         </div>
 
         <div class="w-full max-w-[280px] space-y-4 relative z-10">
@@ -165,20 +156,6 @@
         </div>
     </div>
 
-    <!-- Admin PIN Modal -->
-    <div id="adminPinModal" class="fixed inset-0 bg-black/60 z-[400] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
-        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl text-center transform scale-95 transition-transform">
-            <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
-                <h3 class="text-lg font-bold text-gray-800 flex items-center"><i data-lucide="shield" class="w-5 h-5 text-colgate mr-2"></i> সিকিউরিটি চেক</h3>
-                <button onclick="closeAdminPinModal()" class="text-gray-400 hover:text-red-500 transition-colors bg-gray-100 p-1.5 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
-            </div>
-            <p class="text-[13px] text-gray-500 mb-4">অ্যাডমিন প্যানেলে প্রবেশ করতে পিন কোড দিন:</p>
-            <input type="password" id="frontAdminPinInput" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-center text-xl tracking-[0.5em] font-bold outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all mb-3" placeholder="••••">
-            <button id="btnVerifyAdminPin" class="w-full bg-colgate text-white font-bold py-3 rounded-xl hover:bg-red-700 transition-all shadow-md">লগইন করুন</button>
-            <p id="frontAdminErrorMsg" class="text-red-500 text-[11px] font-bold mt-3 hidden"><i data-lucide="alert-circle" class="inline w-3 h-3 mr-1"></i> ভুল পিন কোড দেওয়া হয়েছে!</p>
-        </div>
-    </div>
-
     <!-- Merchandiser Login Modal -->
     <div id="merchLoginModal" class="fixed inset-0 bg-black/60 z-[400] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
         <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform">
@@ -194,9 +171,26 @@
                 <span class="text-[12px] text-gray-500 mt-2">নাম লোড হচ্ছে...</span>
             </div>
             
-            <select id="modalMerchSelect" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all mb-3 font-medium text-gray-700">
+            <select id="modalMerchSelect" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all mb-3 font-medium text-gray-700 custom-scrollbar">
                 <option value="" disabled selected>আপনার নাম খুঁজুন...</option>
             </select>
+        </div>
+    </div>
+
+    <!-- Admin PIN Modal -->
+    <div id="adminPinModal" class="fixed inset-0 bg-black/60 z-[500] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
+        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl text-center transform scale-95 transition-transform">
+            <h3 class="text-lg font-bold text-gray-800 mb-2 flex justify-center items-center"><i data-lucide="shield" class="w-5 h-5 text-gray-800 mr-2"></i> Admin Login</h3>
+            <p class="text-[13px] text-gray-500 mb-4">Enter secure PIN to access dashboard</p>
+            
+            <input type="password" id="frontAdminPinInput" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-center tracking-[0.5em] text-lg font-bold outline-none focus:border-gray-800 focus:ring-1 focus:ring-gray-800 transition-all mb-2" placeholder="••••" maxlength="4">
+            
+            <p id="frontAdminErrorMsg" class="text-red-500 text-[11px] font-bold mb-4 hidden">Incorrect PIN. Try again.</p>
+            
+            <div class="flex gap-3 mt-4">
+                <button onclick="closeAdminPinModal()" class="flex-1 bg-gray-100 text-gray-700 font-bold py-2.5 rounded-xl hover:bg-gray-200 transition-all text-[13px]">Cancel</button>
+                <button id="btnVerifyAdminPin" class="flex-1 bg-gray-900 text-white font-bold py-2.5 rounded-xl hover:bg-black transition-all shadow-md text-[13px]">Verify PIN</button>
+            </div>
         </div>
     </div>
 
@@ -324,7 +318,6 @@
                                 </div>
                             </div>
 
-                            <!-- SR SPECIFIC FIELDS (Hidden for Merchandiser) -->
                             <div id="srFieldsGroup" class="space-y-4 hidden">
                                 <div class="input-group relative">
                                     <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">রুট নাম <span class="text-colgate">*</span></label>
@@ -350,7 +343,6 @@
                                 </div>
                             </div>
 
-                            <!-- MERCHANDISER SPECIFIC FIELDS (Hidden for SR) -->
                             <div id="merchFieldsGroup" class="space-y-4">
                                 <div class="input-group relative">
                                     <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">স্ল্যাব <span class="text-colgate">*</span></label>
@@ -388,7 +380,6 @@
                         </div>
 
                         <div class="input-group relative">
-                            <!-- Manual Upload Input (Hidden) -->
                             <input type="file" id="manualFileInput" accept="image/*" class="hidden">
                             
                             <div id="cameraTriggerContainer" class="flex flex-col items-center">
@@ -402,7 +393,6 @@
                                     </div>
                                 </button>
                                 
-                                <!-- Minimalist Gallery Button (Unlocked via Sidebar) -->
                                 <button type="button" id="manualUploadBtn" class="hidden mt-3 text-[13px] font-medium text-gray-500 hover:text-colgate transition-colors flex items-center justify-center">
                                     <i data-lucide="cloud-upload" class="h-4 w-4 mr-1.5"></i> গ্যালারি থেকে আপলোড
                                 </button>
@@ -434,7 +424,6 @@
                                 <button type="button" id="closeCameraBtn" class="mt-4 text-[13px] font-semibold text-gray-500 w-full text-center hover:text-red-500 transition-colors">ক্যামেরা বন্ধ করুন</button>
                             </div>
 
-                            <!-- PREVIEW CONTAINER WITH GUIDELINE LAYOUT -->
                             <div id="previewContainer" class="hidden mt-4 relative animate-fade-in">
                                 <div class="relative rounded-2xl overflow-hidden border-2 border-colgate shadow-md w-full bg-black mb-4">
                                     <img id="capturedImagePreview" class="w-full h-auto block" alt="Preview">
@@ -534,35 +523,19 @@
                     </div>
 
                     <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm mb-3">
-                        <div class="grid grid-cols-3 gap-2">
-                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Town (টাউন)</option></select>
-                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Day (বার)</option></select>
-                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Route (রুট)</option></select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Performance Cards -->
-                <div class="bg-gradient-to-br from-red-50 to-white border border-red-100 p-2.5 rounded-xl shadow-sm mb-2.5 relative">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-gray-800 font-bold text-[12px] flex items-center"><i data-lucide="activity" class="h-3.5 w-3.5 mr-1 text-colgate"></i> আজকের পারফরম্যান্স</h3>
-                        <p id="currentDateDisplay" class="text-colgate text-[10px] font-semibold"></p>
-                    </div>
-                    <div class="grid grid-cols-3 gap-2 text-center">
-                        <div class="bg-white p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
-                            <i data-lucide="play-circle" class="h-4 w-4 text-green-500 mb-0.5"></i>
-                            <span id="statStartTime" class="text-[12px] font-bold text-gray-800">--:--</span>
-                            <span class="text-gray-400 text-[9px] font-medium">শুরু</span>
-                        </div>
-                        <div class="bg-white p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
-                            <i data-lucide="stop-circle" class="h-4 w-4 text-orange-500 mb-0.5"></i>
-                            <span id="statEndTime" class="text-[12px] font-bold text-gray-800">--:--</span>
-                            <span class="text-gray-400 text-[9px] font-medium">শেষ</span>
-                        </div>
-                        <div class="bg-white p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
-                            <i data-lucide="hourglass" class="h-4 w-4 text-purple-500 mb-0.5"></i>
-                            <span id="statTotalTime" class="text-[12px] font-bold text-gray-800">0ঘ 0মি</span>
-                            <span class="text-gray-400 text-[9px] font-medium">মোট সময়</span>
+                        <div class="grid grid-cols-3 gap-2 relative">
+                            <div class="relative w-full">
+                                <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 pl-2 pr-6 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Town (টাউন)</option></select>
+                                <i data-lucide="x" onclick="clearMyDaySelect('myDayTownSelect')" class="w-3 h-3 absolute right-2 top-2.5 text-gray-400 hover:text-red-500 cursor-pointer hidden" id="clearMyDayTown"></i>
+                            </div>
+                            <div class="relative w-full">
+                                <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 pl-2 pr-6 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Day (বার)</option></select>
+                                <i data-lucide="x" onclick="clearMyDaySelect('myDayVisitDaySelect')" class="w-3 h-3 absolute right-2 top-2.5 text-gray-400 hover:text-red-500 cursor-pointer hidden" id="clearMyDayDay"></i>
+                            </div>
+                            <div class="relative w-full">
+                                <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 pl-2 pr-6 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Route (রুট)</option></select>
+                                <i data-lucide="x" onclick="clearMyDaySelect('myDayRouteSelect')" class="w-3 h-3 absolute right-2 top-2.5 text-gray-400 hover:text-red-500 cursor-pointer hidden" id="clearMyDayRoute"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -636,12 +609,17 @@
 
                     <!-- ONE PAGER SUMMARY CONTAINER -->
                     <div id="onePagerContainer" class="animate-fade-in pb-1">
-                        <!-- Filters for One Pager (Town, Day, Cluster) -->
+                        <!-- Filters for One Pager (Town, Date, Day, Cluster) -->
                         <div class="bg-gray-50 border border-gray-100 p-2.5 rounded-xl shadow-sm mb-3">
-                            <div class="grid grid-cols-3 gap-2">
+                            <div class="grid grid-cols-2 gap-2 mb-2">
                                 <select id="onePagerTown" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
                                     <option value="">Town (টাউন)</option>
                                 </select>
+                                <div class="relative w-full">
+                                    <input type="date" id="onePagerDate" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors" title="Select Date to Auto-fill Day">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
                                 <select id="onePagerDay" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
                                     <option value="">Day (বার)</option>
                                 </select>
@@ -721,124 +699,218 @@
             </div>
         </div>
 
-        <!-- Admin Sidebar Overlay -->
-        <div id="adminSidebarOverlay" class="fixed inset-0 bg-black/50 z-[200] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm"></div>
-
-        <!-- Admin Sidebar Panel -->
-        <div id="adminSidebar" class="fixed top-0 right-0 h-full w-[85%] sm:w-80 bg-gray-50 z-[210] transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
-            <div class="bg-colgate text-white p-5 flex justify-between items-center shadow-md">
-                <h3 class="text-lg font-bold flex items-center tracking-wide"><i data-lucide="settings" class="w-5 h-5 mr-2"></i> অ্যাডমিন প্যানেল</h3>
-                <button id="closeAdminSidebar" class="text-white hover:text-red-200 transition-colors bg-white/20 p-1.5 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
-            </div>
-            
-            <div class="p-5 overflow-y-auto flex-grow space-y-4">
-                
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                    <button id="toggleGalleryUnlock" class="w-full flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
-                        <div class="flex items-center">
-                            <i data-lucide="image" class="w-4 h-4 text-colgate mr-2"></i>
-                            <span class="text-sm font-bold text-gray-800">গ্যালারি আপলোড আনলক</span>
-                        </div>
-                        <i data-lucide="chevron-down" id="galleryUnlockChevron" class="w-4 h-4 text-gray-400 transition-transform duration-300"></i>
-                    </button>
-                    
-                    <div id="galleryUnlockContent" class="hidden px-5 pb-5 border-t border-gray-100 mt-2 pt-4 bg-gray-50/50">
-                        <p class="text-[12px] text-gray-500 mb-3 leading-relaxed">গ্যালারি অপশন চালু করতে পিন কোড দিন।</p>
-                        <input type="password" id="adminPinInput" class="w-full bg-white border border-gray-200 rounded-xl p-2.5 text-center text-xl tracking-[0.4em] font-bold outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all mb-3" placeholder="••••">
-                        <button id="unlockFeaturesBtn" class="w-full bg-colgate text-white font-bold py-2.5 rounded-xl hover:bg-red-700 transition-all shadow-md text-[13px]">আনলক করুন</button>
-                        <p id="adminErrorMsg" class="text-red-500 text-[11px] text-center mt-2.5 hidden font-bold"><i data-lucide="alert-circle" class="inline w-3 h-3 mr-1"></i> ভুল পিন কোড!</p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                    <button id="btnOpenNewOutlet" class="w-full flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
-                        <div class="flex items-center">
-                            <i data-lucide="store" class="w-4 h-4 text-colgate mr-2"></i>
-                            <span class="text-sm font-bold text-gray-800">নতুন স্মাইল কর্ণার</span>
-                        </div>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
-                    </button>
-                </div>
-
-                <div class="bg-white p-5 rounded-2xl shadow-sm border-2 border-gray-200 border-dashed opacity-60 flex flex-col items-center justify-center text-center py-6">
-                    <div class="bg-gray-100 p-2.5 rounded-full mb-2">
-                        <i data-lucide="plus" class="w-5 h-5 text-gray-400"></i>
-                    </div>
-                    <h4 class="text-[12px] font-bold text-gray-500 mb-1">More Features Soon</h4>
-                </div>
-            </div>
-        </div>
-
-        <!-- New Outlet Entry Modal -->
-        <div id="newOutletModal" class="fixed inset-0 bg-black/60 z-[300] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
-            <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="newOutletContent">
-                <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
-                    <h3 class="text-lg font-bold text-gray-800 flex items-center"><i data-lucide="store" class="w-5 h-5 text-colgate mr-2"></i> নতুন স্মাইল কর্ণার</h3>
-                    <button id="closeNewOutletModal" class="text-gray-400 hover:text-red-500 transition-colors bg-gray-100 p-1.5 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
-                </div>
-                
-                <div class="overflow-y-auto flex-grow custom-scrollbar pr-2 space-y-4">
-                    <input type="hidden" id="newOutletDistCode">
-                    <input type="hidden" id="newOutletRouteCode">
-
-                    <div>
-                        <label class="block text-[12px] font-bold text-gray-700 mb-1">ডিস্ট্রিবিউটর নাম <span class="text-colgate">*</span></label>
-                        <select id="newOutletDistName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
-                            <option value="" disabled selected>ডিস্ট্রিবিউটর নির্বাচন করুন</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-[12px] font-bold text-gray-700 mb-1">রুট নাম <span class="text-colgate">*</span></label>
-                        <select id="newOutletRouteName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" disabled>
-                            <option value="" disabled selected>প্রথমে ডিস্ট্রিবিউটর নির্বাচন করুন</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-[12px] font-bold text-gray-700 mb-1">দোকানের নাম <span class="text-colgate">*</span></label>
-                        <input type="text" id="newOutletName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="দোকানের নাম">
-                    </div>
-
-                    <div>
-                        <label class="block text-[12px] font-bold text-gray-700 mb-1">মালিকের নাম <span class="text-colgate">*</span></label>
-                        <input type="text" id="newOutletOwner" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="মালিকের নাম লিখুন">
-                    </div>
-
-                    <div class="flex gap-3">
-                        <div class="w-1/2">
-                            <label class="block text-[12px] font-bold text-gray-700 mb-1">কন্টাক্ট নাম্বার <span class="text-colgate">*</span></label>
-                            <input type="tel" id="newOutletPhone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="১১ ডিজিট মোবাইল নং">
-                        </div>
-                        <div class="w-1/2">
-                            <label class="block text-[12px] font-bold text-gray-700 mb-1">স্ল্যাব (Slab) <span class="text-colgate">*</span></label>
-                            <select id="newOutletSlab" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
-                                <option value="" disabled selected>লোড হচ্ছে...</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-[12px] font-bold text-gray-700 mb-1">এন্ট্রি করছেন (আপনার নাম) <span class="text-colgate">*</span></label>
-                        <input type="text" id="newOutletEntryBy" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="আপনার নাম (SR / Merchandiser)">
-                    </div>
-                </div>
-                
-                <div class="pt-4 mt-2 border-t border-gray-100">
-                    <button id="submitNewOutletBtn" class="w-full bg-colgate text-white font-bold py-3.5 rounded-xl hover:bg-red-700 transition-all shadow-md flex justify-center items-center">
-                        <i data-lucide="save" class="w-4 h-4 mr-2"></i> এন্ট্রি সেভ করুন
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <!-- Footer -->
         <div class="pb-6 pt-2 flex flex-col items-center bg-white sm:rounded-b-2xl">
-            <p class="text-[11px] text-center text-gray-400 font-medium tracking-wide">কোলগেট স্মাইল কর্ণার প্রোগ্রাম &copy; ২০২৫</p>
+            <p class="text-[11px] text-center text-gray-400 font-medium tracking-wide">Colgate Smile Corner Program &copy; 2025</p>
+        </div>
+    </div>
+
+    <!-- ================= ADMIN DASHBOARD CONTAINER ================= -->
+    <div id="adminDashboardContainer" class="hidden bg-gray-50 w-full max-w-md sm:rounded-2xl sm:shadow-2xl min-h-screen sm:min-h-0 flex-col relative mx-auto overflow-hidden z-[150] animate-fade-in">
+        
+        <div class="bg-gray-900 px-5 py-5 text-center sm:rounded-t-2xl sticky top-0 z-50 shadow-md flex items-center justify-between">
+            <button onclick="logoutAdmin()" class="bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors flex items-center justify-center backdrop-blur-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            </button>
+            <h2 class="text-lg font-bold text-white tracking-wide flex items-center"><i data-lucide="shield" class="w-4 h-4 mr-2 text-red-500"></i> Admin Dashboard</h2>
+            <div class="w-8"></div>
+        </div>
+
+        <div class="p-5 overflow-y-auto flex-grow space-y-4 custom-scrollbar">
+            
+            <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+                <div class="flex justify-between items-center mb-3 pb-2 border-b border-gray-100">
+                    <h3 class="text-[13px] font-bold text-gray-800 flex items-center"><i data-lucide="activity" class="w-4 h-4 text-green-500 mr-1.5"></i> Real-time Status</h3>
+                    <span id="adminDataDate" class="text-[10px] text-gray-400 font-medium">Loading...</span>
+                </div>
+                
+                <div id="adminStatsLoader" class="flex flex-col items-center justify-center py-6"><div class="loader mb-2"></div><p class="text-[10px] text-gray-400">Syncing data...</p></div>
+
+                <div id="adminStatsContent" class="hidden grid grid-cols-2 gap-2">
+                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex flex-col items-center justify-center text-center">
+                        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wide mb-1">Total Outlets</span>
+                        <span id="adminStatTotal" class="text-xl font-extrabold text-gray-800">0</span>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded-xl border border-green-100 flex flex-col items-center justify-center text-center">
+                        <span class="text-[10px] font-bold text-green-600 uppercase tracking-wide mb-1">Total Uploads</span>
+                        <span id="adminStatUploaded" class="text-xl font-extrabold text-green-700">0</span>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-xl border border-blue-100 flex flex-col items-center justify-center text-center">
+                        <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wide mb-1">Display Outlets</span>
+                        <span id="adminStatDisplay" class="text-xl font-extrabold text-blue-700">0</span>
+                    </div>
+                    <div class="bg-orange-50 p-3 rounded-xl border border-orange-100 flex flex-col items-center justify-center text-center">
+                        <span class="text-[10px] font-bold text-orange-600 uppercase tracking-wide mb-1">Regular Outlets</span>
+                        <span id="adminStatRegular" class="text-xl font-extrabold text-orange-700">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <button id="btnAdminForceSync" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-blue-50 hover:border-blue-200 transition-all group">
+                    <div class="bg-blue-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
+                        <i data-lucide="refresh-cw" class="w-5 h-5 text-blue-600"></i>
+                    </div>
+                    <span class="text-[12px] font-bold text-gray-800">Data Refresh</span>
+                    <span class="text-[9px] text-gray-400 mt-0.5">Manual Sync</span>
+                </button>
+                
+                <button id="btnAdminNotice" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-purple-50 hover:border-purple-200 transition-all group">
+                    <div class="bg-purple-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
+                        <i data-lucide="bell-ring" class="w-5 h-5 text-purple-600"></i>
+                    </div>
+                    <span class="text-[12px] font-bold text-gray-800">Notice Board</span>
+                    <span class="text-[9px] text-gray-400 mt-0.5">Team Message</span>
+                </button>
+
+                <button id="btnAdminGallery" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center transition-all group">
+                    <div id="galleryIconBg" class="bg-gray-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
+                        <i data-lucide="image" id="galleryIcon" class="w-5 h-5 text-gray-500"></i>
+                    </div>
+                    <span class="text-[12px] font-bold text-gray-800">Gallery Access</span>
+                    <span id="galleryStatusText" class="text-[9px] font-bold text-red-500 mt-0.5">Locked</span>
+                </button>
+
+                <button id="btnAdminMap" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-emerald-50 hover:border-emerald-200 transition-all group">
+                    <div class="bg-emerald-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
+                        <i data-lucide="map" class="w-5 h-5 text-emerald-600"></i>
+                    </div>
+                    <span class="text-[12px] font-bold text-gray-800">Smile Corners Map</span>
+                </button>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-center justify-between">
+                <div>
+                    <h4 class="text-[13px] font-bold text-gray-800 flex items-center"><i data-lucide="lock" class="w-4 h-4 text-orange-500 mr-1.5"></i> Maintenance Mode</h4>
+                    <p class="text-[10px] text-gray-400 mt-0.5">Temporarily disable app</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="maintenanceToggle" class="sr-only peer">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notice Input Modal for Admin -->
+    <div id="noticeInputModal" class="fixed inset-0 bg-black/60 z-[500] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
+        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform">
+            <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center"><i data-lucide="bell" class="w-5 h-5 text-blue-500 mr-2"></i> Global Notice</h3>
+            <p class="text-[12px] text-gray-500 mb-4">The message written here will be visible to everyone when they log in.</p>
+            <textarea id="noticeTextInput" rows="4" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[13px] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all mb-4 resize-none" placeholder="Type your message here..."></textarea>
+            <div class="flex gap-3">
+                <button onclick="clearNotice()" class="flex-1 bg-gray-100 text-gray-700 font-bold py-2.5 rounded-xl hover:bg-gray-200 transition-all text-[13px]">Clear Notice</button>
+                <button onclick="saveNotice()" class="flex-1 bg-blue-600 text-white font-bold py-2.5 rounded-xl hover:bg-blue-700 transition-all shadow-md text-[13px]">Save Notice</button>
+            </div>
+            <button onclick="closeNoticeModal()" class="w-full mt-3 text-[12px] text-gray-400 font-medium hover:text-gray-600">Cancel</button>
+        </div>
+    </div>
+
+    <!-- New Outlet Entry Modal -->
+    <div id="newOutletModal" class="fixed inset-0 bg-black/60 z-[300] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="newOutletContent">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+                <h3 class="text-lg font-bold text-gray-800 flex items-center"><i data-lucide="store" class="w-5 h-5 text-colgate mr-2"></i> New Smile Corner</h3>
+                <button id="closeNewOutletModal" class="text-gray-400 hover:text-red-500 transition-colors bg-gray-100 p-1.5 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            
+            <div class="overflow-y-auto flex-grow custom-scrollbar pr-2 space-y-4">
+                <input type="hidden" id="newOutletDistCode">
+                <input type="hidden" id="newOutletRouteCode">
+
+                <div>
+                    <label class="block text-[12px] font-bold text-gray-700 mb-1">Distributor Name <span class="text-colgate">*</span></label>
+                    <select id="newOutletDistName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
+                        <option value="" disabled selected>Select Distributor</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[12px] font-bold text-gray-700 mb-1">Route Name <span class="text-colgate">*</span></label>
+                    <select id="newOutletRouteName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" disabled>
+                        <option value="" disabled selected>Select Distributor First</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[12px] font-bold text-gray-700 mb-1">Shop Name <span class="text-colgate">*</span></label>
+                    <input type="text" id="newOutletName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="Enter Shop Name">
+                </div>
+
+                <div>
+                    <label class="block text-[12px] font-bold text-gray-700 mb-1">Owner Name <span class="text-colgate">*</span></label>
+                    <input type="text" id="newOutletOwner" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="Enter Owner Name">
+                </div>
+
+                <div class="flex gap-3">
+                    <div class="w-1/2">
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">Contact Number <span class="text-colgate">*</span></label>
+                        <input type="tel" id="newOutletPhone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="11 Digit Mobile No">
+                    </div>
+                    <div class="w-1/2">
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">Slab <span class="text-colgate">*</span></label>
+                        <select id="newOutletSlab" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
+                            <option value="" disabled selected>Loading...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[12px] font-bold text-gray-700 mb-1">Entered By (Your Name) <span class="text-colgate">*</span></label>
+                    <input type="text" id="newOutletEntryBy" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="Your Name (SR / Merch)">
+                </div>
+            </div>
+            
+            <div class="pt-4 mt-2 border-t border-gray-100">
+                <button id="submitNewOutletBtn" class="w-full bg-colgate text-white font-bold py-3.5 rounded-xl hover:bg-red-700 transition-all shadow-md flex justify-center items-center">
+                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Save Entry
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= ADMIN MAP CONTAINER ================= -->
+    <div id="adminMapContainer" class="hidden bg-gray-50 w-full max-w-md sm:rounded-2xl sm:shadow-2xl h-screen sm:h-[90vh] flex-col relative mx-auto overflow-hidden z-[160] animate-fade-in">
+        
+        <div class="bg-gray-900 px-4 py-4 text-center sm:rounded-t-2xl shadow-md flex items-center justify-between shrink-0 z-50">
+            <button onclick="closeAdminMap()" class="bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors flex items-center justify-center backdrop-blur-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            </button>
+            <h2 class="text-[15px] font-bold text-white tracking-wide flex items-center">
+                <i data-lucide="map-pin" class="w-4 h-4 mr-1.5 text-red-500"></i> Map View
+            </h2>
+            <div class="w-8"></div>
+        </div>
+
+        <div class="bg-white p-3 border-b border-gray-200 shrink-0 z-40 shadow-sm flex flex-col gap-2">
+            <div class="grid grid-cols-3 gap-2">
+                <select id="mapFilterMerch" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] outline-none font-bold text-gray-700">
+                    <option value="">All Merchandisers</option>
+                </select>
+                <select id="mapFilterTown" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] outline-none font-bold text-gray-700">
+                    <option value="">All Towns</option>
+                </select>
+                <select id="mapFilterRoute" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] outline-none font-bold text-gray-700">
+                    <option value="">All Routes</option>
+                </select>
+            </div>
+            <div class="flex justify-between items-center px-1 mt-1">
+                <span id="mapCountDisplay" class="text-[11px] font-extrabold text-colgate">0 Outlets Found</span>
+                <span id="mapDistanceDisplay" class="text-[11px] font-extrabold text-blue-600 hidden bg-blue-50 px-2 py-0.5 rounded border border-blue-100">0.0 km</span>
+                <div id="mapLoader" class="hidden items-center gap-1.5 text-[10px] text-gray-500 font-bold">
+                    <div class="loader !w-3 !h-3 !border-[2px]"></div> Loading...
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-grow relative z-10 w-full bg-gray-200">
+            <div id="adminMap" class="w-full h-full"></div>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script>
         // Security logic
         document.addEventListener('contextmenu', event => event.preventDefault());
@@ -854,7 +926,7 @@
 
         lucide.createIcons();
 
-        // Custom Modal Logic to replace window.alert and window.confirm
+        // Custom Modal Logic
         window.showAlert = (msg) => {
             document.getElementById('customAlertMsg').textContent = msg;
             const modal = document.getElementById('customAlert');
@@ -888,12 +960,14 @@
             }, 300);
         };
 
-        // Replace native alerts for convenience in codebase
         window.alert = window.showAlert;
 
+        // ===============================================
         // Constants
+        // ===============================================
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkLhnjgv9VdgHoO1BscC5hKQJJk-0uEFsL4YSQo7GAgdGvK4eZt6OkNvbFEYaLv1Ih/exec';
         const NEW_OUTLET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxvNoIajBiG8BQdSDpRorTzqk0AgK7vOr7o_INMJ03aJVJ-aBHN8BB3xKKqrXkNbTBm/exec';
+        const LOCATION_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwu8lVlJwbm2BpxgLFAB_AhsLQpVY4eoxdeQubPRUUQQ3B6dKf7I4ELV7jr-b18IRHc/exec';
         const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; 
         const REPORT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYcd2eba30rLXPA3OHxVcHYKVpUK9RweS5WD7g-IFM46AUsI6zSu6YESkPxmbg9xyj4gs7UUgL13a/pub?gid=857310602&single=true&output=csv';
 
@@ -905,10 +979,77 @@
         let stream = null;
         let capturedImageData = null;
         let finalLocationName = "Location Unknown";
+        let globalLatitude = "Not Found";
+        let globalLongitude = "Not Found";
         let isLocationAcquired = false;
         let currentFacingMode = 'environment';
         let detailedReportData = [];
         let isDetailedReportLoaded = false;
+
+        // ==========================================
+        // ENHANCED GPS LOCATION LOGIC
+        // ==========================================
+        function getGPSLocation() {
+            return new Promise((resolve) => {
+                if (!navigator.geolocation) {
+                    globalLatitude = "No GPS Support";
+                    globalLongitude = "No GPS Support";
+                    finalLocationName = "No GPS Support";
+                    isLocationAcquired = false;
+                    resolve(false);
+                    return;
+                }
+
+                const locBadge = document.getElementById('cameraLocationBadge');
+                if (locBadge) locBadge.textContent = "লোকেশন খোঁজা হচ্ছে...";
+
+                navigator.geolocation.getCurrentPosition(
+                    (p) => {
+                        globalLatitude = p.coords.latitude.toFixed(6);
+                        globalLongitude = p.coords.longitude.toFixed(6);
+                        finalLocationName = `${globalLatitude}, ${globalLongitude}`;
+                        if (locBadge) locBadge.textContent = finalLocationName;
+                        isLocationAcquired = true;
+                        resolve(true);
+                    },
+                    (error) => {
+                        console.warn("High Accuracy GPS failed, trying Network/Tower location...", error);
+                        navigator.geolocation.getCurrentPosition(
+                            (p2) => {
+                                globalLatitude = p2.coords.latitude.toFixed(6);
+                                globalLongitude = p2.coords.longitude.toFixed(6);
+                                finalLocationName = `${globalLatitude}, ${globalLongitude}`;
+                                if (locBadge) locBadge.textContent = finalLocationName;
+                                isLocationAcquired = true;
+                                resolve(true);
+                            },
+                            (err2) => {
+                                globalLatitude = "GPS Off / Denied";
+                                globalLongitude = "GPS Off / Denied";
+                                finalLocationName = "GPS Off / Denied";
+                                if (locBadge) locBadge.textContent = "GPS Off / Denied";
+                                isLocationAcquired = false;
+                                resolve(false);
+                            },
+                            { enableHighAccuracy: false, timeout: 8000, maximumAge: 0 }
+                        );
+                    },
+                    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+                );
+            });
+        }
+
+        function initLocationFetch() {
+            getGPSLocation();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => { 
+            checkRole(); 
+            getGPSLocation();
+            if (localStorage.getItem('colgate_gallery_unlocked') === 'true') {
+                document.getElementById('manualUploadBtn')?.classList.remove('hidden');
+            }
+        });
 
         // ==========================================
         // GLOBAL FILTER HELPERS
@@ -928,7 +1069,7 @@
         }
 
         // ==========================================
-        // TIME FETCHING LOGIC (FROM GOOGLE SHEET)
+        // TIME FETCHING LOGIC
         // ==========================================
         function getMerchTimes() {
             let startStr = '--:--';
@@ -1002,43 +1143,31 @@
             if (dateDisplay) {
                 dateDisplay.textContent = new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
             }
-            
-            const times = getMerchTimes();
-            const startEl = document.getElementById('statStartTime');
-            const endEl = document.getElementById('statEndTime');
-            const totalEl = document.getElementById('statTotalTime');
-            
-            if (startEl) startEl.textContent = times.startStr;
-            if (endEl) endEl.textContent = times.endStr;
-            if (totalEl) totalEl.textContent = times.totalStr;
+            // Performance stats were removed from My Day UI, but keeping this function intact to not break reports/others.
         };
 
         // ==========================================
         // ROLE MANAGEMENT
         // ==========================================
-        window.addEventListener('DOMContentLoaded', () => { checkRole(); });
-
-        function populateMonthDropdown() {
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            const d = new Date();
-            const currentMonth = monthNames[d.getMonth()];
-            const prevMonth = monthNames[d.getMonth() === 0 ? 11 : d.getMonth() - 1];
-
-            const formMonth = document.getElementById('formMonth');
-            if (formMonth) {
-                formMonth.innerHTML = `
-                    <option value="${currentMonth}" selected>${currentMonth}</option>
-                    <option value="${prevMonth}">${prevMonth}</option>
-                `;
-            }
-        }
-
         function checkRole() {
-            populateMonthDropdown();
-            
+            const maintenance = localStorage.getItem('app_maintenance');
+            if (maintenance === 'true' && localStorage.getItem('colgate_app_role') !== 'admin') {
+                document.body.innerHTML = `<div class="flex flex-col items-center justify-center h-screen bg-white text-center p-6"><i data-lucide="settings" class="w-16 h-16 text-orange-500 mb-4 animate-spin"></i><h2 class="text-xl font-bold text-gray-800 mb-2">System Maintenance</h2><p class="text-gray-500 text-[13px]">অ্যাপটিতে বর্তমানে আপডেটের কাজ চলছে। দয়া করে কিছুক্ষণ পর আবার চেষ্টা করুন।</p></div>`;
+                lucide.createIcons();
+                return;
+            }
+
+            const notice = localStorage.getItem('global_notice');
+            const noticeSeen = sessionStorage.getItem('notice_seen');
+            if (notice && !noticeSeen) {
+                window.showAlert("নোটিশ:\n" + notice);
+                sessionStorage.setItem('notice_seen', 'true');
+            }
+
             const role = localStorage.getItem('colgate_app_role');
             const roleSelection = document.getElementById('roleSelectionContainer');
             const mainApp = document.getElementById('mainAppContainer');
+            const adminDash = document.getElementById('adminDashboardContainer');
             const tabsContainer = document.getElementById('tabsContainer');
 
             if (!role) {
@@ -1046,13 +1175,33 @@
                 roleSelection.classList.add('flex');
                 mainApp.classList.add('hidden');
                 mainApp.classList.remove('flex');
+                if (adminDash) {
+                    adminDash.classList.add('hidden');
+                    adminDash.classList.remove('flex');
+                }
                 return;
             }
 
             roleSelection.classList.add('hidden');
             roleSelection.classList.remove('flex');
-            mainApp.classList.remove('hidden');
-            mainApp.classList.add('flex');
+
+            if (role === 'admin') {
+                mainApp.classList.add('hidden');
+                mainApp.classList.remove('flex');
+                if (adminDash) {
+                    adminDash.classList.remove('hidden');
+                    adminDash.classList.add('flex');
+                    loadAdminDashboard();
+                }
+                return;
+            } else {
+                if (adminDash) {
+                    adminDash.classList.add('hidden');
+                    adminDash.classList.remove('flex');
+                }
+                mainApp.classList.remove('hidden');
+                mainApp.classList.add('flex');
+            }
 
             if (role === 'merchandiser') {
                 const merchName = localStorage.getItem('colgate_app_merch_name');
@@ -1086,7 +1235,6 @@
             } else {
                 populateDropdowns(); 
                 initOnePagerFilters();
-                
                 if (document.getElementById('myDayView') && !document.getElementById('myDayView').classList.contains('hidden')) {
                     renderMyDayPJP();
                 }
@@ -1124,9 +1272,32 @@
                 select.classList.remove('hidden');
             }
 
-            const merchs = [...new Set(pjpData.map(i => i.merchandiser))].filter(Boolean).sort();
+            // Enhanced Merchandiser Grouping by Type & Territory (A-Z sorted)
+            const merchMap = new Map();
+            pjpData.forEach(p => {
+                if (p.merchandiser) {
+                    merchMap.set(p.merchandiser, {
+                        type: p.outletType || 'SMT',
+                        territory: p.territory || 'Unknown'
+                    });
+                }
+            });
+
+            const sortedMerchs = Array.from(merchMap.keys()).sort();
+            let dccHtml = '', robHtml = '', smtHtml = '';
+
+            sortedMerchs.forEach(m => {
+                const info = merchMap.get(m);
+                const opt = `<option value="${m}">${m} • ${info.territory}</option>`;
+                if (info.type.toUpperCase() === 'DCC') dccHtml += opt;
+                else if (info.type.toUpperCase() === 'ROB') robHtml += opt;
+                else smtHtml += opt;
+            });
+
             select.innerHTML = '<option value="" disabled selected>আপনার নাম খুঁজুন...</option>' + 
-                               merchs.map(m => `<option value="${m}">${m}</option>`).join('');
+                               (dccHtml ? `<optgroup label="DCC Team">${dccHtml}</optgroup>` : '') +
+                               (robHtml ? `<optgroup label="ROB Team">${robHtml}</optgroup>` : '') +
+                               (smtHtml ? `<optgroup label="Other Teams (SMT)">${smtHtml}</optgroup>` : '');
         });
 
         document.getElementById('modalMerchSelect')?.addEventListener('change', (e) => {
@@ -1145,7 +1316,7 @@
         });
 
         window.logoutRole = () => {
-            window.showConfirm("আপনি কি নিশ্চিত যে আপনি লগআউট করতে চান?", (confirmed) => {
+            window.showConfirm("Are you sure you want to logout?", (confirmed) => {
                 if (confirmed) {
                     localStorage.removeItem('colgate_app_role');
                     localStorage.removeItem('colgate_app_merch_name');
@@ -1153,6 +1324,21 @@
                 }
             });
         };
+
+        function populateMonthDropdown() {
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const d = new Date();
+            const currentMonth = monthNames[d.getMonth()];
+            const prevMonth = monthNames[d.getMonth() === 0 ? 11 : d.getMonth() - 1];
+
+            const formMonth = document.getElementById('formMonth');
+            if (formMonth) {
+                formMonth.innerHTML = `
+                    <option value="${currentMonth}" selected>${currentMonth}</option>
+                    <option value="${prevMonth}">${prevMonth}</option>
+                `;
+            }
+        }
 
         // ==========================================
         // DATA LOADING & PARSING
@@ -1204,8 +1390,9 @@
                 }
 
                 const pjpRows = await fetchSheetData('PJP');
-                pjpData = pjpRows.map(row => {
+                pjpData = pjpRows.map((row, idx) => {
                     const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
+                    
                     return {
                         region: getVal(0),        // A
                         zone: getVal(1),          // B
@@ -1239,21 +1426,26 @@
 
                 isDataLoaded = true;
                 
-                populateDropdowns();
-                initOnePagerFilters();
-                
-                const myDayView = document.getElementById('myDayView');
-                if (myDayView && !myDayView.classList.contains('hidden')) {
-                    renderMyDayPJP();
+                const role = localStorage.getItem('colgate_app_role');
+                if (role === 'admin') {
+                    updateAdminStats();
+                } else {
+                    populateDropdowns();
+                    initOnePagerFilters();
+                    
+                    const myDayView = document.getElementById('myDayView');
+                    if (myDayView && !myDayView.classList.contains('hidden')) {
+                        renderMyDayPJP();
+                    }
                 }
                 
                 window.updateTimeUI();
                 
                 if (loader) loader.classList.add('hidden');
-            } catch (error) {
-                console.error("Data loading error:", error);
-                window.showAlert("ডেটা লোড করতে সমস্যা হয়েছে। দয়া করে ইন্টারনেট কানেকশন চেক করুন।");
-                if (loader) loader.classList.add('hidden');
+            } catch (error) { 
+                console.error("Data loading error:", error); 
+                window.showAlert("There was a problem loading data. Please check your internet connection."); 
+                if (loader) loader.classList.add('hidden'); 
             }
         }
 
@@ -1329,7 +1521,7 @@
                 }
             }
 
-            // My Day Region Init
+            // My Day Town Init (No Region Filter)
             const myDaySelectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
             const myDayTownSelect = document.getElementById('myDayTownSelect');
             
@@ -1540,6 +1732,14 @@
         // ==========================================
         // MY DAY LOGIC
         // ==========================================
+        window.clearMyDaySelect = (selectId) => {
+            const selectEl = document.getElementById(selectId);
+            if(selectEl) {
+                selectEl.value = "";
+                selectEl.dispatchEvent(new Event('change'));
+            }
+        };
+
         const myDayTypeRadios = document.getElementsByName('myday_outlet_type');
         for (let r of myDayTypeRadios) {
             r.addEventListener('change', () => {
@@ -1558,16 +1758,24 @@
                 document.getElementById('myDayRouteSelect').classList.add('bg-gray-100', 'text-gray-500');
                 document.getElementById('myDayRouteSelect').classList.remove('bg-white', 'text-gray-700');
                 
-                document.getElementById('myDayPjpContainer').classList.add('hidden');
-                document.getElementById('myDayPjpList').innerHTML = '';
+                document.getElementById('clearMyDayTown').classList.add('hidden');
+                document.getElementById('clearMyDayDay').classList.add('hidden');
+                document.getElementById('clearMyDayRoute').classList.add('hidden');
+
+                calculateMyDayStats();
+                renderMyDayPJP();
             });
         }
 
         document.getElementById('myDayTownSelect')?.addEventListener('change', (e) => {
             const town = e.target.value;
+            document.getElementById('clearMyDayTown').classList.toggle('hidden', !town);
+            
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
             
-            let filteredPjp = getFilteredPJP().filter(i => i.townName === town);
+            let filteredPjp = getFilteredPJP();
+            if(town) filteredPjp = filteredPjp.filter(i => i.townName === town);
+            
             if (selectedType && selectedType !== 'ALL') {
                 filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
@@ -1581,6 +1789,8 @@
                 daySelect.disabled = days.length === 0;
                 daySelect.classList.remove('bg-gray-100', 'text-gray-500');
                 daySelect.classList.add('bg-white', 'text-gray-700');
+                daySelect.value = "";
+                document.getElementById('clearMyDayDay').classList.add('hidden');
             }
             
             const routeSelect = document.getElementById('myDayRouteSelect');
@@ -1589,20 +1799,24 @@
                 routeSelect.disabled = true;
                 routeSelect.classList.add('bg-gray-100', 'text-gray-500');
                 routeSelect.classList.remove('bg-white', 'text-gray-700');
+                document.getElementById('clearMyDayRoute').classList.add('hidden');
             }
             
-            const container = document.getElementById('myDayPjpContainer');
-            if (container) container.classList.add('hidden');
-            const list = document.getElementById('myDayPjpList');
-            if (list) list.innerHTML = '';
+            calculateMyDayStats();
+            renderMyDayPJP();
         });
 
-        document.getElementById('myDayVisitDaySelect')?.addEventListener('change', () => {
+        document.getElementById('myDayVisitDaySelect')?.addEventListener('change', (e) => {
             const town = document.getElementById('myDayTownSelect').value;
-            const day = document.getElementById('myDayVisitDaySelect').value;
+            const day = e.target.value;
+            document.getElementById('clearMyDayDay').classList.toggle('hidden', !day);
+
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
             
-            let filteredPjp = getFilteredPJP().filter(i => i.townName === town && i.visitDay === day);
+            let filteredPjp = getFilteredPJP();
+            if (town) filteredPjp = filteredPjp.filter(i => i.townName === town);
+            if (day) filteredPjp = filteredPjp.filter(i => i.visitDay === day);
+            
             if (selectedType && selectedType !== 'ALL') {
                 filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
@@ -1616,27 +1830,70 @@
                 routeSelect.disabled = routes.length === 0;
                 routeSelect.classList.remove('bg-gray-100', 'text-gray-500');
                 routeSelect.classList.add('bg-white', 'text-gray-700');
+                routeSelect.value = "";
+                document.getElementById('clearMyDayRoute').classList.add('hidden');
             }
             
-            const container = document.getElementById('myDayPjpContainer');
-            if (container) container.classList.add('hidden');
-            const list = document.getElementById('myDayPjpList');
-            if (list) list.innerHTML = '';
+            calculateMyDayStats();
+            renderMyDayPJP();
         });
 
-        document.getElementById('myDayRouteSelect')?.addEventListener('change', renderMyDayPJP);
+        document.getElementById('myDayRouteSelect')?.addEventListener('change', (e) => {
+            document.getElementById('clearMyDayRoute').classList.toggle('hidden', !e.target.value);
+            calculateMyDayStats();
+            renderMyDayPJP();
+        });
 
-        function renderMyDayPJP() {
+        function calculateMyDayStats() {
             window.updateTimeUI();
             
             const town = document.getElementById('myDayTownSelect')?.value;
             const day = document.getElementById('myDayVisitDaySelect')?.value;
             const route = document.getElementById('myDayRouteSelect')?.value;
-            if (!town || !day || !route) return;
-
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
 
-            let outlets = getFilteredPJP().filter(i => i.townName === town && i.visitDay === day && i.routeName === route);
+            let outlets = getFilteredPJP();
+            if (town) outlets = outlets.filter(i => i.townName === town);
+            if (day) outlets = outlets.filter(i => i.visitDay === day);
+            if (route) outlets = outlets.filter(i => i.routeName === route);
+            
+            if (selectedType && selectedType !== 'ALL') {
+                outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+
+            const session = JSON.parse(localStorage.getItem('colgate_merch_session')) || {};
+            const todayStr = new Date().toDateString();
+            const localSubmitted = (session.date === todayStr && Array.isArray(session.submittedCodes)) ? session.submittedCodes : [];
+
+            let completedCount = 0;
+            outlets.forEach(out => {
+                const outCode = (out.code || "").toUpperCase().trim();
+                const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
+                if ((reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode)) {
+                    completedCount++;
+                }
+            });
+
+            const totalCountEl = document.getElementById('pjpTotalCount');
+            if (totalCountEl) totalCountEl.textContent = outlets.length;
+            
+            const uploadedCountEl = document.getElementById('pjpUploadedCount');
+            if (uploadedCountEl) uploadedCountEl.textContent = completedCount;
+            
+            const remainingCountEl = document.getElementById('pjpRemainingCount');
+            if (remainingCountEl) remainingCountEl.textContent = outlets.length - completedCount;
+        }
+
+        function renderMyDayPJP() {
+            const town = document.getElementById('myDayTownSelect')?.value;
+            const day = document.getElementById('myDayVisitDaySelect')?.value;
+            const route = document.getElementById('myDayRouteSelect')?.value;
+            const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
+
+            let outlets = getFilteredPJP();
+            if (town) outlets = outlets.filter(i => i.townName === town);
+            if (day) outlets = outlets.filter(i => i.visitDay === day);
+            if (route) outlets = outlets.filter(i => i.routeName === route);
             
             if (selectedType && selectedType !== 'ALL') {
                 outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
@@ -1650,19 +1907,22 @@
             if (pjpContainer) pjpContainer.classList.remove('hidden');
             
             const routeLabel = document.getElementById('myDaySelectedRouteLabel');
-            if (routeLabel) routeLabel.textContent = route;
+            if (routeLabel) {
+                if (route) routeLabel.textContent = route;
+                else if (day) routeLabel.textContent = "All Routes for " + day;
+                else if (town) routeLabel.textContent = "All Routes for " + town;
+                else routeLabel.textContent = "All Routes";
+            }
 
-            let html = '', completedCount = 0, displayCount = 0, regularCount = 0;
+            let html = '', displayCount = 0, regularCount = 0;
             
             if (outlets.length === 0) {
-                html = `<div class="text-center py-4 text-gray-500 text-[12px] font-bold">এই টাইপের কোনো আউটলেট পাওয়া যায়নি।</div>`;
+                html = `<div class="text-center py-4 text-gray-500 text-[12px] font-bold">এই ফিল্টারে কোনো আউটলেট পাওয়া যায়নি।</div>`;
             } else {
                 outlets.forEach(out => {
                     const outCode = (out.code || "").toUpperCase().trim();
                     const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
                     const isCompleted = (reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode);
-                    
-                    if (isCompleted) completedCount++;
                     
                     const statusStr = (out.status || "").toLowerCase();
                     if (statusStr.includes('regular')) regularCount++; else displayCount++;
@@ -1695,17 +1955,8 @@
                 });
             }
 
-            const pjpList = document.getElementById('myDayPjpList');
-            if (pjpList) pjpList.innerHTML = html;
-            
-            const totalCountEl = document.getElementById('pjpTotalCount');
-            if (totalCountEl) totalCountEl.textContent = outlets.length;
-            
-            const uploadedCountEl = document.getElementById('pjpUploadedCount');
-            if (uploadedCountEl) uploadedCountEl.textContent = completedCount;
-            
-            const remainingCountEl = document.getElementById('pjpRemainingCount');
-            if (remainingCountEl) remainingCountEl.textContent = outlets.length - completedCount;
+            const pjpListEl = document.getElementById('myDayPjpList');
+            if (pjpListEl) pjpListEl.innerHTML = html;
             
             const displayCountEl = document.getElementById('myDayDisplayCount');
             if (displayCountEl) displayCountEl.textContent = displayCount;
@@ -1801,10 +2052,15 @@
         };
 
         // ==========================================
-        // REPORT LOGIC (ONE PAGER & DETAILED)
+        // REPORT LOGIC
         // ==========================================
         function initOnePagerFilters() {
             let filtered = getFilteredPJP();
+            
+            const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
+            if (selectedType && selectedType !== 'ALL') {
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
             
             const townSel = document.getElementById('onePagerTown');
             if (townSel) {
@@ -1820,36 +2076,76 @@
                     townSel.value = towns[0]; 
                     townSel.dispatchEvent(new Event('change'));
                 } else {
+                    const daySel = document.getElementById('onePagerDay');
+                    if (daySel) { daySel.innerHTML = '<option value="">Day (বার)</option>'; daySel.disabled = true; }
+                    const clusterSel = document.getElementById('onePagerCluster');
+                    if (clusterSel) { clusterSel.innerHTML = '<option value="">Cluster</option>'; clusterSel.disabled = true; }
                     renderOnePagerReport();
                 }
             }
         }
 
+        document.getElementById('onePagerDate')?.addEventListener('change', (e) => {
+            const dateVal = e.target.value;
+            const daySel = document.getElementById('onePagerDay');
+            
+            if (dateVal) {
+                const dayIndex = new Date(dateVal).getDay();
+                const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                const mappedDay = daysOfWeek[dayIndex];
+                
+                if (daySel && Array.from(daySel.options).some(opt => opt.value === mappedDay)) {
+                    daySel.value = mappedDay;
+                    daySel.dispatchEvent(new Event('change'));
+                } else if (daySel) {
+                    daySel.value = "";
+                    daySel.dispatchEvent(new Event('change'));
+                }
+            } else if(daySel) {
+                daySel.value = "";
+                daySel.dispatchEvent(new Event('change'));
+            }
+        });
+
         document.getElementById('onePagerTown')?.addEventListener('change', (e) => {
             const town = e.target.value;
             let filtered = getFilteredPJP().filter(i => i.townName === town);
+            
+            const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
+            if (selectedType && selectedType !== 'ALL') {
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
             
             const daySel = document.getElementById('onePagerDay');
             const days = [...new Set(filtered.map(i => i.visitDay))].filter(Boolean).sort();
             
             if (daySel) {
+                const prevDay = daySel.value;
                 daySel.innerHTML = '<option value="">All Days</option>' + days.map(d => `<option value="${d}">${d}</option>`).join('');
                 daySel.disabled = days.length === 0;
                 daySel.classList.toggle('bg-gray-100', days.length === 0);
                 daySel.classList.toggle('bg-white', days.length > 0);
                 daySel.classList.toggle('text-gray-500', days.length === 0);
                 daySel.classList.toggle('text-gray-700', days.length > 0);
+                
+                if (days.includes(prevDay)) daySel.value = prevDay;
+                else daySel.value = "";
             }
             
             const clusterSel = document.getElementById('onePagerCluster');
             const clusters = [...new Set(filtered.map(i => i.clusterName))].filter(Boolean).sort();
+            
             if (clusterSel) {
+                const prevCluster = clusterSel.value;
                 clusterSel.innerHTML = '<option value="">All Clusters</option>' + clusters.map(c => `<option value="${c}">${c}</option>`).join('');
                 clusterSel.disabled = clusters.length === 0;
                 clusterSel.classList.toggle('bg-gray-100', clusters.length === 0);
                 clusterSel.classList.toggle('bg-white', clusters.length > 0);
                 clusterSel.classList.toggle('text-gray-500', clusters.length === 0);
                 clusterSel.classList.toggle('text-gray-700', clusters.length > 0);
+                
+                if (clusters.includes(prevCluster)) clusterSel.value = prevCluster;
+                else clusterSel.value = "";
             }
 
             renderOnePagerReport();
@@ -1862,8 +2158,14 @@
             let filtered = getFilteredPJP().filter(i => i.townName === town);
             if (day) filtered = filtered.filter(i => i.visitDay === day);
             
+            const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
+            if (selectedType && selectedType !== 'ALL') {
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+            
             const clusterSel = document.getElementById('onePagerCluster');
             if (clusterSel) {
+                const prevCluster = clusterSel.value;
                 const clusters = [...new Set(filtered.map(i => i.clusterName))].filter(Boolean).sort();
                 clusterSel.innerHTML = '<option value="">All Clusters</option>' + clusters.map(c => `<option value="${c}">${c}</option>`).join('');
                 clusterSel.disabled = clusters.length === 0;
@@ -1871,6 +2173,9 @@
                 clusterSel.classList.toggle('bg-white', clusters.length > 0);
                 clusterSel.classList.toggle('text-gray-500', clusters.length === 0);
                 clusterSel.classList.toggle('text-gray-700', clusters.length > 0);
+                
+                if (clusters.includes(prevCluster)) clusterSel.value = prevCluster;
+                else clusterSel.value = "";
             }
             
             renderOnePagerReport();
@@ -1895,6 +2200,7 @@
 
             const savedMerch = localStorage.getItem('colgate_app_merch_name');
             const town = document.getElementById('onePagerTown')?.value;
+            const dateVal = document.getElementById('onePagerDate')?.value;
             const dayVal = document.getElementById('onePagerDay')?.value;
             const cluster = document.getElementById('onePagerCluster')?.value;
             const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
@@ -1904,6 +2210,7 @@
             }
             
             const detailsStr = [];
+            if (dateVal) detailsStr.push(`Date: ${new Date(dateVal).toLocaleDateString('en-GB')}`);
             if (dayVal) detailsStr.push(`Day: ${dayVal}`);
             if (town) detailsStr.push(`Town: ${town}`);
             if (cluster) detailsStr.push(`Cluster: ${cluster}`);
@@ -1961,39 +2268,8 @@
             const displayPct = calcPct(displayVisited, displayCount);
             const regularPct = calcPct(regularVisited, regularCount);
             
-            let dateStr = new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
-            
-            const times = getMerchTimes();
-            let startTimeStr = times.startStr;
-            let endTimeStr = times.endStr;
-            let totalTimeStr = times.totalStr;
-
             content.innerHTML = `
                 <div class="px-5 pt-6 pb-6 bg-white">
-                    <div class="mb-6">
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="text-gray-800 font-extrabold text-[15px] flex items-center"><i data-lucide="activity" class="h-5 w-5 mr-1.5 text-colgate"></i> আজকের পারফরম্যান্স</h3>
-                            <p class="text-colgate text-[12px] font-bold">${dateStr}</p>
-                        </div>
-                        <div class="grid grid-cols-3 gap-3 text-center">
-                            <div class="bg-gray-50 py-2.5 px-2 rounded-2xl border border-gray-100 flex flex-col items-center justify-center">
-                                <i data-lucide="play-circle" class="h-5 w-5 text-green-500 mb-1.5"></i>
-                                <span class="text-[14px] font-black text-gray-800 tracking-tight">${startTimeStr}</span>
-                                <span class="text-gray-400 text-[10px] font-bold mt-1">শুরু</span>
-                            </div>
-                            <div class="bg-gray-50 py-2.5 px-2 rounded-2xl border border-gray-100 flex flex-col items-center justify-center">
-                                <i data-lucide="stop-circle" class="h-5 w-5 text-orange-500 mb-1.5"></i>
-                                <span class="text-[14px] font-black text-gray-800 tracking-tight">${endTimeStr}</span>
-                                <span class="text-gray-400 text-[10px] font-bold mt-1">শেষ</span>
-                            </div>
-                            <div class="bg-gray-50 py-2.5 px-2 rounded-2xl border border-gray-100 flex flex-col items-center justify-center">
-                                <i data-lucide="hourglass" class="h-5 w-5 text-purple-500 mb-1.5"></i>
-                                <span class="text-[14px] font-black text-gray-800 tracking-tight">${totalTimeStr}</span>
-                                <span class="text-gray-400 text-[10px] font-bold mt-1">মোট সময়</span>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="space-y-4">
                         <div class="bg-gray-50 rounded-2xl p-4 flex items-center justify-between relative overflow-hidden border border-gray-100">
                             <div class="w-[28%] border-r border-gray-200 pr-2 flex flex-col justify-center">
@@ -2072,7 +2348,10 @@
                             eligible: row[13],
                             imgUpload: row[14],
                             imgUploadCount: row[15],
-                            payout: row[16]
+                            payout: row[16],
+                            startTime: row[17] ? row[17].trim() : '',
+                            endTime: row[18] ? row[18].trim() : '',
+                            totalTime: row[19] ? row[19].trim() : ''
                         });
                     }
                 }
@@ -2117,13 +2396,8 @@
                 document.getElementById('reportRouteSelect').classList.add('bg-gray-100', 'text-gray-500');
                 document.getElementById('reportRouteSelect').classList.remove('bg-white', 'text-gray-700');
                 
-                document.getElementById('reportCountDisplay').classList.add('hidden');
-                document.getElementById('reportList').innerHTML = `
-                    <div class="flex flex-col items-center justify-center py-10 opacity-70">
-                        <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
-                        <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে Region এবং DB নির্বাচন করুন</p>
-                    </div>`;
-                lucide.createIcons();
+                renderDetailedReport();
+                initOnePagerFilters();
             });
         }
 
@@ -2132,7 +2406,8 @@
             const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
             const dbSelect = document.getElementById('reportDbNameSelect');
             
-            let filteredReport = detailedReportData.filter(d => d.zone === region);
+            let filteredReport = detailedReportData;
+            if(region) filteredReport = filteredReport.filter(d => d.zone === region);
             
             if (selectedType && selectedType !== 'ALL') {
                 const activeData = getFilteredPJP();
@@ -2158,13 +2433,7 @@
                 routeSelect.classList.remove('bg-white', 'text-gray-700');
             }
 
-            document.getElementById('reportCountDisplay').classList.add('hidden');
-            document.getElementById('reportList').innerHTML = `
-                <div class="flex flex-col items-center justify-center py-10 opacity-70">
-                    <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
-                    <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে DB নির্বাচন করুন</p>
-                </div>`;
-            lucide.createIcons();
+            renderDetailedReport();
         });
 
         document.getElementById('reportDbNameSelect')?.addEventListener('change', (e) => {
@@ -2172,16 +2441,10 @@
             const region = document.getElementById('reportRegionSelect').value;
             const routeSelect = document.getElementById('reportRouteSelect');
             
-            if(!dbName) {
-                if(routeSelect) {
-                    routeSelect.innerHTML = '<option value="">রুট নির্বাচন করুন</option>';
-                    routeSelect.disabled = true;
-                }
-                return;
-            }
-
             const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
-            let filteredReport = detailedReportData.filter(d => d.dhName === dbName && d.zone === region);
+            let filteredReport = detailedReportData;
+            if(region) filteredReport = filteredReport.filter(d => d.zone === region);
+            if(dbName) filteredReport = filteredReport.filter(d => d.dhName === dbName);
             
             if (selectedType && selectedType !== 'ALL') {
                 const activeData = getFilteredPJP();
@@ -2219,29 +2482,16 @@
             const dbName = dbNameSelect ? dbNameSelect.value : '';
             const route = routeSelect ? routeSelect.value : '';
 
-            if (!dbName || !region) {
-                countDisplay.classList.add('hidden');
-                list.innerHTML = `
-                    <div class="flex flex-col items-center justify-center py-10 opacity-70">
-                        <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
-                        <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে Region এবং DB Name নির্বাচন করুন</p>
-                    </div>`;
-                lucide.createIcons();
-                return;
-            }
-            
-            let filtered = detailedReportData.filter(d => d.dhName === dbName && d.zone === region);
-            if (route) {
-                filtered = filtered.filter(d => d.route === route);
-            }
+            // Progressive filter
+            let filtered = detailedReportData;
+            if (region) filtered = filtered.filter(d => d.zone === region);
+            if (dbName) filtered = filtered.filter(d => d.dhName === dbName);
+            if (route) filtered = filtered.filter(d => d.route === route);
 
-            // --- REPORT OUTLET TYPE FILTER ---
             const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
-
             if (selectedType && selectedType !== 'ALL') {
                 const activeData = getFilteredPJP();
                 filtered = filtered.filter(d => {
-                    // Find corresponding outlet in pjpData to get its outletType
                     const match = activeData.find(p => p.code.toUpperCase() === d.code);
                     return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
                 });
@@ -2254,7 +2504,13 @@
                 );
             }
 
-            if (filtered.length === 0) {
+            const totalFound = filtered.length;
+            const displayLimit = 300;
+            if (filtered.length > displayLimit) {
+                filtered = filtered.slice(0, displayLimit);
+            }
+
+            if (totalFound === 0) {
                 countDisplay.classList.add('hidden');
                 list.innerHTML = `
                     <div class="flex flex-col items-center justify-center py-10 opacity-70">
@@ -2265,7 +2521,7 @@
                 return;
             }
 
-            countNumber.textContent = filtered.length;
+            countNumber.textContent = totalFound + (totalFound > displayLimit ? ` (Top ${displayLimit} shown)` : '');
             countDisplay.classList.remove('hidden');
 
             let html = '';
@@ -2384,29 +2640,7 @@
         // ==========================================
         // CAMERA, GALLERY & LOCATION LOGIC
         // ==========================================
-        function initLocationFetch() {
-            isLocationAcquired = false;
-            const locBadge = document.getElementById('cameraLocationBadge');
-            if (locBadge) locBadge.textContent = "লোকেশন খোঁজা হচ্ছে...";
-            
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(async p => {
-                    const lat = p.coords.latitude, lon = p.coords.longitude;
-                    finalLocationName = `${lat.toFixed(4)}, ${lon.toFixed(4)}`; 
-                    if (locBadge) locBadge.textContent = finalLocationName;
-                    isLocationAcquired = true; 
-                }, () => { 
-                    finalLocationName = "GPS Off"; 
-                    if (locBadge) locBadge.textContent = "GPS Off"; 
-                    isLocationAcquired = false; 
-                }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }); 
-            } else {
-                finalLocationName = "No GPS Support";
-                if (locBadge) locBadge.textContent = "No GPS Support";
-                isLocationAcquired = false;
-            }
-        }
-
+        
         async function startCamera(facingMode) {
             if (stream) {
                 stream.getTracks().forEach(t => t.stop());
@@ -2446,7 +2680,6 @@
             const v = document.getElementById('cameraFeed'), c = document.getElementById('processCanvas'), ctx = c.getContext('2d');
             if (!v) return;
             
-            // Image Compression during capture (Max 1080px width to save data)
             const MAX_CAM_W = 1080;
             let drawWidth = v.videoWidth;
             let drawHeight = v.videoHeight;
@@ -2467,7 +2700,6 @@
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             
             applyWatermark(ctx, c.width, c.height);
-            // Compress to 60% quality JPEG
             capturedImageData = c.toDataURL('image/jpeg', 0.6);
             document.getElementById('capturedImagePreview').src = capturedImageData;
             document.getElementById('previewContainer').classList.remove('hidden');
@@ -2481,9 +2713,6 @@
             document.getElementById('cameraTriggerContainer').classList.remove('hidden'); 
         });
 
-        // ==========================================
-        // GALLERY UPLOAD LOGIC
-        // ==========================================
         document.getElementById('manualUploadBtn')?.addEventListener('click', () => {
             initLocationFetch();
             document.getElementById('manualFileInput').click();
@@ -2500,7 +2729,6 @@
                     const c = document.getElementById('processCanvas');
                     const ctx = c.getContext('2d');
                     
-                    // Fixed max width/height to avoid memory issues and speed up upload
                     const MAX_WIDTH = 1080;
                     const MAX_HEIGHT = 1080;
                     let width = img.width;
@@ -2522,9 +2750,6 @@
                     c.height = height;
                     ctx.drawImage(img, 0, 0, width, height);
                     
-                    // Watermark is NOT applied for manual gallery uploads
-                    
-                    // Compression
                     capturedImageData = c.toDataURL('image/jpeg', 0.6);
                     document.getElementById('capturedImagePreview').src = capturedImageData;
                     document.getElementById('previewContainer').classList.remove('hidden');
@@ -2598,69 +2823,98 @@
         });
 
         // ==========================================
-        // SUBMISSION
+        // SUBMISSION LOGIC (IMAGE THEN LOCATION)
         // ==========================================
         document.getElementById('customForm')?.addEventListener('submit', async e => {
             e.preventDefault(); 
             if(!capturedImageData) return window.showAlert("দয়া করে আউটলেটের ছবি তুলুন!");
-            
-            const btn = document.getElementById('submitBtn'), loader = document.getElementById('btnLoader'), text = document.getElementById('btnText');
-            btn.disabled = true; loader.classList.remove('hidden'); 
-            text.textContent = "আপলোড শুরু হচ্ছে...";
-            
-            // Smart Loading Texts to keep user engaged
-            let loadTimer1 = setTimeout(() => { if(btn.disabled) text.textContent = "ছবি আপলোড হচ্ছে..."; }, 3000);
-            let loadTimer2 = setTimeout(() => { if(btn.disabled) text.textContent = "ডেটাবেসে সেভ হচ্ছে..."; }, 8000);
-            
-            const formDbCodeEl = document.getElementById('formDbCode');
-            const distSelectEl = document.getElementById('distSelect');
-            const areaSelectEl = document.getElementById('areaSelect');
 
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
-            
-            data.db_code = formDbCodeEl && formDbCodeEl.value ? formDbCodeEl.value : "Not Found";
-            data.distribution_name = distSelectEl && distSelectEl.value ? distSelectEl.value : "Not Found";
-            data.area_name = areaSelectEl && areaSelectEl.value ? areaSelectEl.value : "Not Found";
-            
-            data.role = localStorage.getItem('colgate_app_role') || 'merchandiser';
+            const executeSubmit = async () => {
+                const btn = document.getElementById('submitBtn'), loader = document.getElementById('btnLoader'), text = document.getElementById('btnText');
+                btn.disabled = true; loader.classList.remove('hidden'); 
+                text.textContent = "আপলোড শুরু হচ্ছে...";
+                
+                let loadTimer1 = setTimeout(() => { if(btn.disabled) text.textContent = "ছবি আপলোড হচ্ছে..."; }, 3000);
+                let loadTimer2 = setTimeout(() => { if(btn.disabled) text.textContent = "ডেটাবেসে সেভ হচ্ছে..."; }, 8000);
+                
+                const formDbCodeEl = document.getElementById('formDbCode');
+                const distSelectEl = document.getElementById('distSelect');
+                const areaSelectEl = document.getElementById('areaSelect');
 
-            if (data.role === 'sr') {
-                const srOutlet = document.getElementById('srOutletSelect');
-                if (srOutlet && srOutlet.value) {
-                    data.shop_code = srOutlet.value;
-                    data.slab = document.getElementById('formSlab').value || 'Regular'; 
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData.entries());
+                
+                data.db_code = formDbCodeEl && formDbCodeEl.value ? formDbCodeEl.value : "Not Found";
+                data.distribution_name = distSelectEl && distSelectEl.value ? distSelectEl.value : "Not Found";
+                data.area_name = areaSelectEl && areaSelectEl.value ? areaSelectEl.value : "Not Found";
+                data.role = localStorage.getItem('colgate_app_role') || 'merchandiser';
+
+                if (data.role === 'sr') {
+                    const srOutlet = document.getElementById('srOutletSelect');
+                    if (srOutlet && srOutlet.value) {
+                        data.shop_code = srOutlet.value;
+                        data.slab = document.getElementById('formSlab').value || 'Regular'; 
+                    }
                 }
+
+                data.shop_image = { data: capturedImageData, name: `pjp_${Date.now()}.jpg` };
+                
+                const locationData = {
+                    shop_code: data.shop_code,
+                    latitude: globalLatitude,
+                    longitude: globalLongitude
+                };
+
+                try {
+                    await fetch(SCRIPT_URL, { 
+                        method: 'POST', 
+                        body: JSON.stringify(data), 
+                        mode: 'no-cors'
+                    });
+
+                    text.textContent = "লোকেশন সিঙ্ক হচ্ছে...";
+                    await fetch(LOCATION_SCRIPT_URL, {
+                        method: 'POST',
+                        body: JSON.stringify(locationData),
+                        mode: 'no-cors'
+                    });
+                    
+                    const todayStr = new Date().toDateString();
+                    let s = JSON.parse(localStorage.getItem('colgate_merch_session')) || { date: todayStr, submittedCodes: [] };
+                    if (s.date !== todayStr) s = { date: todayStr, submittedCodes: [] };
+                    
+                    const currentShopCode = (data.shop_code || "").toUpperCase().trim();
+                    if (currentShopCode && !s.submittedCodes.includes(currentShopCode)) {
+                        s.submittedCodes.push(currentShopCode);
+                    }
+                    localStorage.setItem('colgate_merch_session', JSON.stringify(s));
+                    
+                    document.getElementById('customForm').classList.add('hidden'); 
+                    document.getElementById('successMessage').classList.remove('hidden');
+                    
+                    window.updateTimeUI(); 
+                    if (document.getElementById('myDayView').classList.contains('hidden') === false) {
+                        renderMyDayPJP();
+                    }
+                } catch(err) { 
+                    window.showAlert("Error sending data."); 
+                }
+                
+                clearTimeout(loadTimer1);
+                clearTimeout(loadTimer2);
+                btn.disabled = false; loader.classList.add('hidden'); text.textContent = "জমা দিন (Submit)";
+            };
+
+            if (!isLocationAcquired || globalLatitude.includes("Not Found") || globalLatitude.includes("Denied")) {
+                window.showConfirm("GPS লোকেশন এখনো পাওয়া যায়নি। আপনি কি লোকেশন ছাড়াই ফর্মটি জমা দিতে চান?", async (confirmed) => {
+                    if (confirmed) {
+                        await getGPSLocation(); 
+                        executeSubmit();
+                    }
+                });
+            } else {
+                executeSubmit();
             }
-
-            data.shop_image = { data: capturedImageData, name: `pjp_${Date.now()}.jpg` };
-            
-            try {
-                await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data), mode: 'no-cors' });
-                
-                // Track Submission locally for UI instant feedback
-                const todayStr = new Date().toDateString();
-                let s = JSON.parse(localStorage.getItem('colgate_merch_session')) || { date: todayStr, submittedCodes: [] };
-                if (s.date !== todayStr) s = { date: todayStr, submittedCodes: [] };
-                
-                const currentShopCode = (data.shop_code || "").toUpperCase().trim();
-                if (currentShopCode && !s.submittedCodes.includes(currentShopCode)) {
-                    s.submittedCodes.push(currentShopCode);
-                }
-                localStorage.setItem('colgate_merch_session', JSON.stringify(s));
-                
-                document.getElementById('customForm').classList.add('hidden'); 
-                document.getElementById('successMessage').classList.remove('hidden');
-                
-                window.updateTimeUI(); 
-                if (document.getElementById('myDayView').classList.contains('hidden') === false) {
-                    renderMyDayPJP();
-                }
-            } catch(e) { window.showAlert("Error sending data."); }
-            
-            clearTimeout(loadTimer1);
-            clearTimeout(loadTimer2);
-            btn.disabled = false; loader.classList.add('hidden'); text.textContent = "জমা দিন (Submit)";
         });
 
         window.shareSnapshot = async (btn) => {
@@ -2742,8 +2996,11 @@
             capturedImageData = null; 
             isLocationAcquired = false; 
             finalLocationName = "Location Unknown";
+            globalLatitude = "Not Found";
+            globalLongitude = "Not Found";
+            
+            initLocationFetch(); 
 
-            // Reset Output Type Radios
             const radios1 = document.getElementsByName('outlet_type');
             for (let r of radios1) r.checked = false;
         };
@@ -2751,7 +3008,7 @@
         // ==========================================
         // FRONT PAGE SECURED PANEL (ADMIN DASHBOARD)
         // ==========================================
-        const ADMIN_PIN = "1096";
+        const ADMIN_PIN = "1234";
 
         document.getElementById('btnFrontSecured')?.addEventListener('click', () => {
             const modal = document.getElementById('adminPinModal');
@@ -2787,7 +3044,8 @@
         };
 
         async function loadAdminDashboard() {
-            document.getElementById('adminDataDate').textContent = new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
+            // Using English locale for dates in the admin dashboard
+            document.getElementById('adminDataDate').textContent = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
             
             const galleryStatusText = document.getElementById('galleryStatusText');
             const galleryIconBg = document.getElementById('galleryIconBg');
@@ -2849,7 +3107,7 @@
             await loadAllData();
             
             btn.classList.remove('opacity-50', 'pointer-events-none');
-            window.showAlert("ডেটা সফলভাবে সিঙ্ক করা হয়েছে!");
+            window.showAlert("Data synced successfully!");
         });
 
         document.getElementById('btnAdminGallery')?.addEventListener('click', () => {
@@ -2865,13 +3123,7 @@
 
         document.getElementById('maintenanceToggle')?.addEventListener('change', (e) => {
             localStorage.setItem('app_maintenance', e.target.checked);
-            if (e.target.checked) window.showAlert("মেইনটেন্যান্স মোড চালু হয়েছে। ইউজাররা এখন আর অ্যাপে লগইন করতে পারবে না।");
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('colgate_gallery_unlocked') === 'true') {
-                document.getElementById('manualUploadBtn')?.classList.remove('hidden');
-            }
+            if (e.target.checked) window.showAlert("Maintenance mode activated. Users can no longer log in.");
         });
 
         document.getElementById('btnAdminNotice')?.addEventListener('click', () => {
@@ -2892,7 +3144,7 @@
             const txt = document.getElementById('noticeTextInput').value.trim();
             if (txt) {
                 localStorage.setItem('global_notice', txt);
-                window.showAlert("নোটিশ সফলভাবে সেভ করা হয়েছে।");
+                window.showAlert("Notice saved successfully.");
             } else {
                 localStorage.removeItem('global_notice');
             }
@@ -2902,7 +3154,7 @@
         window.clearNotice = () => {
             document.getElementById('noticeTextInput').value = '';
             localStorage.removeItem('global_notice');
-            window.showAlert("নোটিশ মুছে ফেলা হয়েছে।");
+            window.showAlert("Notice cleared.");
             closeNoticeModal();
         };
 
@@ -2919,16 +3171,16 @@
 
         btnAdminNewOutlet?.addEventListener('click', () => {
             const dbs = [...new Set(pjpData.map(i => i.townName))].filter(Boolean).sort();
-            newOutletDistName.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউটর নির্বাচন করুন</option>' + 
+            newOutletDistName.innerHTML = '<option value="" disabled selected>Select Distributor</option>' + 
                                           dbs.map(db => `<option value="${db}">${db}</option>`).join('');
             
-            newOutletRouteName.innerHTML = '<option value="" disabled selected>প্রথমে ডিস্ট্রিবিউটর নির্বাচন করুন</option>';
+            newOutletRouteName.innerHTML = '<option value="" disabled selected>Select Distributor First</option>';
             newOutletRouteName.disabled = true;
 
             const uniqueSlabs = [...new Set(pjpData.map(i => i.slab))].filter(Boolean).sort();
             const slabSelect = document.getElementById('newOutletSlab');
             if (slabSelect) {
-                slabSelect.innerHTML = '<option value="" disabled selected>স্ল্যাব নির্বাচন করুন</option>' + 
+                slabSelect.innerHTML = '<option value="" disabled selected>Select Slab</option>' + 
                                        uniqueSlabs.map(s => `<option value="${s}">${s}</option>`).join('');
             }
 
@@ -2949,7 +3201,7 @@
             if (match) newOutletDistCode.value = match.distCode;
 
             const routes = [...new Set(pjpData.filter(i => i.townName === dbName).map(i => i.routeName))].filter(Boolean).sort();
-            newOutletRouteName.innerHTML = '<option value="" disabled selected>রুট নির্বাচন করুন</option>' + 
+            newOutletRouteName.innerHTML = '<option value="" disabled selected>Select Route</option>' + 
                                            routes.map(r => `<option value="${r}">${r}</option>`).join('');
             newOutletRouteName.disabled = routes.length === 0;
             newOutletRouteCode.value = '';
@@ -2990,17 +3242,17 @@
             const entryBy = document.getElementById('newOutletEntryBy').value;
 
             if(!distName || !routeName || !name || !owner || !phone || !slab || !entryBy) {
-                window.showAlert("দয়া করে * চিহ্নিত সকল তথ্য পূরণ করুন!");
+                window.showAlert("Please fill in all required (*) fields!");
                 return;
             }
 
             if(phone.length !== 11) {
-                window.showAlert("মোবাইল নাম্বার অবশ্যই ঠিক ১১ ডিজিটের হতে হবে!");
+                window.showAlert("Mobile number must be exactly 11 digits!");
                 return;
             }
             
             const originalText = submitNewOutletBtn.innerHTML;
-            submitNewOutletBtn.innerHTML = '<div class="loader !w-4 !h-4 !border-t-white mr-2"></div> সেভ হচ্ছে...';
+            submitNewOutletBtn.innerHTML = '<div class="loader !w-4 !h-4 !border-t-white mr-2"></div> Saving...';
             submitNewOutletBtn.disabled = true;
 
             const payload = {
@@ -3024,7 +3276,7 @@
                     body: JSON.stringify(payload)
                 });
 
-                window.showAlert("নতুন স্মাইল কর্ণার সফলভাবে এন্ট্রি হয়েছে!");
+                window.showAlert("New Smile Corner entered successfully!");
                 
                 newOutletDistName.value = '';
                 newOutletRouteName.value = '';
@@ -3038,12 +3290,276 @@
                 
                 hideNewOutletModal();
             } catch(e) {
-                window.showAlert("এন্ট্রি সেভ করতে সমস্যা হয়েছে। ইন্টারনেট সংযোগ চেক করুন।");
+                window.showAlert("Error saving entry. Please check your internet connection.");
             } finally {
                 submitNewOutletBtn.innerHTML = originalText;
                 submitNewOutletBtn.disabled = false;
             }
         });
+
+        // ==========================================
+        // ADMIN MAP LOGIC
+        // ==========================================
+        let mapInstance = null;
+        let mapMarkerLayer = null;
+        let mapPolylineLayer = null;
+        let mapDataRaw = [];
+
+        document.getElementById('btnAdminMap')?.addEventListener('click', async () => {
+            const mapContainer = document.getElementById('adminMapContainer');
+            const dashContainer = document.getElementById('adminDashboardContainer');
+            
+            dashContainer.classList.add('hidden');
+            dashContainer.classList.remove('flex');
+            mapContainer.classList.remove('hidden');
+            mapContainer.classList.add('flex');
+
+            if (!mapInstance) {
+                initAdminMap();
+            }
+            
+            // Force map resize immediately when unhidden to fix grey box bugs
+            setTimeout(() => { if(mapInstance) mapInstance.invalidateSize(); }, 150);
+            
+            await loadMapDataFromSheet();
+        });
+
+        window.closeAdminMap = () => {
+            const mapContainer = document.getElementById('adminMapContainer');
+            const dashContainer = document.getElementById('adminDashboardContainer');
+            
+            mapContainer.classList.add('hidden');
+            mapContainer.classList.remove('flex');
+            dashContainer.classList.remove('hidden');
+            dashContainer.classList.add('flex');
+        };
+
+        function initAdminMap() {
+            if (typeof L === 'undefined') {
+                window.showAlert("There was a problem loading the map service.");
+                return;
+            }
+
+            mapInstance = L.map('adminMap', {
+                center: [23.8103, 90.4125], // Centered roughly on Bangladesh
+                zoom: 7,
+                zoomControl: false
+            });
+            
+            L.control.zoom({ position: 'bottomright' }).addTo(mapInstance);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap',
+                maxZoom: 19
+            }).addTo(mapInstance);
+
+            mapMarkerLayer = L.featureGroup().addTo(mapInstance);
+            mapPolylineLayer = L.layerGroup().addTo(mapInstance);
+            
+            // Safely attach map event listeners 
+            document.getElementById('mapFilterMerch')?.addEventListener('change', applyMapFilters);
+            document.getElementById('mapFilterTown')?.addEventListener('change', applyMapFilters);
+            document.getElementById('mapFilterRoute')?.addEventListener('change', applyMapFilters);
+        }
+
+        async function loadMapDataFromSheet() {
+            const loader = document.getElementById('mapLoader');
+            loader.classList.remove('hidden');
+            loader.classList.add('flex');
+
+            try {
+                // We use the Images sheet to get strictly recorded Lat/Lons
+                const imgRows = await fetchSheetData('Images');
+                
+                const validLocations = [];
+                
+                // Read from bottom to top (Newest First)
+                for (let i = imgRows.length - 1; i >= 1; i--) {
+                    const row = imgRows[i];
+                    if (!row || !row.c) continue;
+                    
+                    const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
+                    
+                    const shopCode = getVal(5).toUpperCase().replace(/\s+/g, ''); 
+                    if (!shopCode) continue;
+
+                    let lat = NaN;
+                    let lng = NaN;
+
+                    // Robust coordinate detector (checks columns J to Z)
+                    for (let col = 9; col <= 25; col++) {
+                        const cellVal = getVal(col);
+                        if (cellVal) {
+                            const parsed = parseFloat(cellVal);
+                            if (!isNaN(parsed)) {
+                                if (parsed > 20.0 && parsed < 29.0 && isNaN(lat)) lat = parsed;
+                                else if (parsed > 86.0 && parsed < 95.0 && isNaN(lng)) lng = parsed;
+                            }
+                        }
+                    }
+
+                    // Validate coordinates ensuring they fall mostly within Bangladesh boundaries
+                    if (shopCode && !isNaN(lat) && !isNaN(lng)) {
+                        
+                        // Link with detailed info from PJP memory
+                        const pjpMatch = pjpData.find(p => p.code.toUpperCase() === shopCode);
+                        
+                        validLocations.push({
+                            code: shopCode,
+                            lat: lat,
+                            lng: lng,
+                            name: pjpMatch ? pjpMatch.name : "Unknown Outlet",
+                            town: pjpMatch ? pjpMatch.townName : "Unknown",
+                            route: pjpMatch ? pjpMatch.routeName : "Unknown",
+                            merchandiser: pjpMatch ? pjpMatch.merchandiser : "Unknown"
+                        });
+                    }
+                }
+                
+                // Deduplicate (take latest location for same shop code)
+                const uniqueLocationsMap = new Map();
+                validLocations.forEach(loc => {
+                    // Since array was built from bottom to top, the FIRST occurrence of a code is the NEWEST
+                    if(!uniqueLocationsMap.has(loc.code)) {
+                        uniqueLocationsMap.set(loc.code, loc);
+                    }
+                });
+                mapDataRaw = Array.from(uniqueLocationsMap.values());
+
+                populateMapFilters();
+                applyMapFilters();
+            } catch (err) {
+                console.error(err);
+                window.showAlert("There was a problem loading map data.");
+            } finally {
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
+            }
+        }
+
+        function populateMapFilters() {
+            const merchSelect = document.getElementById('mapFilterMerch');
+            const townSelect = document.getElementById('mapFilterTown');
+            const routeSelect = document.getElementById('mapFilterRoute');
+            
+            const merchandisers = [...new Set(mapDataRaw.map(d => d.merchandiser))].filter(Boolean).sort();
+            const towns = [...new Set(mapDataRaw.map(d => d.town))].filter(Boolean).sort();
+            const routes = [...new Set(mapDataRaw.map(d => d.route))].filter(Boolean).sort();
+
+            if (merchSelect) merchSelect.innerHTML = '<option value="">All Merchandisers</option>' + merchandisers.map(m => `<option value="${m}">${m}</option>`).join('');
+            if (townSelect) townSelect.innerHTML = '<option value="">All Towns</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
+            if (routeSelect) routeSelect.innerHTML = '<option value="">All Routes</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
+        }
+
+        function applyMapFilters() {
+            if (!mapInstance || !mapMarkerLayer) return;
+
+            const merchFilter = document.getElementById('mapFilterMerch')?.value;
+            const townFilter = document.getElementById('mapFilterTown')?.value;
+            const routeFilter = document.getElementById('mapFilterRoute')?.value;
+
+            let filtered = mapDataRaw;
+            if (merchFilter) filtered = filtered.filter(d => d.merchandiser === merchFilter);
+            if (townFilter) filtered = filtered.filter(d => d.town === townFilter);
+            if (routeFilter) filtered = filtered.filter(d => d.route === routeFilter);
+
+            const displayElement = document.getElementById('mapCountDisplay');
+            if(displayElement) displayElement.textContent = `${filtered.length} Outlets Found`;
+
+            mapMarkerLayer.clearLayers();
+            mapPolylineLayer.clearLayers();
+
+            if (filtered.length === 0) {
+                document.getElementById('mapDistanceDisplay')?.classList.add('hidden');
+                return;
+            }
+
+            filtered.forEach(data => {
+                const marker = L.circleMarker([data.lat, data.lng], {
+                    radius: 5,
+                    fillColor: "#da291c", 
+                    color: "#FFFFFF",
+                    weight: 1.5,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                });
+
+                marker.bindPopup(`
+                    <div style="font-family: 'Inter', sans-serif;">
+                        <div style="color:#da291c; font-weight:bold; font-size:12px; margin-bottom:2px;">${data.name}</div>
+                        <div style="font-size:10px; color:#4b5563; font-weight:600;">Code: #${data.code}</div>
+                        <div style="font-size:10px; color:#6b7280;">Route: ${data.route}</div>
+                        <div style="font-size:10px; color:#6b7280;">Merch: ${data.merchandiser || 'Unknown'}</div>
+                    </div>
+                `);
+                
+                mapMarkerLayer.addLayer(marker);
+            });
+
+            let totalMeters = 0;
+
+            // If filtered down to a reasonable number, connect the dots with a polyline.
+            if (filtered.length > 1 && filtered.length < 500) {
+                const routeGroups = {};
+                filtered.forEach(item => {
+                    const rName = item.route || 'Unassigned';
+                    if (!routeGroups[rName]) routeGroups[rName] = [];
+                    routeGroups[rName].push(item);
+                });
+
+                Object.entries(routeGroups).forEach(([route, items]) => {
+                    if (items.length < 2) return;
+
+                    // Simple nearest neighbor sorting to create a logical path outline
+                    let remaining = [...items];
+                    const sortedGeo = [remaining.shift()];
+                    
+                    while (remaining.length > 0) {
+                        const last = L.latLng(sortedGeo[sortedGeo.length - 1].lat, sortedGeo[sortedGeo.length - 1].lng);
+                        let nearestIdx = 0;
+                        let minDist = Infinity;
+                        
+                        remaining.forEach((item, idx) => {
+                            const dist = last.distanceTo(L.latLng(item.lat, item.lng));
+                            if (dist < minDist) {
+                                minDist = dist;
+                                nearestIdx = idx;
+                            }
+                        });
+                        
+                        totalMeters += minDist;
+                        sortedGeo.push(remaining[nearestIdx]);
+                        remaining.splice(nearestIdx, 1);
+                    }
+
+                    const latlngs = sortedGeo.map(d => [d.lat, d.lng]);
+                    L.polyline(latlngs, {
+                        color: '#002169', 
+                        weight: 2,
+                        opacity: 0.6,
+                        dashArray: '5, 5'
+                    }).addTo(mapPolylineLayer);
+                });
+            }
+
+            const distDisplay = document.getElementById('mapDistanceDisplay');
+            if (distDisplay) {
+                if (totalMeters > 0) {
+                    distDisplay.textContent = 'Distance: ' + (totalMeters / 1000).toFixed(1) + ' km';
+                    distDisplay.classList.remove('hidden');
+                } else {
+                    distDisplay.classList.add('hidden');
+                }
+            }
+
+            try {
+                // Auto zoom map to tightly fit all currently shown points
+                const bounds = mapMarkerLayer.getBounds();
+                if (bounds.isValid()) {
+                    mapInstance.fitBounds(bounds, { padding: [30, 30], maxZoom: 15 });
+                }
+            } catch(e) { }
+        }
 
     </script>
 </body>
