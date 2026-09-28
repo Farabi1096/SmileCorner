@@ -713,7 +713,9 @@
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
             </button>
             <h2 class="text-lg font-bold text-white tracking-wide flex items-center"><i data-lucide="shield" class="w-4 h-4 mr-2 text-red-500"></i> Admin Dashboard</h2>
-            <div class="w-8"></div>
+            <button onclick="toggleDesktopMode()" class="bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors flex items-center justify-center backdrop-blur-sm shadow-sm" title="Toggle Desktop View">
+                <i data-lucide="monitor" id="desktopToggleIcon" class="w-4 h-4"></i>
+            </button>
         </div>
 
         <div class="p-5 overflow-y-auto flex-grow space-y-4 custom-scrollbar">
@@ -746,7 +748,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div id="adminButtonsGrid" class="grid grid-cols-2 gap-3">
                 <button id="btnAdminForceSync" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-blue-50 hover:border-blue-200 transition-all group">
                     <div class="bg-blue-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
                         <i data-lucide="refresh-cw" class="w-5 h-5 text-blue-600"></i>
@@ -879,7 +881,9 @@
             <h2 class="text-[15px] font-bold text-white tracking-wide flex items-center">
                 <i data-lucide="map-pin" class="w-4 h-4 mr-1.5 text-red-500"></i> Map View
             </h2>
-            <div class="w-8"></div>
+            <button onclick="toggleDesktopMode()" class="bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors flex items-center justify-center backdrop-blur-sm shadow-sm" title="Toggle Desktop View">
+                <i data-lucide="monitor" id="mapDesktopToggleIcon" class="w-4 h-4"></i>
+            </button>
         </div>
 
         <div class="bg-white p-3 border-b border-gray-200 shrink-0 z-40 shadow-sm flex flex-col gap-2">
@@ -1044,6 +1048,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => { 
+            populateMonthDropdown();
             checkRole(); 
             getGPSLocation();
             if (localStorage.getItem('colgate_gallery_unlocked') === 'true') {
@@ -1325,7 +1330,7 @@
             });
         };
 
-        function populateMonthDropdown() {
+        function populateMonthDropdown(forceReset = false) {
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const d = new Date();
             const currentMonth = monthNames[d.getMonth()];
@@ -1333,10 +1338,16 @@
 
             const formMonth = document.getElementById('formMonth');
             if (formMonth) {
+                const currentVal = formMonth.value;
                 formMonth.innerHTML = `
-                    <option value="${currentMonth}" selected>${currentMonth}</option>
+                    <option value="${currentMonth}">${currentMonth}</option>
                     <option value="${prevMonth}">${prevMonth}</option>
                 `;
+                if (!forceReset && currentVal && (currentVal === currentMonth || currentVal === prevMonth)) {
+                    formMonth.value = currentVal;
+                } else {
+                    formMonth.value = currentMonth;
+                }
             }
         }
 
@@ -1972,7 +1983,7 @@
             if (tabForm) tabForm.click();
             const role = localStorage.getItem('colgate_app_role');
             
-            populateMonthDropdown();
+            populateMonthDropdown(true);
 
             const radios = document.getElementsByName('outlet_type');
             for (let r of radios) {
@@ -2939,7 +2950,7 @@
         window.resetForm = () => { 
             const form = document.getElementById('customForm');
             if (form) form.reset();
-            populateMonthDropdown();
+            populateMonthDropdown(true);
             form.classList.remove('hidden'); 
             document.getElementById('successMessage').classList.add('hidden'); 
             document.getElementById('previewContainer').classList.add('hidden'); 
@@ -3339,9 +3350,9 @@
             mapPolylineLayer = L.layerGroup().addTo(mapInstance);
             
             // Safely attach map event listeners 
-            document.getElementById('mapFilterMerch')?.addEventListener('change', applyMapFilters);
-            document.getElementById('mapFilterTown')?.addEventListener('change', applyMapFilters);
-            document.getElementById('mapFilterRoute')?.addEventListener('change', applyMapFilters);
+            document.getElementById('mapFilterMerch')?.addEventListener('change', () => updateMapFilters('merch'));
+            document.getElementById('mapFilterTown')?.addEventListener('change', () => updateMapFilters('town'));
+            document.getElementById('mapFilterRoute')?.addEventListener('change', () => updateMapFilters('route'));
         }
 
         async function loadMapDataFromSheet() {
@@ -3355,6 +3366,13 @@
                 
                 const validLocations = [];
                 
+                // Pre-build a map for fast and reliable PJP lookup
+                const pjpMap = new Map();
+                pjpData.forEach(p => {
+                    const cleanCode = (p.code || "").toUpperCase().replace(/\s+/g, '');
+                    if (cleanCode) pjpMap.set(cleanCode, p);
+                });
+                
                 // Read from bottom to top (Newest First)
                 for (let i = imgRows.length - 1; i >= 1; i--) {
                     const row = imgRows[i];
@@ -3362,7 +3380,21 @@
                     
                     const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
                     
-                    const shopCode = getVal(5).toUpperCase().replace(/\s+/g, ''); 
+                    // Auto-detect shop code column by checking which column matches our PJP data
+                    let shopCode = "";
+                    let pjpMatch = null;
+                    
+                    for (let col = 3; col <= 9; col++) {
+                        const val = getVal(col).toUpperCase().replace(/\s+/g, '');
+                        if (val && pjpMap.has(val)) {
+                            shopCode = val;
+                            pjpMatch = pjpMap.get(val);
+                            break;
+                        }
+                    }
+                    
+                    // Fallback if not found
+                    if (!shopCode) shopCode = getVal(5).toUpperCase().replace(/\s+/g, ''); 
                     if (!shopCode) continue;
 
                     let lat = NaN;
@@ -3383,8 +3415,9 @@
                     // Validate coordinates ensuring they fall mostly within Bangladesh boundaries
                     if (shopCode && !isNaN(lat) && !isNaN(lng)) {
                         
-                        // Link with detailed info from PJP memory
-                        const pjpMatch = pjpData.find(p => p.code.toUpperCase() === shopCode);
+                        if (!pjpMatch && pjpMap.has(shopCode)) {
+                             pjpMatch = pjpMap.get(shopCode);
+                        }
                         
                         validLocations.push({
                             code: shopCode,
@@ -3409,7 +3442,6 @@
                 mapDataRaw = Array.from(uniqueLocationsMap.values());
 
                 populateMapFilters();
-                applyMapFilters();
             } catch (err) {
                 console.error(err);
                 window.showAlert("There was a problem loading map data.");
@@ -3421,16 +3453,52 @@
 
         function populateMapFilters() {
             const merchSelect = document.getElementById('mapFilterMerch');
+            
+            const merchandisers = [...new Set(mapDataRaw.map(d => d.merchandiser))].filter(x => x && x !== "Unknown").sort();
+            if (merchSelect) merchSelect.innerHTML = '<option value="">All Merchandisers</option>' + merchandisers.map(m => `<option value="${m}">${m}</option>`).join('');
+            
+            updateMapFilters('init');
+        }
+
+        function updateMapFilters(source) {
+            const merchSelect = document.getElementById('mapFilterMerch');
             const townSelect = document.getElementById('mapFilterTown');
             const routeSelect = document.getElementById('mapFilterRoute');
-            
-            const merchandisers = [...new Set(mapDataRaw.map(d => d.merchandiser))].filter(Boolean).sort();
-            const towns = [...new Set(mapDataRaw.map(d => d.town))].filter(Boolean).sort();
-            const routes = [...new Set(mapDataRaw.map(d => d.route))].filter(Boolean).sort();
 
-            if (merchSelect) merchSelect.innerHTML = '<option value="">All Merchandisers</option>' + merchandisers.map(m => `<option value="${m}">${m}</option>`).join('');
-            if (townSelect) townSelect.innerHTML = '<option value="">All Towns</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
-            if (routeSelect) routeSelect.innerHTML = '<option value="">All Routes</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
+            const selectedMerch = merchSelect ? merchSelect.value : '';
+            const selectedTown = townSelect ? townSelect.value : '';
+            const selectedRoute = routeSelect ? routeSelect.value : '';
+
+            let filteredForTowns = mapDataRaw;
+            if (selectedMerch) {
+                filteredForTowns = filteredForTowns.filter(d => d.merchandiser === selectedMerch);
+            }
+
+            if (source === 'merch' || source === 'init') {
+                const towns = [...new Set(filteredForTowns.map(d => d.town))].filter(x => x && x !== "Unknown").sort();
+                if (townSelect) {
+                    townSelect.innerHTML = '<option value="">All Towns</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
+                    if (towns.includes(selectedTown)) townSelect.value = selectedTown;
+                    else townSelect.value = '';
+                }
+            }
+
+            const currentTown = townSelect ? townSelect.value : '';
+            let filteredForRoutes = filteredForTowns;
+            if (currentTown) {
+                filteredForRoutes = filteredForRoutes.filter(d => d.town === currentTown);
+            }
+
+            if (source === 'merch' || source === 'town' || source === 'init') {
+                const routes = [...new Set(filteredForRoutes.map(d => d.route))].filter(x => x && x !== "Unknown").sort();
+                if (routeSelect) {
+                    routeSelect.innerHTML = '<option value="">All Routes</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
+                    if (routes.includes(selectedRoute)) routeSelect.value = selectedRoute;
+                    else routeSelect.value = '';
+                }
+            }
+
+            applyMapFilters();
         }
 
         function applyMapFilters() {
@@ -3451,8 +3519,10 @@
             mapMarkerLayer.clearLayers();
             mapPolylineLayer.clearLayers();
 
+            const distDisplayEl = document.getElementById('mapDistanceDisplay');
+
             if (filtered.length === 0) {
-                document.getElementById('mapDistanceDisplay')?.classList.add('hidden');
+                if (distDisplayEl) distDisplayEl.classList.add('hidden');
                 return;
             }
 
@@ -3466,12 +3536,21 @@
                     fillOpacity: 0.9
                 });
 
+                const safeName = (data.name || "").replace(/'/g, "\\'");
+                const safeMerch = (data.merchandiser || 'Unknown').replace(/'/g, "\\'");
+
                 marker.bindPopup(`
-                    <div style="font-family: 'Inter', sans-serif;">
-                        <div style="color:#da291c; font-weight:bold; font-size:12px; margin-bottom:2px;">${data.name}</div>
-                        <div style="font-size:10px; color:#4b5563; font-weight:600;">Code: #${data.code}</div>
+                    <div style="font-family: 'Inter', sans-serif; position: relative; padding-right: 15px;">
+                        <div style="color:#da291c; font-weight:bold; font-size:12px; margin-bottom:2px; padding-right: 12px; line-height:1.2;">${data.name}</div>
+                        <div style="font-size:10px; color:#4b5563; font-weight:600; margin-top:4px;">Code: #${data.code}</div>
                         <div style="font-size:10px; color:#6b7280;">Route: ${data.route}</div>
                         <div style="font-size:10px; color:#6b7280;">Merch: ${data.merchandiser || 'Unknown'}</div>
+                        <div style="font-size:10px; color:#6b7280; font-family: monospace; margin-top:2px;">Lat: ${data.lat.toFixed(6)}</div>
+                        <div style="font-size:10px; color:#6b7280; font-family: monospace;">Lng: ${data.lng.toFixed(6)}</div>
+                        
+                        <button onclick="copyOutletDetails('${safeName}', '${data.code}', '${data.route}', '${safeMerch}', ${data.lat}, ${data.lng})" style="position: absolute; top: 0; right: -5px; background: none; border: none; cursor: pointer; color: #9ca3af; padding: 2px; transition: color 0.2s;" onmouseover="this.style.color='#da291c'" onmouseout="this.style.color='#9ca3af'" title="Copy Details">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </button>
                     </div>
                 `);
                 
@@ -3480,57 +3559,45 @@
 
             let totalMeters = 0;
 
-            // If filtered down to a reasonable number, connect the dots with a polyline.
+            // Connect the dots with a single continuous polyline (Nearest Neighbor math logic)
             if (filtered.length > 1 && filtered.length < 500) {
-                const routeGroups = {};
-                filtered.forEach(item => {
-                    const rName = item.route || 'Unassigned';
-                    if (!routeGroups[rName]) routeGroups[rName] = [];
-                    routeGroups[rName].push(item);
-                });
-
-                Object.entries(routeGroups).forEach(([route, items]) => {
-                    if (items.length < 2) return;
-
-                    // Simple nearest neighbor sorting to create a logical path outline
-                    let remaining = [...items];
-                    const sortedGeo = [remaining.shift()];
+                let remaining = [...filtered];
+                const sortedGeo = [remaining.shift()];
+                
+                while (remaining.length > 0) {
+                    const last = L.latLng(sortedGeo[sortedGeo.length - 1].lat, sortedGeo[sortedGeo.length - 1].lng);
+                    let nearestIdx = 0;
+                    let minDist = Infinity;
                     
-                    while (remaining.length > 0) {
-                        const last = L.latLng(sortedGeo[sortedGeo.length - 1].lat, sortedGeo[sortedGeo.length - 1].lng);
-                        let nearestIdx = 0;
-                        let minDist = Infinity;
-                        
-                        remaining.forEach((item, idx) => {
-                            const dist = last.distanceTo(L.latLng(item.lat, item.lng));
-                            if (dist < minDist) {
-                                minDist = dist;
-                                nearestIdx = idx;
-                            }
-                        });
-                        
-                        totalMeters += minDist;
-                        sortedGeo.push(remaining[nearestIdx]);
-                        remaining.splice(nearestIdx, 1);
-                    }
+                    remaining.forEach((item, idx) => {
+                        const dist = last.distanceTo(L.latLng(item.lat, item.lng));
+                        if (dist < minDist) {
+                            minDist = dist;
+                            nearestIdx = idx;
+                        }
+                    });
+                    
+                    totalMeters += minDist;
+                    sortedGeo.push(remaining[nearestIdx]);
+                    remaining.splice(nearestIdx, 1);
+                }
 
-                    const latlngs = sortedGeo.map(d => [d.lat, d.lng]);
-                    L.polyline(latlngs, {
-                        color: '#002169', 
-                        weight: 2,
-                        opacity: 0.6,
-                        dashArray: '5, 5'
-                    }).addTo(mapPolylineLayer);
-                });
+                const latlngs = sortedGeo.map(d => [d.lat, d.lng]);
+                L.polyline(latlngs, {
+                    color: '#da291c', 
+                    weight: 2.5,
+                    opacity: 0.8,
+                    dashArray: '6, 6'
+                }).addTo(mapPolylineLayer);
             }
 
-            const distDisplay = document.getElementById('mapDistanceDisplay');
-            if (distDisplay) {
+            if (distDisplayEl) {
                 if (totalMeters > 0) {
-                    distDisplay.textContent = 'Distance: ' + (totalMeters / 1000).toFixed(1) + ' km';
-                    distDisplay.classList.remove('hidden');
+                    // Added a 1.3 multiplier to convert straight-line to estimated road distance automatically
+                    distDisplayEl.innerHTML = 'Distance: ' + ((totalMeters / 1000) * 1.3).toFixed(2) + ' km <span style="font-size:8px; font-weight:normal;">(Est.)</span>';
+                    distDisplayEl.classList.remove('hidden');
                 } else {
-                    distDisplay.classList.add('hidden');
+                    distDisplayEl.classList.add('hidden');
                 }
             }
 
@@ -3542,6 +3609,75 @@
                 }
             } catch(e) { }
         }
+
+        window.copyOutletDetails = (name, code, route, merch, lat, lng) => {
+            const text = `Shop: ${name}\nCode: #${code}\nRoute: ${route}\nMerchandiser: ${merch}\nLocation: ${lat}, ${lng}`;
+            
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed"; 
+            textArea.style.left = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                window.showAlert("Details copied to clipboard!");
+            } catch (err) {
+                console.error('Unable to copy', err);
+                window.showAlert("Failed to copy details.");
+            }
+            
+            document.body.removeChild(textArea);
+        };
+
+        // ==========================================
+        // DESKTOP VIEW TOGGLE
+        // ==========================================
+        let isDesktopMode = false;
+        window.toggleDesktopMode = () => {
+            isDesktopMode = !isDesktopMode;
+            
+            const dashContainer = document.getElementById('adminDashboardContainer');
+            const mapContainer = document.getElementById('adminMapContainer');
+            const statsGrid = document.getElementById('adminStatsContent');
+            const buttonsGrid = document.getElementById('adminButtonsGrid');
+            
+            const dashIcon = document.getElementById('desktopToggleIcon');
+            const mapIcon = document.getElementById('mapDesktopToggleIcon');
+            
+            if (isDesktopMode) {
+                dashContainer.classList.replace('max-w-md', 'max-w-5xl');
+                dashContainer.classList.add('w-[95%]');
+                mapContainer.classList.replace('max-w-md', 'max-w-6xl');
+                mapContainer.classList.add('w-[95%]');
+                
+                if (statsGrid) statsGrid.classList.replace('grid-cols-2', 'grid-cols-4');
+                if (buttonsGrid) buttonsGrid.classList.replace('grid-cols-2', 'grid-cols-4');
+                
+                if (dashIcon) dashIcon.setAttribute('data-lucide', 'smartphone');
+                if (mapIcon) mapIcon.setAttribute('data-lucide', 'smartphone');
+            } else {
+                dashContainer.classList.replace('max-w-5xl', 'max-w-md');
+                dashContainer.classList.remove('w-[95%]');
+                mapContainer.classList.replace('max-w-6xl', 'max-w-md');
+                mapContainer.classList.remove('w-[95%]');
+                
+                if (statsGrid) statsGrid.classList.replace('grid-cols-4', 'grid-cols-2');
+                if (buttonsGrid) buttonsGrid.classList.replace('grid-cols-4', 'grid-cols-2');
+                
+                if (dashIcon) dashIcon.setAttribute('data-lucide', 'monitor');
+                if (mapIcon) mapIcon.setAttribute('data-lucide', 'monitor');
+            }
+            
+            lucide.createIcons();
+            
+            // Force Leaflet map to redraw and resize so there are no grey blank blocks
+            if (!mapContainer.classList.contains('hidden') && mapInstance) {
+                setTimeout(() => mapInstance.invalidateSize(), 300);
+            }
+        };
 
     </script>
 </body>
