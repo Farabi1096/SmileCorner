@@ -1333,8 +1333,10 @@
         function populateMonthDropdown(forceReset = false) {
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const d = new Date();
+            
             const currentMonth = monthNames[d.getMonth()];
-            const prevMonth = monthNames[d.getMonth() === 0 ? 11 : d.getMonth() - 1];
+            const prevMonth = monthNames[(d.getMonth() + 11) % 12];
+            const prevPrevMonth = monthNames[(d.getMonth() + 10) % 12];
 
             const formMonth = document.getElementById('formMonth');
             if (formMonth) {
@@ -1342,8 +1344,9 @@
                 formMonth.innerHTML = `
                     <option value="${currentMonth}">${currentMonth}</option>
                     <option value="${prevMonth}">${prevMonth}</option>
+                    <option value="${prevPrevMonth}">${prevPrevMonth}</option>
                 `;
-                if (!forceReset && currentVal && (currentVal === currentMonth || currentVal === prevMonth)) {
+                if (!forceReset && currentVal && (currentVal === currentMonth || currentVal === prevMonth || currentVal === prevPrevMonth)) {
                     formMonth.value = currentVal;
                 } else {
                     formMonth.value = currentMonth;
